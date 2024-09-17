@@ -1,0 +1,93 @@
+
+{
+  "main_message": "La IA que te ayuda a alcanzar tus metas",
+  "sliders": [
+    {
+      "image": "https://i.ibb.co/BTpdNpb/Rectangle-31.png",
+      "link": "/",
+      "title": "Jasper",
+      "description": "lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
+    },
+    {
+      "image": "https://i.ibb.co/MD5RG5y/Rectangle-27.png",
+      "link": "/",
+      "title": "Jasper",
+      "description": "lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
+    },
+    {
+      "image": "https://i.ibb.co/svjfZhs/Rectangle-28.png",
+      "link": "/",
+      "title": "B HUMAN",
+      "description": "lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
+    },
+    {
+      "image": "https://i.ibb.co/2kj4Skr/Rectangle-29.png",
+      "link": "/",
+      "title": "MAKE",
+      "description": "lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
+    },
+    {
+      "image": "https://i.ibb.co/txBthT2/Rectangle-30.png",
+      "link": "/",
+      "title": "COLORIZE.AI",
+      "description": "lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
+    },
+    {
+      "image": "../src/assets/cards/Rectangle 31.png",
+      "link": "/",
+      "title": "CRAFT",
+      "description": "lorem ipsum lorem ipsum lorem ipsum lorem ipsum"
+    }
+   
+  ],
+  "featured_videos": [
+    {
+      "title": "Get Our Video Tools IA",
+      "platform": "YouTube",
+      "embed_url": "/",
+      "description": "Download the app and go to travel the world!"
+    },
+    {
+      "title": "Get Our Video Tools IA",
+      "platform": "YouTube",
+      "embed_url": "/",
+      "description": "Download the app and go to travel the world!"
+    }
+  ],
+  "featured_message": "Build your path with the right tools.",
+  "footer_links": [
+    {
+      "title": "Top cities",
+      "url": "/"
+    },
+    {
+      "title": "Accommodation",
+      "url": "/"
+    },
+    {
+      "title": "Cafes & restaurants",
+      "url": "/"
+    },
+    {
+      "title": "Events",
+      "url": "/"
+    },
+    {
+      "title": "My account",
+      "url": "/"
+    },
+    {
+      "title": "Favorites",
+      "url": "/"
+    },
+    {
+      "title": "My listings",
+      "url": "/"
+    },
+    {
+      "title": "Add listing",
+      "url": "/"
+    }
+  ],
+  "newsletter_text": "Don’t miss any relevant vacancies!"
+}

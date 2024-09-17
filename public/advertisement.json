@@ -1,0 +1,34 @@
+{
+  "ads": [
+    {
+      "id": "1",
+      "title": "AI Tool 1",
+      "image_url": "https://i.ibb.co/MPyxTjx/Rectangle-7.png",
+      "link": "https://www.example.com/ai-tool-1",
+      "placement": "homepage",
+      "format": "banner",
+      "clicks": 1200,
+      "views": 20000
+    },
+    {
+      "id": "2",
+      "title": "AI Tool 2",
+      "image_url": "https://i.ibb.co/MPyxTjx/Rectangle-7.png",
+      "link": "https://www.example.com/ai-tool-2",
+      "placement": "community",
+      "format": "video",
+      "clicks": 1800,
+      "views": 25000
+    },
+    {
+      "id": "3",
+      "title": "AI Tool 3",
+      "image_url": "https://i.ibb.co/MPyxTjx/Rectangle-7.png",
+      "link": "https://www.example.com/ai-tool-3",
+      "placement": "blog",
+      "format": "newsletter",
+      "clicks": 2200,
+      "views": 30000
+    }
+  ]
+}

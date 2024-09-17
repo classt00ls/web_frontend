@@ -1,0 +1,235 @@
+
+{
+  "categories": [
+    {
+      "id": "1",
+      "title": "AI productivity tools",
+      "icon": "https://i.ibb.co/1bZ7DP5/Icon1.png",
+      "subcategories": [
+        {
+          "id": "1-1",
+          "title": "productivity subcategories 1"
+        },
+        {
+          "id": "1-2",
+          "title": "productivity subcategories 2"
+        },
+        {
+          "id": "1-3",
+          "title": "productivity subcategories 3"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "AI image generators",
+      "icon": "https://i.ibb.co/t8FLsZn/Icon3.png",
+      "subcategories": [
+        {
+          "id": "2-1",
+          "title": "image subcategories 1"
+        },
+        {
+          "id": "2-2",
+          "title": "image subcategories 2"
+        },
+        {
+          "id": "2-3",
+          "title": "image subcategories 3"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "title": "AI text generators",
+      "icon": "https://i.ibb.co/zN4PvQW/Icon6.png",
+      "subcategories": [
+        {
+          "id": "3-1",
+          "title": "text subcategories 1"
+        },
+        {
+          "id": "3-2",
+          "title": "text subcategories 2"
+        },
+        {
+          "id": "3-3",
+          "title": "text subcategories 3"
+        }
+      ]
+    },
+     {
+      "id": "4",
+      "title": "AI video generators",
+      "icon": "https://i.ibb.co/92sKpgx/Icon4.png",
+      "subcategories": [
+        {
+          "id": "3-1",
+          "title": "video subcategories 1"
+        },
+        {
+          "id": "3-2",
+          "title": "video subcategories 2"
+        },
+        {
+          "id": "3-3",
+          "title": "video subcategories 3"
+        }
+      ]
+    },
+     {
+      "id": "5",
+      "title": "AI art generators",
+      "icon": "https://i.ibb.co/vqTD3vs/Icon5.png",
+      "subcategories": [
+        {
+          "id": "3-1",
+          "title": "art subcategories 1"
+        },
+        {
+          "id": "3-2",
+          "title": "art subcategories 2"
+        },
+        {
+          "id": "3-3",
+          "title": "art subcategories 3"
+        }
+      ]
+    },
+     {
+      "id": "6",
+      "title": "AI Code generators",
+      "icon": "https://i.ibb.co/zN4PvQW/Icon6.png",
+      "subcategories": [
+        {
+          "id": "3-1",
+          "title": "Code subcategories 1"
+        },
+        {
+          "id": "3-2",
+          "title": "Code subcategories 2"
+        },
+        {
+          "id": "3-3",
+          "title": "Code subcategories 3"
+        }
+      ]
+    },
+     {
+      "id": "7",
+      "title": "AI Audio generators",
+      "icon": "https://i.ibb.co/W0GxSZT/Icon7.png",
+      "subcategories": [
+        {
+          "id": "3-1",
+          "title": "Audio subcategories 1"
+        },
+        {
+          "id": "3-2",
+          "title": "Audio subcategories 2"
+        },
+        {
+          "id": "3-3",
+          "title": "Audio subcategories 3"
+        }
+      ]
+    },
+     {
+      "id": "8",
+      "title": "AI Asistencia",
+      "icon": "https://i.ibb.co/hfc2K48/Icon8.png",
+      "subcategories": [
+        {
+          "id": "3-1",
+          "title": "Asistencia subcategories 1"
+        },
+        {
+          "id": "3-2",
+          "title": "Asistencia subcategories 2"
+        },
+        {
+          "id": "3-3",
+          "title": "Asistencia subcategories 3"
+        }
+      ]
+    },
+     {
+      "id": "9",
+      "title": "AI Educacion",
+      "icon": "https://i.ibb.co/hVVXj7Y/Icon9.png",
+      "subcategories": [
+        {
+          "id": "3-1",
+          "title": "Educacion subcategories 1"
+        },
+        {
+          "id": "3-2",
+          "title": "Educacion subcategories 2"
+        },
+        {
+          "id": "3-3",
+          "title": "Educacion subcategories 3"
+        }
+      ]
+    },
+     {
+      "id": "10",
+      "title": "AI Salud",
+      "icon": "https://i.ibb.co/hVVXj7Y/Icon9.png",
+      "subcategories": [
+        {
+          "id": "3-1",
+          "title": "Salud subcategories 1"
+        },
+        {
+          "id": "3-2",
+          "title": "Salud subcategories 2"
+        },
+        {
+          "id": "3-3",
+          "title": "Salud subcategories 3"
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "title": "Other AI Tools",
+      "icon": "https://i.ibb.co/t3hXkN6/Icon10.png",
+      "subcategories": [
+        {
+          "id": "3-1",
+          "title": "Other subcategories 1"
+        },
+        {
+          "id": "3-2",
+          "title": "Other subcategories 2"
+        },
+        {
+          "id": "3-3",
+          "title": "Other subcategories 3"
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "title": "More",
+      "icon": "https://i.ibb.co/PtJcjYc/Icon11.png",
+      "subcategories": [
+        {
+          "id": "3-1",
+          "title": "More subcategories 1"
+        },
+        {
+          "id": "3-2",
+          "title": "More subcategories 2"
+        },
+        {
+          "id": "3-3",
+          "title": "More subcategories 3"
+        }
+      ]
+    }
+    
+    
+  ]
+}

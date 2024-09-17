@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Lekton:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.menu-horizontal > li > details > ul:before {
+    content: "" !important;
+}
+
+.pagination>.page-item {
+    color: black !important;
+    background: white !important;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    text-align: center;
+    cursor: pointer;
+}
+.pagination>.page-item.active {
+    color: #ffffff !important;
+    background: #FD5631 !important;
+}

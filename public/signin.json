@@ -1,0 +1,10 @@
+{
+  "success": true,
+  "message": "Sign In successful",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+  "user": {
+    "id": "123456",
+    "name": "John Doe",
+    "email": "john.doe@example.com"
+  }
+}

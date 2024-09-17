@@ -1,0 +1,33 @@
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: #ff4500;
+  cursor: ew-resize;
+  box-shadow: 0 0 2px 0 #555;
+  transition: background .3s ease-in-out;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #d33;
+}
+
+
+input[type="range"]::-moz-range-thumb:hover {
+    background: #d33;
+}
+
+input[type="range"]::fill-lower {
+    background: #ff4500;
+    border-radius: 50%;
+    box-shadow: 0 0 2px 0 #555;
+    transition: background .3s ease-in-out;
+}
+
+input[type="range"]::fill-upper {
+    background: #f3f3f3;
+    border-radius: 50%;
+    box-shadow: 0 0 2px 0 #555;
+    transition: background .3s ease-in-out;
+}

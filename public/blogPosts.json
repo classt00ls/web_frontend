@@ -1,0 +1,100 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "TRAVELLING",
+      "excerpt": "EAir Travel in the Time of COVID-19",
+      "thumbnail": "https://i.ibb.co/MPyxTjx/Rectangle-7.png",
+      "published_date": "2024-08-28",
+      "author": "John Doe",
+      "link": "https://i.ibb.co/fCDxH2N/Frame-170.png"
+    },
+    {
+      "id": "2",
+      "title": "TRAVELLING",
+      "excerpt": "10 World Class Museums You Can Visit Online",
+      "thumbnail": "https://i.ibb.co/1qKhywM/Rectangle-8.png",
+      "published_date": "2024-08-27",
+      "author": "Annette Black",
+      "link": "https://i.ibb.co/fCDxH2N/Frame-170.png"
+    },
+    {
+      "id": "3",
+      "title": "TRAVELLING",
+      "excerpt": "7 Tips for Solo Travelers in Africa",
+      "thumbnail": "https://i.ibb.co/x8FC1yr/Rectangle-9.png",
+      "published_date": "2024-08-26",
+      "author": "Ralph Edwards",
+      "link": "https://i.ibb.co/rdCYZbS/Frame-172.png"
+    },
+    {
+      "id": "4",
+      "title": "TRAVELLING",
+      "excerpt": "EAir Travel in the Time of COVID-19",
+      "thumbnail": "https://i.ibb.co/MPyxTjx/Rectangle-7.png",
+      "published_date": "2024-08-28",
+      "author": "John Doe",
+      "link": "https://i.ibb.co/rdCYZbS/Frame-172.png"
+    },
+    {
+      "id": "5",
+      "title": "TRAVELLING",
+      "excerpt": "10 World Class Museums You Can Visit Online",
+      "thumbnail": "https://i.ibb.co/1qKhywM/Rectangle-8.png",
+      "published_date": "2024-08-27",
+      "author": "Annette Black",
+      "link": "https://i.ibb.co/rdCYZbS/Frame-172.png"
+    },
+    {
+      "id": "6",
+      "title": "TRAVELLING",
+      "excerpt": "7 Tips for Solo Travelers in Africa",
+      "thumbnail": "https://i.ibb.co/x8FC1yr/Rectangle-9.png",
+      "published_date": "2024-08-26",
+      "author": "Ralph Edwards",
+      "link": "https://i.ibb.co/fCDxH2N/Frame-170.png"
+    },
+    {
+      "id": "7",
+      "title": "TRAVELLING",
+      "excerpt": "EAir Travel in the Time of COVID-19",
+      "thumbnail": "https://i.ibb.co/MPyxTjx/Rectangle-7.png",
+      "published_date": "2024-08-28",
+      "author": "John Doe",
+      "link": "https://i.ibb.co/CbGRGPB/Frame-171.png"
+    },
+    {
+      "id": "8",
+      "title": "TRAVELLING",
+      "excerpt": "10 World Class Museums You Can Visit Online",
+      "thumbnail": "https://i.ibb.co/1qKhywM/Rectangle-8.png",
+      "published_date": "2024-08-27",
+      "author": "Annette Black",
+      "link": "https://i.ibb.co/fCDxH2N/Frame-170.png"
+    },
+    {
+      "id": "9",
+      "title": "TRAVELLING",
+      "excerpt": "7 Tips for Solo Travelers in Africa",
+      "thumbnail": "https://i.ibb.co/x8FC1yr/Rectangle-9.png",
+      "published_date": "2024-08-26",
+      "author": "Ralph Edwards",
+      "link": "https://i.ibb.co/CbGRGPB/Frame-171.png"
+    },
+       {
+      "id": "10",
+      "title": "TRAVELLING",
+      "excerpt": "7 Tips for Solo Travelers in Africa",
+      "thumbnail": "https://i.ibb.co/x8FC1yr/Rectangle-9.png",
+      "published_date": "2024-08-26",
+      "author": "Ralph Edwards",
+      "link": "https://i.ibb.co/fCDxH2N/Frame-170.png"
+    }
+    
+  ],
+  "pagination": {
+    "currentPage": 1,
+    "totalPages": 5,
+    "totalPosts": 25
+  }
+}
