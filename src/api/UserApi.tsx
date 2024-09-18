@@ -1,5 +1,5 @@
-import { LOGOUT_REQUEST } from "../contexts/actions/userActions";
-import store from "../contexts/store";
+import { LOGOUT_REQUEST } from "../store/actions/userActions";
+import store from "../store/store";
 import { authApiCall } from "./apiCalls";
 
 /** Recupera los leads dados de alta para el usuario */

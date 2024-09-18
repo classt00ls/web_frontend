@@ -1,6 +1,6 @@
 import { IAuthState } from "../../Domain/Store";
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, ME_SUCCESS } from "../actions/userActions";
-import { REGISTER_SUCCESS } from "../actionTypts";
+import { REGISTER_SUCCESS } from "../actionTypes";
 
 const initialState: IAuthState = {logginIn: false, loggedIn: false, user: null};
 

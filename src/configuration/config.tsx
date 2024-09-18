@@ -1,6 +1,6 @@
 const Configuration = {
-	API_URL: process.env.REACT_APP_API_URL,
-	APP_URL: process.env.REACT_APP_URL
+	API_URL: 'http://localhost:3000',
+	APP_URL:'http://localhost:5173'
 }
 
 export default Configuration;

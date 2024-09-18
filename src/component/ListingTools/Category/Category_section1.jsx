@@ -9,16 +9,43 @@ import { dataContext } from "../../../Context/Context";
 
 import Loader from "../../Loader/Loader";
 import { Link } from "react-router-dom";
+import { ToolApi } from "../../../api/ToolApi";
+import { useDispatch } from "react-redux";
 
 const Category_section1 = () => {
+
+  const dispatch = useDispatch();
+
   const { toolsData, selectedCategory, setSelectedCategory } =
     useContext(dataContext);
   const [currentPage, setCurrentPage] = useState(1);
   const { pagination } = toolsData;
   const [paginationHas, setPaginationHas] = useState(true);
-
+  const [ loading, setLoading ] = useState(true);
+  const [reload, setReload] = useState(true);
   const [data, setData] = useState([]);
 
+  useEffect(() => {
+    if(reload) {
+      (async () => {
+        try {
+
+          const toolsData = await ToolApi.getAllTools(1,5);
+          setData(toolsData);
+          setReload(false);
+          setLoading(false);
+
+        } catch (error) {
+
+          dispatch({ type: 'set', errorMessage: error });
+          dispatch({ type: 'set', showError: true });
+
+        }
+      })()
+    }
+  }, [reload])
+
+  /*
   useEffect(() => {
     if (selectedCategory) {
       const filteredData = toolsData?.tools?.filter(
@@ -33,15 +60,11 @@ const Category_section1 = () => {
     }
   }, [selectedCategory, toolsData?.tools]);
 
-  console.log(data);
+  */
 
-  if (toolsData?.tools?.length < 1) {
+  if (loading) {
     return <Loader />;
   }
-  if (!paginationHas && data?.length < 1) {
-    return <Loader />;
-  }
-  // console.log(toolsData.pagination);
 
   const toolsPerPage = !paginationHas
     ? 12
@@ -49,20 +72,17 @@ const Category_section1 = () => {
   const totalPages = Math.ceil(
     (!paginationHas ? data?.length : toolsData?.tools?.length) / toolsPerPage
   );
-  console.log(toolsData);
 
+  console.log("LA DATA ............. ", data);
   // console.log(data?.tools?.map((tool) => tool));
   // slice((currentPage - 1) * toolsPerPage, currentPage * toolsPerPage)
+
   return (
     <div className=" bg-white">
       <div className="flex flex-wrap gap-8 p-5">
         {paginationHas &&
-          toolsData?.tools
-            ?.slice(
-              (currentPage - 1) * toolsPerPage,
-              currentPage * toolsPerPage
-            )
-            .map((tool) => (
+          data?.map((tool) => (
+            
               <div
                 key={tool?.id}
                 className="bg-gray-100 w-[316px] p-5 rounded-lg shadow-lg"
@@ -70,12 +90,12 @@ const Category_section1 = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <img
-                      src={tool?.icon}
-                      alt={tool?.title}
+                      src={`https://www.google.com/s2/favicons?domain=${tool?.url.split('/?')[0]}&sz=256 `}
+                      alt={tool?.name}
                       className="w-[72px] h-[72px] rounded-lg"
                     />
                     <h1 className="font-bold text-black text-[24px] px-4 ">
-                      {tool?.title}
+                      {tool?.name}
                     </h1>
                   </div>
                   <img
@@ -90,13 +110,14 @@ const Category_section1 = () => {
                     <div className="flex items-center">
                       <img src={star} alt="review-icon" className="h-4 w-4" />
                       <span className="ml-2  text-[13px] text-gray-700">
-                        {tool?.stars} ({tool?.stars} Reviews)
+                        {/*{tool?.stars} ({tool?.stars} Reviews)*/}
+                        5(5 Reviews)
                       </span>
                     </div>
                     <div className="flex items-center">
                       <img src={card} alt="type-icon" className="h-4 w-4" />
                       <span className="ml-2 text-[13px] text-gray-700">
-                        {tool?.price}
+                         price {/* {tool?.price} */}
                       </span>
                     </div>
                     <div className="flex items-center">
@@ -106,7 +127,8 @@ const Category_section1 = () => {
                         className="h-4 w-4"
                       />
                       <span className="ml-2 text-[13px] text-red-600">
-                        {tool?.totalBookmarked}
+                        {/* {tool?.totalBookmarked} */}
+                        100
                       </span>
                     </div>
                   </div>
@@ -117,7 +139,7 @@ const Category_section1 = () => {
 
                   <ul className="mt-2 text-gray-700  text-[10px] space-y-1">
                     {tool?.tags.map((item, index) => (
-                      <li key={index}>#{item}</li>
+                      <li key={item.id}>#{item.name}</li>
                     ))}
                   </ul>
 
@@ -143,12 +165,12 @@ const Category_section1 = () => {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
                     <img
-                      src={tool?.icon}
-                      alt={tool?.title}
+                      src={tool?.url.split('/?')[0]}
+                      alt={tool?.name}
                       className="w-[72px] h-[72px] rounded-lg"
                     />
                     <h1 className="font-bold text-black text-[24px] px-4 ">
-                      {tool?.title}
+                      {tool?.name}
                     </h1>
                   </div>
                   <img
@@ -163,13 +185,14 @@ const Category_section1 = () => {
                     <div className="flex items-center">
                       <img src={star} alt="review-icon" className="h-4 w-4" />
                       <span className="ml-2  text-[13px] text-gray-700">
-                        {tool?.stars} ({tool?.stars} Reviews)
+                        {/*{tool?.stars} ({tool?.stars} Reviews)*/}
+                        5(5 Reviews)
                       </span>
                     </div>
                     <div className="flex items-center">
                       <img src={card} alt="type-icon" className="h-4 w-4" />
                       <span className="ml-2 text-[13px] text-gray-700">
-                        {tool?.price}
+                        price {/* {tool?.price} */}
                       </span>
                     </div>
                     <div className="flex items-center">
@@ -179,7 +202,8 @@ const Category_section1 = () => {
                         className="h-4 w-4"
                       />
                       <span className="ml-2 text-[13px] text-red-600">
-                        {tool?.totalBookmarked}
+                        {/* {tool?.totalBookmarked} */}
+                        100
                       </span>
                     </div>
                   </div>

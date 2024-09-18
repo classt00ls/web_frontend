@@ -33,6 +33,8 @@ const Context = ({ children }) => {
     
     
   },[]);
+
+  
    useEffect(() => {
     const fetchData = async () => {
       try {
