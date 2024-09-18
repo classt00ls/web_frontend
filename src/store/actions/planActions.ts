@@ -1,0 +1,1 @@
+export const PLAN_SUCCESS = {type: "PLAN_SUCCESS"}
