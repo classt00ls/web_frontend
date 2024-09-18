@@ -19,6 +19,7 @@ const Category_section1 = () => {
   const { toolsData, selectedCategory, setSelectedCategory } =
     useContext(dataContext);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const { pagination } = toolsData;
   const [paginationHas, setPaginationHas] = useState(true);
   const [ loading, setLoading ] = useState(true);
@@ -26,12 +27,12 @@ const Category_section1 = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    if(reload) {
       (async () => {
         try {
-
-          const toolsData = await ToolApi.getAllTools(1,5);
-          setData(toolsData);
+          setLoading(true);
+          const toolsData = await ToolApi.getAllTools(currentPage,12);
+          setData(toolsData.data);
+          setTotalPages(Math.round(toolsData.count/12));
           setReload(false);
           setLoading(false);
 
@@ -42,8 +43,8 @@ const Category_section1 = () => {
 
         }
       })()
-    }
-  }, [reload])
+  }, [currentPage])
+
 
   /*
   useEffect(() => {
@@ -66,14 +67,7 @@ const Category_section1 = () => {
     return <Loader />;
   }
 
-  const toolsPerPage = !paginationHas
-    ? 12
-    : pagination?.totalItems / pagination?.totalPages;
-  const totalPages = Math.ceil(
-    (!paginationHas ? data?.length : toolsData?.tools?.length) / toolsPerPage
-  );
-
-  console.log("LA DATA ............. ", data);
+  const toolsPerPage = 12;
   // console.log(data?.tools?.map((tool) => tool));
   // slice((currentPage - 1) * toolsPerPage, currentPage * toolsPerPage)
 
