@@ -7,54 +7,28 @@ import CO from "../../../../src/assets/classtools_web_design/Vector (8).png";
 import signalLogo from "../../../../src/assets/classtools_web_design/Group 252.png";
 import YTLogo from "../../../../src/assets/classtools_web_design/Group 262.png";
 
-const Product_section_6 = () => {
+import parse from 'html-react-parser'
+
+const Product_section_6 = ({title, features}) => {
   return (
     <section className=" mt-10">
       <div className="flex flex-col md:flex-row">
         {/* Left Side */}
         <div className="w-full md:w-1/2 md:pr-20">
           <h1 className="text-black font-bold mt-5  text-[24px] ">
-            Principales características de Jasper.ai
+            Principales características de {title}
           </h1>
-          <ul className="mt-10 text-[15px] ">
-            <li className="flex items-center my-2">
-              <img className="h-4" src={signalLogo} alt="feature-icon" />
-              <p className="mx-2">Generación de IA de texto e imagen</p>
-            </li>
-            <li className="flex items-center my-2">
-              <img className="h-4" src={I} alt="feature-icon" />
-              <p className="mx-2">
-                Integración con Grammarly y otras extensiones de Chrome
-              </p>
-            </li>
-            <li className="flex items-center my-2">
-              <img className="h-4" src={H} alt="feature-icon" />
-              <p className="mx-2">Historial de revisiones</p>
-            </li>
-            <li className="flex items-center my-2">
-              <img className="h-4" src={G} alt="feature-icon" />
-              <p className="mx-2">Guardada automáticamente</p>
-            </li>
-            <li className="flex items-center my-2">
-              <img className="h-4" src={C} alt="feature-icon" />
-              <p className="mx-2">Compartir documentos</p>
-            </li>
-            <li className="flex items-center my-2">
-              <img className="h-4" src={IN} alt="feature-icon" />
-              <p className="mx-2">Inicio de sesión multiusuario</p>
-            </li>
-            <li className="flex items-center my-2">
-              <img className="h-4" src={CO} alt="feature-icon" />
-              <p className="mx-2">Comprobador de plagio</p>
-            </li>
-          </ul>
+          <br />
+          {parse (features)}
+          
+          
         </div>
 
         {/* Right Side */}
         <div className="w-full md:w-1/2">
           <div>
             <h1 className="text-black font-bold mt-5 text-[24px]">
-              Cómo utilizar Jasper.ai
+              Cómo utilizar {title}
             </h1>
             <div className="flex items-center mt-8 text-[15px] ">
               <img

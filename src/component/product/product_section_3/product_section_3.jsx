@@ -7,7 +7,7 @@ import kmicon from "../../../../src/assets/classtools_web_design/gps_logo.png";
 import price from "../../../../src/assets/classtools_web_design/card_logo.png";
 import { Link } from "react-router-dom";
 
-const Product_section_3 = () => {
+const Product_section_3 = ({stars, pricing}) => {
   return (
     <section className="">
       <div className="flex flex-wrap space-x-4 py-5 text-[18px] md:text-[21px]">
@@ -46,7 +46,7 @@ const Product_section_3 = () => {
         <p className="flex flex-col md:flex-row md:space-x-4 text-[16px] md:text-[18px]">
           <span id="review-count" className="flex items-center space-x-2">
             <img src={ReviewLogo} alt="review-icon" className="h-4" />
-            <span className="text-[14px] ">4.5 (4 Reviews)</span>
+            <span className="text-[14px] ">{stars} (4 Reviews)</span>
           </span>
           <span
             id="distance"
@@ -60,7 +60,7 @@ const Product_section_3 = () => {
             className="flex items-center space-x-2 mt-2 md:mt-0 ml-0 md:ml-4"
           >
             <img src={price} alt="price-icon" className="h-8" />
-            <span className="text-[14px] ">$2,400</span>
+            <span className="text-[14px] ">{pricing}</span>
           </span>
         </p>
       </div>

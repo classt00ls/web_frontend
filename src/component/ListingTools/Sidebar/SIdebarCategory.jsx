@@ -10,8 +10,9 @@ const SidebarCategory = () => {
     setSelectedCategory,
   } = useContext(dataContext);
 
-  console.log(categoriesData);
-  console.log(selectedCategory);
+  console.log('categoriesData: ' + categoriesData);
+  
+  // console.log(selectedCategory);
 
   if (categoriesData.length < 1) {
     return <Loader />;
@@ -24,13 +25,13 @@ const SidebarCategory = () => {
             <div
               key={index}
               className="flex cursor-pointer flex-col w-[132px] h-[96px] items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out"
-              onClick={() => setSelectedCategory(category.title)}
+              onClick={() => setSelectedCategory(category.name)}
             >
               <div className="w-[30px] h-[30px] mx-2">
-                <img src={category?.icon} alt="" />
+                <img src={category?.imageUrl} alt="" />
               </div>
               <h3 className="text-xs font-semibold text-gray-700 text-center">
-                {category.title}
+                {category.name}
               </h3>
             </div>
           ))}

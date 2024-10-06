@@ -6,13 +6,15 @@ import ytLogo from "../../../../src/assets/classtools_web_design/yt_logo2.png";
 import xLogo from "../../../../src/assets/classtools_web_design/x_logo.png";
 import linkLogo from "../../../../src/assets/classtools_web_design/linkedin_logo.png";
 
-const Product_section_2 = () => {
+const Product_section_2 = ({title}) => {
+
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div className="">
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between mt-4">
         <h1 className="text-black font-bold text-[28px] md:text-[36px]">
-          Jasper.AI
+          {title}
         </h1>
         <div className="flex items-center space-x-4 mt-4 md:mt-0">
           <img src={loveLogo} alt="Logo 1" className="h-4" />

@@ -2,32 +2,18 @@ import { authApiCall } from "./apiCalls";
 
 
 /** Recupera los tool dados de alta para el usuario */
-const getAllTools = (
-    page = 0, 
-    pageSize = null
+const getAllCategories = (
 ): Promise<any> => {
 	return new Promise((resolve, reject) => {
-		const params = { page, pageSize};
+		const params = { };
         
-		authApiCall.get("/tool", { params })
+		authApiCall.get("/web/category", { params })
 			.then(({ data, status }) => { resolve(data) })
 			.catch((error) => { reject(processError(error)) })
             
 	});
 }
 
-const getDetailTool = (
-    id
-): Promise<any> => {
-	return new Promise((resolve, reject) => {
-		const params = { id };
-        
-		authApiCall.get("/tool/detail", { params })
-			.then(({ data, status }) => { resolve(data) })
-			.catch((error) => { reject(processError(error)) })
-            
-	});
-}
 
 const processError = (error: any) => {
     if (error.response) {
@@ -50,7 +36,6 @@ const processError = (error: any) => {
     }
 }
 
-export const ToolApi = {
-    getAllTools,
-    getDetailTool
+export const TagApi = {
+    getAllCategories
   };

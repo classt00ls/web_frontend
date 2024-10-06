@@ -1,5 +1,7 @@
 import { useState } from "react";
-const Product_section_5 = () => {
+import parse from 'html-react-parser'
+
+const Product_section_5 = ({description}) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const handleToggle = () => {
@@ -12,25 +14,30 @@ const Product_section_5 = () => {
         <div className="w-full md:w-1/2 md:pr-30">
           {!isExpanded ? (
             <div>
-              <p className="text-[#1F1B2DBA] text-[15px] ">
-                Jasper.ai es una herramienta de escritura de IA diseñada para
-                generar textos de marketing, como publicaciones de blog,
-                descripciones de productos, biografías de empresas, textos de
-                anuncios y subtítulos en redes sociales. La herramienta ofrece
-                cientos de plantillas para elegir, respondiendo a muchos
-                escenarios, como si quieres escribir una publicación de blog de
-                formato largo o necesitas la respuesta perfecta a una revisión.
-                Se quita el estrés de una página en blanco de la escritura.
-                Actualmente, Jasper.ai es el mejor para los vendedores, ya que
-                ofrece ventajas a empresas de cualquier tamaño.
-              </p>
+              { typeof description == "string" ?
+                <p className="text-[#1F1B2DBA] text-[15px] ">
+                  <br />
+                  {  parse(description) }
+
+                </p>
+                :
+                <p className="text-[#1F1B2DBA] text-[15px] ">
+                  <br />
+                  {  description }
+
+                </p>
+              }
+
+              
               <div className="text-orange-500 mt-4">
+                {/* 
                 <button
                   onClick={handleToggle}
                   className="text-[14px] md:text-[16px]"
                 >
                   Read more
                 </button>
+                */}
               </div>
             </div>
           ) : (

@@ -104,14 +104,13 @@ const Category_section1 = () => {
                     <div className="flex items-center">
                       <img src={star} alt="review-icon" className="h-4 w-4" />
                       <span className="ml-2  text-[13px] text-gray-700">
-                        {/*{tool?.stars} ({tool?.stars} Reviews)*/}
-                        5(5 Reviews)
+                        {tool?.stars} ({tool?.stars} Reviews)
                       </span>
                     </div>
                     <div className="flex items-center">
                       <img src={card} alt="type-icon" className="h-4 w-4" />
                       <span className="ml-2 text-[13px] text-gray-700">
-                         price {/* {tool?.price} */}
+                        {tool?.pricing}
                       </span>
                     </div>
                     <div className="flex items-center">
@@ -138,7 +137,7 @@ const Category_section1 = () => {
                   </ul>
 
                   <div className="flex justify-end  mt-[-25px] ">
-                    <Link to={"/product"}>
+                    <Link to={`/product/${tool.id}`}>
                       <img src={share} alt="share-icon" className="w-6 h-6" />
                     </Link>
                   </div>
@@ -179,14 +178,13 @@ const Category_section1 = () => {
                     <div className="flex items-center">
                       <img src={star} alt="review-icon" className="h-4 w-4" />
                       <span className="ml-2  text-[13px] text-gray-700">
-                        {/*{tool?.stars} ({tool?.stars} Reviews)*/}
-                        5(5 Reviews)
+                        {tool?.stars} ({tool?.stars} 0 Reviews)
                       </span>
                     </div>
                     <div className="flex items-center">
                       <img src={card} alt="type-icon" className="h-4 w-4" />
                       <span className="ml-2 text-[13px] text-gray-700">
-                        price {/* {tool?.price} */}
+                        {tool?.price}
                       </span>
                     </div>
                     <div className="flex items-center">
@@ -213,7 +211,7 @@ const Category_section1 = () => {
                   </ul>
 
                   <div className="flex justify-end  mt-[-25px] ">
-                    <Link to={"/product"}>
+                    <Link to={`/product/${tool.id}`}>
                       <img src={share} alt="share-icon" className="w-6 h-6" />
                     </Link>
                   </div>

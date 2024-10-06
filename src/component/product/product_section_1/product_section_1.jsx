@@ -1,4 +1,4 @@
-const Product_section_1 = () => {
+const Product_section_1 = ({title}) => {
   return (
     <div className=" ">
       <h6 className="text-[12px] sm:text-[14px]">
@@ -14,7 +14,7 @@ const Product_section_1 = () => {
           className="text-orange-500 hover:underline"
           href="/Listings/Jasper.AI"
         >
-          Jasper.AI
+          hola - {title}
         </a>
       </h6>
     </div>

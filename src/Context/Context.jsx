@@ -2,6 +2,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { base_url } from "../utils";
+import { TagApi } from "../api/TagApi";
 
 export const dataContext = React.createContext();
 
@@ -29,21 +30,16 @@ const Context = ({ children }) => {
     .catch((error) => {
       console.error('api error:',error);
     });
-
-    
-    
   },[]);
 
   
    useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/categories.json");
-        setCategoriesData(response.data.categories);
-       
+        const response = await TagApi.getAllCategories();
+        setCategoriesData(response);
       } catch (err) {
         console.log("Failed to fetch categories");
-        
       }
     };
     fetchData();
