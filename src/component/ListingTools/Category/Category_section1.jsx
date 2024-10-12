@@ -10,14 +10,17 @@ import { dataContext } from "../../../Context/Context";
 import Loader from "../../Loader/Loader";
 import { Link } from "react-router-dom";
 import { ToolApi } from "../../../api/ToolApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { tagContext } from "../../../Context/Providers/TagProvider";
 
 const Category_section1 = () => {
 
   const dispatch = useDispatch();
+  const selectedCategories = useSelector(state => state.changeState.selectedCategories);
+  const refreshTools = useSelector(state => state.changeState.refreshTools);
 
-  const { toolsData, selectedCategory, setSelectedCategory } =
-    useContext(dataContext);
+  const { toolsData } = useContext(dataContext);
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const { pagination } = toolsData;
@@ -26,12 +29,15 @@ const Category_section1 = () => {
   const [reload, setReload] = useState(true);
   const [data, setData] = useState([]);
 
+
   useEffect(() => {
       (async () => {
         try {
           setLoading(true);
-          const toolsData = await ToolApi.getAllTools(currentPage,12);
+
+          const toolsData = await ToolApi.getFilteredlTool(currentPage,12,selectedCategories);
           setData(toolsData.data);
+          
           setTotalPages(Math.round(toolsData.count/12));
           setReload(false);
           setLoading(false);
@@ -46,22 +52,29 @@ const Category_section1 = () => {
   }, [currentPage])
 
 
-  /*
+  
   useEffect(() => {
-    if (selectedCategory) {
-      const filteredData = toolsData?.tools?.filter(
-        (tool) => tool.category === selectedCategory
-      );
-      setPaginationHas(false);
+    (async () => {
+      if(!refreshTools) return;
+      try {
+        setLoading(true);
+        const toolsData = await ToolApi.getFilteredlTool(1,12,selectedCategories);
+        setData(toolsData.data);
+        setTotalPages(Math.round(toolsData.count/12));
+        setReload(false);
+        setLoading(false);
+        dispatch({ type: 'set', refreshTools: false });
 
-      setData(filteredData);
-    } else {
-      setPaginationHas(true);
-      setData(toolsData.tools);
-    }
-  }, [selectedCategory, toolsData?.tools]);
+      } catch (error) {
 
-  */
+        dispatch({ type: 'set', errorMessage: error });
+        dispatch({ type: 'set', showError: true });
+
+      }
+    })()
+  }, [refreshTools]);
+
+  
 
   if (loading) {
     return <Loader />;

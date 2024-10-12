@@ -6,10 +6,12 @@ import { dataContext } from "../../../Context/Context";
 import Loader from "../../Loader/Loader";
 import Category from "../Category/Category";
 import Filter from "../Filter/Filter";
+import { tagContext } from "../../../Context/Providers/TagProvider";
 
 const Listing = () => {
   const { listing } = useContext(dataContext);
-  const { toolsData,categoriesData,setSelectedCategory,selectedCategory,subCategories } = useContext(dataContext);
+  
+  const { categoriesData, selectedCategory, subCategories } = useContext(dataContext);
 
 
   

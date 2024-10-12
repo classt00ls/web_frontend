@@ -13,11 +13,15 @@ import filter_icon from '../../../assets/AI Icons/filter_icon.svg';
 import filter_icon_1 from '../../../assets/AI Icons/filter_icon_1.svg';
 import Loader from "../../Loader/Loader";
 import "./Sidebar.css";
+import { tagContext } from "../../../Context/Providers/TagProvider";
 
 const Sidebar = () => {
-  const { listing,setListing } = useContext(dataContext);
   const { categoriesData,setCategoriesData,selectedCategory,setSelectedCategory, subCategories } = useContext(dataContext);
-  console.log(categoriesData);
+
+
+  const { listing,setListing } = useContext(dataContext);
+
+  
   const [options,setOptions] = useState([]);
 
   
@@ -99,10 +103,6 @@ const Sidebar = () => {
   ];
 
   const [verifieds,setVerifieds] = useState(verified);
-
-console.log(categoriesData);
-
-
 
   useEffect(() => {  
     if (categoriesData?.length > 0) {

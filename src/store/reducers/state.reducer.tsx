@@ -11,12 +11,8 @@ const initialState:AppState = {
 	errorMessage: '',
 	infoMessage: '',
 	showPlans: false,
-	showProducts: false,
-	showChangePlans: false,
-	showCancelPlan: false,
-	showRemoveUser: false,
-	warningBilling: false,
-	lastRequestTstp: 0
+	refreshTools: false,
+	selectedCategories: []
   }
   
 const changeState = (state = initialState, {type = 'set', ...rest }) => {

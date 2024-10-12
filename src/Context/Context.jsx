@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { base_url } from "../utils";
 import { TagApi } from "../api/TagApi";
+import { ToolApi } from "../api/ToolApi";
 
 export const dataContext = React.createContext();
 
@@ -12,7 +13,7 @@ const Context = ({ children }) => {
   const [listing,setListing] = useState("category");
   const [categoriesData,setCategoriesData] = useState([]);
   const [toolsData,setToolsData] = useState([]);
-  const [selectedCategory,setSelectedCategory] = useState("AI productivity tools");
+  const [selectedCategory,setSelectedCategory] = useState([]);
   
   const [subCategories, setSubCategories] = useState([]);
   const [tools, setTools] = useState([]);
@@ -51,11 +52,12 @@ const Context = ({ children }) => {
       setSubCategories(filteredData[0]?.subcategories);
       
     }
-  },[categoriesData,selectedCategory])
-console.log("categories",categoriesData);
+  },[categoriesData])
 
-  
 
+  useEffect(() => {
+    console.log("===============*****===============" , selectedCategory)
+  }, [`${selectedCategory}`])
 
   const value = {
     listing,

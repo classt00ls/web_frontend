@@ -6,11 +6,17 @@ import aiImage from "../../../assets/filter-image.png";
 import { dataContext } from "../../../Context/Context";
 import Loader from "../../Loader/Loader";
 import "./filter.css";
+import { tagContext } from "../../../Context/Providers/TagProvider";
 
 const Filter = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { toolsData, categoriesData, setSelectedCategory, selectedCategory } =
+
+  const { toolsData } =
     useContext(dataContext);
+
+  const { categoriesData, selectedCategory } =
+    useContext(tagContext);
+
   const { pagination } = toolsData;
   const [paginationHas, setPaginationHas] = useState(true);
   const [data, setData] = useState([]);
@@ -36,7 +42,6 @@ const Filter = () => {
   if (!paginationHas && data?.length < 1) {
     return <Loader />;
   }
-  console.log(categoriesData);
 
   const toolsPerPage = !paginationHas
     ? 12
@@ -44,7 +49,7 @@ const Filter = () => {
   const totalPages = Math.ceil(
     (!paginationHas ? data?.length : toolsData?.tools?.length) / toolsPerPage
   );
-  console.log(toolsData);
+  
   return (
     <div className="mt-10">
       <div className="flex flex-wrap gap-[29px]">

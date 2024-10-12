@@ -7,7 +7,7 @@ const getAllTools = (
     pageSize = null
 ): Promise<any> => {
 	return new Promise((resolve, reject) => {
-		const params = { page, pageSize};
+		const params = { page, pageSize };
         
 		authApiCall.get("/tool", { params })
 			.then(({ data, status }) => { resolve(data) })
@@ -23,6 +23,21 @@ const getDetailTool = (
 		const params = { id };
         
 		authApiCall.get("/tool/detail", { params })
+			.then(({ data, status }) => { resolve(data) })
+			.catch((error) => { reject(processError(error)) })
+            
+	});
+}
+
+const getFilteredlTool = (
+    page = 0, 
+    pageSize = null,
+    tags = []
+): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		const params = { page, pageSize, tags};
+        
+		authApiCall.post("/tool/filter", { params })
 			.then(({ data, status }) => { resolve(data) })
 			.catch((error) => { reject(processError(error)) })
             
@@ -52,5 +67,6 @@ const processError = (error: any) => {
 
 export const ToolApi = {
     getAllTools,
-    getDetailTool
+    getDetailTool,
+    getFilteredlTool
   };
