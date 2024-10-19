@@ -8,8 +8,7 @@ export interface AppState {
 	remoteMessage: string,
 	errorMessage: string,
 	showPlans: boolean,
-	refreshTools: boolean,
-	selectedCategories: Array<string>
+	refreshTools: boolean
 }
 
 // @MF TODO: establecer modelo de usuario que nos llegará del backend

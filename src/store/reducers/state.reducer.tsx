@@ -11,8 +11,7 @@ const initialState:AppState = {
 	errorMessage: '',
 	infoMessage: '',
 	showPlans: false,
-	refreshTools: false,
-	selectedCategories: []
+	refreshTools: false
   }
   
 const changeState = (state = initialState, {type = 'set', ...rest }) => {

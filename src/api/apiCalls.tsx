@@ -5,9 +5,10 @@ const API_URL = Configuration.API_URL;
 
 // Llamadas que requeriran de auth token
 export const authApiCall = axios.create({
-	withCredentials: true,
+	withCredentials: false,
 	baseURL: API_URL,
 	headers: {
+		'ngrok-skip-browser-warning': 'skip',
 		'Accept': 'application/json',
 		'Content-Type': 'application/json'
 	}

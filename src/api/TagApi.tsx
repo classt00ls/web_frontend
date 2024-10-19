@@ -8,7 +8,10 @@ const getAllCategories = (
 		const params = { };
         
 		authApiCall.get("/web/category", { params })
-			.then(({ data, status }) => { resolve(data) })
+			.then(({ data, status }) => { 
+                // Incorporar aquí algún mapper que organize estas variables de forntend a añadir
+                resolve(data.map(element => {element.clicked = false; return element;})) 
+            })
 			.catch((error) => { reject(processError(error)) })
             
 	});

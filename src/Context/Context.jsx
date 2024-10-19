@@ -38,6 +38,7 @@ const Context = ({ children }) => {
     const fetchData = async () => {
       try {
         const response = await TagApi.getAllCategories();
+        console.log(" fetch categories: ", response);
         setCategoriesData(response);
       } catch (err) {
         console.log("Failed to fetch categories");

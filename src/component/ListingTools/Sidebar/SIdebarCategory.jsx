@@ -7,23 +7,25 @@ const SidebarCategory = () => {
   const { categoriesData, setCategoriesData, selectedCategory, setSelectedCategory } = useContext(dataContext);
   const dispatch = useDispatch();
 
-  const selectedCategories = useSelector(state => state.changeState.selectedCategories);
+  const selectedCategories = useSelector(state => state.filters.selectedCategories);
   const refreshTools = useSelector(state => state.changeState.refreshTools);
 
 
-  const selectCategory = async (newCategory) => {
+  const selectCategory = async (category) => {
       try {
+        
         let actualCategories = selectedCategories;
 
-        if(actualCategories.includes(newCategory)) {
-          console.log('Ya lo tenemos !!')
-          actualCategories = actualCategories.filter(category => category != newCategory);
+        if(actualCategories.includes(category.name)) {
+          category.clicked = false;
+          actualCategories = actualCategories.filter(filtered => filtered != category.name);
         } else {
-          actualCategories.push(newCategory);
+          category.clicked = true;
+          actualCategories.push(category.name);
         }
-        dispatch({ type: 'set', selectedCategories: actualCategories });
+
+        dispatch({ type: 'CHANGE_FILTERS', selectedCategories: actualCategories });
         dispatch({ type: 'set', refreshTools: true });
-        console.log('valor actual: ', selectedCategories)
 
       } catch (error) {
         dispatch({ type: 'set', errorMessage: error });
@@ -42,8 +44,11 @@ const SidebarCategory = () => {
           {categoriesData.map((category, index) => (
             <div
               key={index}
-              className="flex cursor-pointer flex-col w-[132px] h-[96px] items-center p-4 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out"
-              onClick={() => selectCategory(category.name)}
+              className={`flex cursor-pointer flex-col w-[132px] h-[96px] items-center p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out`
+                +
+                `${category.clicked ? ' bg-blue-500 text-blue':' bg-white'}`
+              }
+              onClick={() => selectCategory(category)}
             >
               <div className="w-[30px] h-[30px] mx-2">
                 <img src={category?.imageUrl} alt="" />

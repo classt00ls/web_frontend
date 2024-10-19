@@ -16,7 +16,8 @@ import { tagContext } from "../../../Context/Providers/TagProvider";
 const Category_section1 = () => {
 
   const dispatch = useDispatch();
-  const selectedCategories = useSelector(state => state.changeState.selectedCategories);
+  const selectedCategories = useSelector(state => state.filters.selectedCategories);
+  const filters = useSelector(state => state.filters);
   const refreshTools = useSelector(state => state.changeState.refreshTools);
 
   const { toolsData } = useContext(dataContext);
@@ -57,8 +58,9 @@ const Category_section1 = () => {
     (async () => {
       if(!refreshTools) return;
       try {
+        console.log('HALLO !!')
         setLoading(true);
-        const toolsData = await ToolApi.getFilteredlTool(1,12,selectedCategories);
+        const toolsData = await ToolApi.getFilteredlTool(1,12,filters);
         setData(toolsData.data);
         setTotalPages(Math.round(toolsData.count/12));
         setReload(false);

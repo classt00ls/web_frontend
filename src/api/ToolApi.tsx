@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { authApiCall } from "./apiCalls";
 
 
@@ -29,13 +30,15 @@ const getDetailTool = (
 	});
 }
 
+
 const getFilteredlTool = (
     page = 0, 
     pageSize = null,
-    tags = []
+    filters = []
 ): Promise<any> => {
+
 	return new Promise((resolve, reject) => {
-		const params = { page, pageSize, tags};
+		const params = { page, pageSize, filters};
         
 		authApiCall.post("/tool/filter", { params })
 			.then(({ data, status }) => { resolve(data) })

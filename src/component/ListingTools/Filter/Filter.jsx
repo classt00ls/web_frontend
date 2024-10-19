@@ -6,16 +6,16 @@ import aiImage from "../../../assets/filter-image.png";
 import { dataContext } from "../../../Context/Context";
 import Loader from "../../Loader/Loader";
 import "./filter.css";
-import { tagContext } from "../../../Context/Providers/TagProvider";
+import { useSelector } from "react-redux";
+import { ToolApi } from "../../../api/ToolApi";
 
 const Filter = () => {
+
   const [currentPage, setCurrentPage] = useState(1);
+  const { toolsData } = useContext(dataContext);
 
-  const { toolsData } =
-    useContext(dataContext);
+  const selectedCategories = useSelector(state => state.filters.selectedCategories);
 
-  const { categoriesData, selectedCategory } =
-    useContext(tagContext);
 
   const { pagination } = toolsData;
   const [paginationHas, setPaginationHas] = useState(true);
@@ -23,33 +23,53 @@ const Filter = () => {
   // data object for ai tools
 
   useEffect(() => {
-    if (selectedCategory) {
-      const filteredData = toolsData?.tools?.filter(
-        (tool) => tool.category === selectedCategory
-      );
-      setPaginationHas(false);
+    (async () => {
+      try {
+        setLoading(true);
 
-      setData(filteredData);
-    } else {
-      setPaginationHas(true);
-      setData(toolsData.tools);
+        const toolsData = await ToolApi.getFilteredlTool(currentPage,12,selectedCategories);
+        setData(toolsData.data);
+        
+        setTotalPages(Math.round(toolsData.count/12));
+        setReload(false);
+        setLoading(false);
+
+      } catch (error) {
+
+        dispatch({ type: 'set', errorMessage: error });
+        dispatch({ type: 'set', showError: true });
+
+      }
+    })()
+}, [currentPage])
+
+useEffect(() => {
+  (async () => {
+    if(!refreshTools) return;
+    try {
+      setLoading(true);
+      const toolsData = await ToolApi.getFilteredlTool(1,12,filters);
+      setData(toolsData.data);
+      setTotalPages(Math.round(toolsData.count/12));
+      setReload(false);
+      setLoading(false);
+      dispatch({ type: 'set', refreshTools: false });
+
+    } catch (error) {
+
+      dispatch({ type: 'set', errorMessage: error });
+      dispatch({ type: 'set', showError: true });
+
     }
-  }, [selectedCategory, toolsData?.tools]);
+  })()
+}, [refreshTools]);
 
-  if (toolsData?.tools?.length < 1 || categoriesData?.length < 1) {
-    return <Loader />;
-  }
-  if (!paginationHas && data?.length < 1) {
-    return <Loader />;
-  }
+if (loading) {
+  return <Loader />;
+}
 
-  const toolsPerPage = !paginationHas
-    ? 12
-    : pagination?.totalItems / pagination?.totalPages;
-  const totalPages = Math.ceil(
-    (!paginationHas ? data?.length : toolsData?.tools?.length) / toolsPerPage
-  );
-  
+const toolsPerPage = 12;
+
   return (
     <div className="mt-10">
       <div className="flex flex-wrap gap-[29px]">
