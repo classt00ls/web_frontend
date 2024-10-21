@@ -5,92 +5,25 @@ import bookmark from "../../../assets/Category/bookmark.png";
 import share from "../../../assets/Category/share.png";
 import card from "../../../assets/classtools_web_design/card_logo.png";
 import star from "../../../assets/classtools_web_design/star_logo.png";
-import { dataContext } from "../../../Context/Context";
 
 import Loader from "../../Loader/Loader";
 import { Link } from "react-router-dom";
-import { ToolApi } from "../../../api/ToolApi";
-import { useDispatch, useSelector } from "react-redux";
-import { tagContext } from "../../../Context/Providers/TagProvider";
+import { useDispatch } from "react-redux";
 
-const Category_section1 = () => {
+const Category_section1 = ({currentPage,loading,tools,totalPages, setCurrentPage}) => {
 
-  const dispatch = useDispatch();
-  const selectedCategories = useSelector(state => state.filters.selectedCategories);
-  const filters = useSelector(state => state.filters);
-  const refreshTools = useSelector(state => state.changeState.refreshTools);
-
-  const { toolsData } = useContext(dataContext);
-  
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const { pagination } = toolsData;
   const [paginationHas, setPaginationHas] = useState(true);
-  const [ loading, setLoading ] = useState(true);
-  const [reload, setReload] = useState(true);
-  const [data, setData] = useState([]);
-
-
-  useEffect(() => {
-      (async () => {
-        try {
-          setLoading(true);
-
-          const toolsData = await ToolApi.getFilteredlTool(currentPage,12,selectedCategories);
-          setData(toolsData.data);
-          
-          setTotalPages(Math.round(toolsData.count/12));
-          setReload(false);
-          setLoading(false);
-
-        } catch (error) {
-
-          dispatch({ type: 'set', errorMessage: error });
-          dispatch({ type: 'set', showError: true });
-
-        }
-      })()
-  }, [currentPage])
-
-
-  
-  useEffect(() => {
-    (async () => {
-      if(!refreshTools) return;
-      try {
-        console.log('HALLO !!')
-        setLoading(true);
-        const toolsData = await ToolApi.getFilteredlTool(1,12,filters);
-        setData(toolsData.data);
-        setTotalPages(Math.round(toolsData.count/12));
-        setReload(false);
-        setLoading(false);
-        dispatch({ type: 'set', refreshTools: false });
-
-      } catch (error) {
-
-        dispatch({ type: 'set', errorMessage: error });
-        dispatch({ type: 'set', showError: true });
-
-      }
-    })()
-  }, [refreshTools]);
-
   
 
-  if (loading) {
-    return <Loader />;
-  }
+  if (loading) { return <Loader />;  }
 
   const toolsPerPage = 12;
-  // console.log(data?.tools?.map((tool) => tool));
-  // slice((currentPage - 1) * toolsPerPage, currentPage * toolsPerPage)
 
   return (
     <div className=" bg-white">
       <div className="flex flex-wrap gap-8 p-5">
         {paginationHas &&
-          data?.map((tool) => (
+          tools?.map((tool) => (
             
               <div
                 key={tool?.id}
@@ -159,8 +92,7 @@ const Category_section1 = () => {
                 </div>
               </div>
             ))}
-        {!paginationHas &&
-          data
+        {!paginationHas && tools
             ?.slice(
               (currentPage - 1) * toolsPerPage,
               currentPage * toolsPerPage
@@ -235,6 +167,7 @@ const Category_section1 = () => {
             ))}
       </div>
       <div className="mt-10 ml-5 ">
+
         <ResponsivePagination
           current={currentPage}
           total={totalPages}

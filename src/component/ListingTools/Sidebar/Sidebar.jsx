@@ -13,24 +13,10 @@ import filter_icon from '../../../assets/AI Icons/filter_icon.svg';
 import filter_icon_1 from '../../../assets/AI Icons/filter_icon_1.svg';
 import Loader from "../../Loader/Loader";
 import "./Sidebar.css";
-import { tagContext } from "../../../Context/Providers/TagProvider";
+import { useSelector } from "react-redux";
 
 const Sidebar = () => {
   const { categoriesData,setCategoriesData,selectedCategory,setSelectedCategory, subCategories } = useContext(dataContext);
-
-
-  const { listing,setListing } = useContext(dataContext);
-
-  
-  const [options,setOptions] = useState([]);
-
-  
-  const [selectCat,setSelectCat] = useState("");
-  const [subOptions,setSubOptions] = useState([]);
-
-  
-  
-
   
   const verified = [
     {
@@ -53,11 +39,6 @@ const Sidebar = () => {
     title: "Tool type",
     items: [
       { title: "Histories" },
-      { title: "Books" },
-      { title: "Magazines" },
-      { title: "Films" },
-      { title: "Music" },
-      { title: "Games" },
     ],
   };
 
@@ -65,11 +46,6 @@ const Sidebar = () => {
     title: "Precios",
     items: [
       { title: "Histories" },
-      { title: "Books" },
-      { title: "Magazines" },
-      { title: "Films" },
-      { title: "Music" },
-      { title: "Games" },
     ],
   };
 
@@ -77,13 +53,9 @@ const Sidebar = () => {
     title: "Características",
     items: [
       { title: "Histories" },
-      { title: "Books" },
-      { title: "Magazines" },
-      { title: "Films" },
-      { title: "Music" },
-      { title: "Games" },
     ],
   };
+
   const SubCategories = [
     {
       id: 1,
@@ -102,7 +74,16 @@ const Sidebar = () => {
     },
   ];
 
+  const { listing,setListing } = useContext(dataContext);
+
+  const searchText = useSelector(state => state.filters.searchText);
+
+  const [options,setOptions] = useState([]);
+  const [selectCat,setSelectCat] = useState("");
+  const [subOptions,setSubOptions] = useState([]);
   const [verifieds,setVerifieds] = useState(verified);
+  const [textToSearch,setTextToSearch] = useState('');
+  const [ apiCall, setAPiCall ] = useState(false);
 
   useEffect(() => {  
     if (categoriesData?.length > 0) {
@@ -133,12 +114,8 @@ const Sidebar = () => {
         }
         )
       
-      setSubOptions(values);
-        console.log(subOptions);
-        
-      
+      setSubOptions(values); 
     }
-    console.log(subOptions);
     
 
   },[categoriesData, subCategories])
@@ -150,10 +127,25 @@ const Sidebar = () => {
     }
     
   },[categoriesData, selectCat, setSelectedCategory])
-  
-  console.log(selectCat);
-  
 
+  /************************************* */
+
+  useEffect(() =>{
+    let isMounted = true;
+    (async () => {
+
+      if(apiCall) return;
+      if(!isMounted) return;
+      setAPiCall(true);
+
+      
+
+      if(isMounted) {
+
+      }
+    })()
+    return () => { isMounted = false };
+}, [textToSearch])
 
 
     if (categoriesData.length < 1) {
@@ -161,11 +153,6 @@ const Sidebar = () => {
     
   }
 
-
-
-  
-
-  
   return (
     <div className="w-[300px]">
       <div className="flex items-center">
@@ -174,8 +161,12 @@ const Sidebar = () => {
           type="search"
           placeholder="Search..."
           className="border-[rgba(0, 0, 0, 0.1)] border w-[300px] rounded-full p-5 pl-12"
+          onChange={e => setTextToSearch(e.target.value)}
         />
-        <button className="bg-orange-500 text-[14px]  text-white px-[20px] py-[10px] rounded-full hover:bg-orange-600 -m-[90px] h-fit">
+        <button 
+          className="bg-orange-500 text-[14px]  text-white px-[20px] py-[10px] rounded-full hover:bg-orange-600 -m-[90px] h-fit"
+          onClick={() => setListing("category")}
+        >
           Search
         </button>
       </div>

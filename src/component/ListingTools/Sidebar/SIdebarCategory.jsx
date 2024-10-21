@@ -23,8 +23,9 @@ const SidebarCategory = () => {
           category.clicked = true;
           actualCategories.push(category.name);
         }
-
+        // Actualizamos los filtros
         dispatch({ type: 'CHANGE_FILTERS', selectedCategories: actualCategories });
+        // Vamos a buscar las tools
         dispatch({ type: 'set', refreshTools: true });
 
       } catch (error) {

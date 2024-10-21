@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from "react-router-dom";
-import HeroSection from "../component/Home/HeroSection/HeroSection";
+import HomeLayout from "../component/Home/HomeLayout";
 
 import Context from "../Context/Context";
 import Footer from "./../component/Footer/Footer";
@@ -9,11 +9,13 @@ const Main = () => {
   const location = useLocation();
   const noFooter = location.pathname.includes("signIn");
   const noFooterAddTools = location.pathname.includes("addTools");
+  
+
   return (
     <div>
       <Context>
         <Header></Header>
-        {noFooter || noFooterAddTools || <HeroSection></HeroSection>}
+        {noFooter || <HomeLayout></HomeLayout>}
         <Outlet></Outlet>
         {noFooter || noFooterAddTools || <Footer></Footer>}
       </Context>

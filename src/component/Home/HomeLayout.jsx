@@ -1,13 +1,19 @@
 import { FiSearch } from "react-icons/fi";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
-import backgroundImage from "../../../assets/Rectangle 1.png";
+import backgroundImage from "../../assets/Rectangle 1.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Loader from "../../Loader/Loader";
-const HeroSection = () => {
+import Loader from "../Loader/Loader";
+
+
+const HomeLayout = () => {
+
+
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const noHomeHeader = location.pathname.includes("tools");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +36,7 @@ const HeroSection = () => {
   return (
     <div>
       <div
-        className="relative h-[400px] md:h-[625px]  bg-cover"
+        className={`relative h-[300px] bg-cover`}
         style={{ backgroundImage: `url(${backgroundImage})` }}
       >
         <div className="relative z-10 p-2 flex flex-col items-center justify-center h-full">
@@ -43,6 +49,8 @@ const HeroSection = () => {
               completo.
             </p>
           </div>
+
+        {noHomeHeader ?( <></> ): (
           <div className="flex items-center justify-center mt-12   text-black ">
             <div className="flex items-center max-w-3xl bg-white p-3 h-[65px] md:w-[827px] shadow rounded-full overflow-hidden">
               <div className="relative flex-grow">
@@ -69,10 +77,12 @@ const HeroSection = () => {
               </button>
             </div>
           </div>
+        )}
+
         </div>
       </div>
     </div>
   );
 };
 
-export default HeroSection;
+export default HomeLayout;
