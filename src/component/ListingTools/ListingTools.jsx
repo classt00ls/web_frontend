@@ -16,7 +16,7 @@ const ListingTools = () => {
   const [totalPages, setTotalPages] = useState(0);
 
   const selectedCategories = useSelector(state => state.filters.selectedCategories);
-  const textToSearch = useSelector(state => state.filters.textToSearch);
+  const textToSearch = useSelector(state => state.filters.title);
   const refreshTools = useSelector(state => state.changeState.refreshTools);
   const filters = useSelector(state => state.filters);
 
@@ -45,6 +45,7 @@ const ListingTools = () => {
       if(!refreshTools) return;
       try {
         setLoading(true);
+        setCurrentPage(1);
         const toolsData = await ToolApi.getFilteredlTool(1,12,filters);
         setTools(toolsData.data);
         setTotalPages(Math.round(toolsData.count/12));
@@ -64,8 +65,8 @@ const ListingTools = () => {
     (async () => {
       try {
         setLoading(true);
-        const toolsData = await ToolApi.getFilteredlTool(currentPage,12,selectedCategories);
-        setData(toolsData.data);     
+        const toolsData = await ToolApi.getFilteredlTool(currentPage,12,filters);
+        setTools(toolsData.data);     
         setTotalPages(Math.round(toolsData.count/12));
         setLoading(false);
 

@@ -3,7 +3,7 @@ import { CHANGE_FILTERS } from "../actionTypes";
 const initialState = {
   selectedCategories: [],
   stars: 0,
-  searchText: ""
+  title: ""
 };
 
 const filtersState = (state = initialState, {type = 'set', ...rest }) => {

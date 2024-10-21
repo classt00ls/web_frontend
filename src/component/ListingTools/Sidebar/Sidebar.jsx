@@ -13,11 +13,11 @@ import filter_icon from '../../../assets/AI Icons/filter_icon.svg';
 import filter_icon_1 from '../../../assets/AI Icons/filter_icon_1.svg';
 import Loader from "../../Loader/Loader";
 import "./Sidebar.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
-  const { categoriesData,setCategoriesData,selectedCategory,setSelectedCategory, subCategories } = useContext(dataContext);
-  
+  const { categoriesData,setSelectedCategory, subCategories } = useContext(dataContext);
+  const dispatch = useDispatch();
   const verified = [
     {
       id: 1,
@@ -76,8 +76,6 @@ const Sidebar = () => {
 
   const { listing,setListing } = useContext(dataContext);
 
-  const searchText = useSelector(state => state.filters.searchText);
-
   const [options,setOptions] = useState([]);
   const [selectCat,setSelectCat] = useState("");
   const [subOptions,setSubOptions] = useState([]);
@@ -130,22 +128,18 @@ const Sidebar = () => {
 
   /************************************* */
 
-  useEffect(() =>{
-    let isMounted = true;
-    (async () => {
+  const searchAction = async () => {
+    try {
+      // Actualizamos los filtros
+      dispatch({ type: 'CHANGE_FILTERS', title: textToSearch });
+      // Vamos a buscar las tools
+      dispatch({ type: 'set', refreshTools: true });
 
-      if(apiCall) return;
-      if(!isMounted) return;
-      setAPiCall(true);
-
-      
-
-      if(isMounted) {
-
-      }
-    })()
-    return () => { isMounted = false };
-}, [textToSearch])
+    } catch (error) {
+      dispatch({ type: 'set', errorMessage: error });
+      dispatch({ type: 'set', showError: true });
+    }
+};
 
 
     if (categoriesData.length < 1) {
@@ -165,7 +159,7 @@ const Sidebar = () => {
         />
         <button 
           className="bg-orange-500 text-[14px]  text-white px-[20px] py-[10px] rounded-full hover:bg-orange-600 -m-[90px] h-fit"
-          onClick={() => setListing("category")}
+          onClick={() => searchAction()}
         >
           Search
         </button>
