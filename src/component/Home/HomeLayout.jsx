@@ -4,14 +4,18 @@ import backgroundImage from "../../assets/Rectangle 1.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../Loader/Loader";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 
 const HomeLayout = () => {
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [text, setText] = useState(true);
 
   const noHomeHeader = location.pathname.includes("tools");
 
@@ -29,6 +33,21 @@ const HomeLayout = () => {
     };
     fetchData();
   }, []);
+
+  const searchAction = async () => {
+    try {
+      // Actualizamos los filtros
+      dispatch({ type: 'CHANGE_FILTERS', title: text });
+      // Vamos a buscar las tools
+      dispatch({ type: 'set', refreshTools: true });
+
+      navigate("/tools");
+
+    } catch (error) {
+      dispatch({ type: 'set', errorMessage: error });
+      dispatch({ type: 'set', showError: true });
+    }
+};
 
   if (loading) {
     return <Loader />;
@@ -59,6 +78,7 @@ const HomeLayout = () => {
                 </div>
                 <input
                   type="text"
+                  onChange={e => {setText(e.target.value)}}
                   className="text-center w-full text-[15px] pl-10 pr-4 py-3 rounded-full border-none focus:outline-none"
                   placeholder="What are you looking for?"
                 />
@@ -72,7 +92,8 @@ const HomeLayout = () => {
                   ))}
                 </select>
               </div>
-              <button className="bg-orange-500 text-[14px]  text-white px-[27px] py-[15px] rounded-full hover:bg-orange-600">
+              <button className="bg-orange-500 text-[14px]  text-white px-[27px] py-[15px] rounded-full hover:bg-orange-600"
+                onClick={e => {searchAction()}}>
                 Search
               </button>
             </div>

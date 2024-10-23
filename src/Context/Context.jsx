@@ -38,7 +38,6 @@ const Context = ({ children }) => {
     const fetchData = async () => {
       try {
         const response = await TagApi.getAllCategories();
-        console.log(" fetch categories: ", response);
         setCategoriesData(response);
       } catch (err) {
         console.log("Failed to fetch categories");
@@ -54,11 +53,7 @@ const Context = ({ children }) => {
       
     }
   },[categoriesData])
-
-
-  useEffect(() => {
-    console.log("===============*****===============" , selectedCategory)
-  }, [`${selectedCategory}`])
+  
 
   const value = {
     listing,
