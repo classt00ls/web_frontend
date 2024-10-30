@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   FaUserAlt,
@@ -8,47 +9,58 @@ import {
 } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserApi } from './../../api/UserApi';
+import { isEmpty, size } from 'lodash';
 
 const AuthPage = () => {
+
+  const defaultFormValue = () => {
+		return {
+			email: "",
+			password: ""
+		}
+	}
+
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const [formData, setformData] = useState(defaultFormValue());
 
   const toggleSignUp = () => {
     setIsSignUp(!isSignUp);
   };
 
+  // Cada vez que cambian los datos del formulario
+	const onChange = (e, fieldName) => {
+		setformData({ ...formData, [fieldName]: e.nativeEvent.target.value });
+    console.log(' ... formdata: ', formData)
+	}
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if ((isEmpty(formData.email) || isEmpty(formData.password)) ) {
 
-    const endpoint = isSignUp ? "/signup" : "/signin"; // Adjust API endpoint based on sign-up or sign-in
-    const payload = isSignUp
-      ? { username, email, password }
-      : { email, password };
+			ToastNotify.error(t('login.error-fields-mandatory'));
 
-    try {
-      // const response = await fetch(`https://your-api-endpoint.com${endpoint}`, {
-      const response = await fetch(`/signin.json`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+		} else if (size(formData.password) < 6 ) {
 
-      const data = await response.json();
+			ToastNotify.error(t('login.error-password-minimum'));
 
-      if (response.ok && data.success) {
-        toast.success(data.message || "Sign-in successful!");
-        // Store token in localStorage for future authenticated requests
-        localStorage.setItem("token", data.token);
-        // Optionally redirect or update UI state
-      } else {
-        toast.error(data.message || "An error occurred. Please try again.");
+		} else {
+
+      try {
+        await UserApi.loginCall(formData.email, formData.password);
+        await UserApi.meCall();
+        toast.success("Sign-in successful!");
+          
+          // Store token in localStorage for future authenticated requests
+          // localStorage.setItem("token", data.token);
+
+      } catch (error) {
+        console.log('error: ', error)
+        toast.error("Failed to sign in. Please try again later.");
       }
-    } catch (error) {
-      toast.error("Failed to sign in. Please try again later.");
     }
   };
 
@@ -75,8 +87,7 @@ const AuthPage = () => {
                       type="text"
                       className="w-full px-10 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                       placeholder="Username"
-                      value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      onChange={(e) => onChange(e, "username")}
                       required
                     />
                   </div>
@@ -87,8 +98,7 @@ const AuthPage = () => {
                     type="email"
                     className="w-full px-10 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => onChange(e, "email")}
                     required
                   />
                 </div>
@@ -98,8 +108,8 @@ const AuthPage = () => {
                     type="password"
                     className="w-full px-10 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={formData.password}
+                    onChange={(e) =>  onChange(e, "password")}
                     required
                   />
                 </div>

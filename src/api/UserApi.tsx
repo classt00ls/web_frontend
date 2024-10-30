@@ -1,6 +1,6 @@
-import { LOGOUT_REQUEST } from "../store/actions/userActions";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, ME_SUCCESS } from "../store/actions/userActions";
 import store from "../store/store";
-import { authApiCall } from "./apiCalls";
+import { anonApiCall, authApiCall } from "./apiCalls";
 
 /** Recupera los leads dados de alta para el usuario */
 const getUserWithCompany = (): Promise<any> => {
@@ -84,6 +84,41 @@ const confirmationSendEmail = (email): Promise<any> => {
 	});
 }
 
+/** Realiza el login mediante username/password */
+const loginCall = (email: string, password: string): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		const params = {
+			email,
+			password
+		};
+		if (!email || !password) {
+			reject('Username and password are required');
+		}
+		store.dispatch({type: LOGIN_REQUEST.type});
+		anonApiCall.post("/user/auth/signin", params, {
+			//AxiosRequestConfig parameter
+			withCredentials: true //correct
+		  })
+			.then(async ({ data, status }) => {
+				store.dispatch({type: LOGIN_SUCCESS.type, payload: data});
+				resolve(data);
+			})
+			.catch((error) => { reject(processError(error)); })
+	});
+}
+
+ const meCall = (): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		anonApiCall.get("/user/auth/me",{withCredentials: true})
+			.then(async ({ data, status }) => {
+				console.log('WHOIAM : ', data);
+				store.dispatch({type: ME_SUCCESS.type, payload: data});
+				resolve(data);
+			})
+			.catch((error) => { reject(processError(error)); })
+	});
+}
+
 const processError = (error: any) => {
     if (error.response) {
         const serverError = error.response.data;
@@ -105,6 +140,8 @@ const processError = (error: any) => {
     }
 }
 
+
+
 export const UserApi = {
     getAllUsers,
     getUserWithCompany,
@@ -114,5 +151,7 @@ export const UserApi = {
 	confirmEmail,
 	confirmationSendEmail,
 	impersonateUser,
-	getRole
+	getRole,
+	meCall,
+	loginCall
   };
