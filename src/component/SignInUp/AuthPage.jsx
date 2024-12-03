@@ -11,8 +11,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserApi } from './../../api/UserApi';
 import { isEmpty, size } from 'lodash';
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 const AuthPage = () => {
+
+  const { t } = useTranslation()
+  const navigate = useNavigate();
 
   const defaultFormValue = () => {
 		return {
@@ -41,21 +46,22 @@ const AuthPage = () => {
     event.preventDefault();
     if ((isEmpty(formData.email) || isEmpty(formData.password)) ) {
 
-			ToastNotify.error(t('login.error-fields-mandatory'));
+			toast.error(t('login.error-fields-mandatory'));
 
 		} else if (size(formData.password) < 6 ) {
 
-			ToastNotify.error(t('login.error-password-minimum'));
+			toast.error(t('login.error-password-minimum'));
 
 		} else {
 
       try {
         await UserApi.loginCall(formData.email, formData.password);
+
+        console.log('vamos al mecall ...')
+
         await UserApi.meCall();
-        toast.success("Sign-in successful!");
-          
-          // Store token in localStorage for future authenticated requests
-          // localStorage.setItem("token", data.token);
+        
+				navigate("/");
 
       } catch (error) {
         console.log('error: ', error)

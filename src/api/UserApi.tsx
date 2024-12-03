@@ -84,6 +84,7 @@ const confirmationSendEmail = (email): Promise<any> => {
 	});
 }
 
+
 /** Realiza el login mediante username/password */
 const loginCall = (email: string, password: string): Promise<any> => {
 	return new Promise((resolve, reject) => {
@@ -94,32 +95,40 @@ const loginCall = (email: string, password: string): Promise<any> => {
 		if (!email || !password) {
 			reject('Username and password are required');
 		}
+
 		store.dispatch({type: LOGIN_REQUEST.type});
-		anonApiCall.post("/user/auth/signin", params, {
-			//AxiosRequestConfig parameter
+		
+		anonApiCall.post("/auth/login", params, {
 			withCredentials: true //correct
 		  })
 			.then(async ({ data, status }) => {
+				// Emitimos el evento de login success
 				store.dispatch({type: LOGIN_SUCCESS.type, payload: data});
+
 				resolve(data);
 			})
 			.catch((error) => { reject(processError(error)); })
 	});
 }
+
 
  const meCall = (): Promise<any> => {
+
 	return new Promise((resolve, reject) => {
-		anonApiCall.get("/user/auth/me",{withCredentials: true})
+		authApiCall.get("/auth/me",{withCredentials: true})
 			.then(async ({ data, status }) => {
-				console.log('WHOIAM : ', data);
+
 				store.dispatch({type: ME_SUCCESS.type, payload: data});
+
 				resolve(data);
 			})
 			.catch((error) => { reject(processError(error)); })
 	});
 }
 
+
 const processError = (error: any) => {
+	console.log('lA MARMOTA: ', error)
     if (error.response) {
         const serverError = error.response.data;
         if(serverError.statusCode === 403) {

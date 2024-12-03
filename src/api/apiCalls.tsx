@@ -26,15 +26,18 @@ export const anonApiCall = axios.create({
 
 
 
-const authRequest = async (request) => {
-	// const token = await localStorage.getItem('@token');
-	// console.log('TRACE / authApiCall.interceptors -> Token recovered: ', token);
-	// if (token) {
-	// 	request.headers.common["Authorization"] = `Bearer ${token}`;
-	// } else {
-	// 	return Promise.reject('No token founded');
-	// }
-	// console.log('auth token añadido al request.')
+const authRequest = (request) => {
+
+	const token = localStorage.getItem('access_token');
+
+	console.log('TRACE / authApiCall.interceptors -> Token recovered: ', token);
+
+	if (token) {
+		request.headers["Authorization"] = `Bearer ${token}`;
+	} else {
+		return Promise.reject('No token founded');
+	}
+	
 	return request;
 }
 

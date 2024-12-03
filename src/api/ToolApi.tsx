@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { authApiCall } from "./apiCalls";
+import { anonApiCall, authApiCall } from "./apiCalls";
 
 
 /** Recupera los tool dados de alta para el usuario */
@@ -10,7 +10,7 @@ const getAllTools = (
 	return new Promise((resolve, reject) => {
 		const params = { page, pageSize };
         
-		authApiCall.get("/tool", { params })
+		anonApiCall.get("/tool", { params })
 			.then(({ data, status }) => { resolve(data) })
 			.catch((error) => { reject(processError(error)) })
             
@@ -40,7 +40,7 @@ const getFilteredlTool = (
 	return new Promise((resolve, reject) => {
 		const params = { page, pageSize, filters};
         
-		authApiCall.post("/tool/filter", { params })
+		anonApiCall.post("/tool/filter", { params })
 			.then(({ data, status }) => { resolve(data) })
 			.catch((error) => { reject(processError(error)) })
             
@@ -48,6 +48,8 @@ const getFilteredlTool = (
 }
 
 const processError = (error: any) => {
+    console.log('lA MARMOTA: ', error)
+
     if (error.response) {
         const serverError = error.response.data;
         if(serverError.statusCode === 403) {

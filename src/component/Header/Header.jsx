@@ -2,8 +2,12 @@ import React, { useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "/src/assets/CLASSTOOLS_LOGOS_1111 1.png";
 import SignInlogo from "/src/assets/Group 2.png";
+import { useSelector } from "react-redux";
 
 const Header = () => {
+
+  const user = useSelector((state) => state.auth.user);
+
   const dropdownRefs = {
     explorer: useRef(null),
     community: useRef(null),
@@ -156,6 +160,19 @@ const Header = () => {
           </ul>
         </div>
         <div className="navbar-end flex gap-5  md:mr-10">
+        { user ?
+        <Link
+        to="/addTools"
+        className="bg-[#3683B3] hover:bg-red-600 gap-2 flex items-center md:w-[135px] h-[37px] px-[10px] py-[18px] rounded-[30px]"
+      >
+        <p className="text-[8px] md:text-[18px] flex items-center font-bold">
+          +
+        </p>
+        <p className="text-[10px] md:text-[16px] flex font-semibold items-center text">
+          Add Tool AI
+        </p>
+      </Link>
+      :
           <Link to="/signIn" className=" flex gap-1 md:gap-[16px] items-center">
             <img
               className="w-[5px] h-[10px]  md:w-[8px]  md:h-[14px]"
@@ -166,17 +183,7 @@ const Header = () => {
               Sign in
             </p>
           </Link>
-          <Link
-            to="/addTools"
-            className="bg-[#3683B3] hover:bg-red-600 gap-2 flex items-center md:w-[135px] h-[37px] px-[10px] py-[18px] rounded-[30px]"
-          >
-            <p className="text-[8px] md:text-[18px] flex items-center font-bold">
-              +
-            </p>
-            <p className="text-[10px] md:text-[16px] flex font-semibold items-center text">
-              Add Tool AI
-            </p>
-          </Link>
+}
         </div>
       </div>
     </div>

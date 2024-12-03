@@ -6,6 +6,7 @@ import axios from "axios";
 import Loader from "../Loader/Loader";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { UserApi } from "../../api/UserApi";
 
 
 const HomeLayout = () => {
@@ -20,18 +21,25 @@ const HomeLayout = () => {
   const noHomeHeader = location.pathname.includes("tools");
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
+    (async () => {
       try {
-        const response = await axios.get("/categories.json");
-        setCategories(response.data.categories);
+        
+        setLoading(true);
+        // const response = await axios.get("/categories.json");
+        // setCategories(response.data.categories)
+        await UserApi.meCall();
+
         setLoading(false);
-      } catch (err) {
+
+      } catch (error) {
+
+        setLoading(false);
         setError("Failed to fetch categories");
-        setLoading(false);
+        dispatch({ type: 'set', errorMessage: error });
+        dispatch({ type: 'set', showError: true });
+
       }
-    };
-    fetchData();
+    })()
   }, []);
 
   const searchAction = async () => {

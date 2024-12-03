@@ -1,4 +1,4 @@
-import { authApiCall } from "./apiCalls";
+import { anonApiCall, authApiCall } from "./apiCalls";
 
 
 /** Recupera los tool dados de alta para el usuario */
@@ -7,7 +7,7 @@ const getAllCategories = (
 	return new Promise((resolve, reject) => {
 		const params = { };
         
-		authApiCall.get("/web/category", { params })
+		anonApiCall.get("/web/category", { params })
 			.then(({ data, status }) => { 
                 // Incorporar aquí algún mapper que organize estas variables de forntend a añadir
                 resolve(data.map(element => {element.clicked = false; return element;})) 
@@ -19,6 +19,7 @@ const getAllCategories = (
 
 
 const processError = (error: any) => {
+    console.log('lA MARMOTA: ', error)
     if (error.response) {
         const serverError = error.response.data;
         if(serverError.statusCode === 403) {

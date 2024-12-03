@@ -8,6 +8,8 @@ const initialState: IAuthState = {logginIn: false, loggedIn: false, user: null};
 export function authenticationReducer(state: IAuthState = initialState, action): IAuthState {
   switch (action.type) {
     case LOGIN_REQUEST.type:
+
+    console.log('LOGIN_REQUEST *********** ');
       return {
         ...state,
         logginIn: true
@@ -17,7 +19,7 @@ export function authenticationReducer(state: IAuthState = initialState, action):
         ...state
       };
     case LOGOUT_REQUEST.type:
-      localStorage.setItem('logged', 'false');
+      localStorage.setItem('access_token', 'false');
       return {
         ...state,
         logginIn: false,
@@ -26,14 +28,16 @@ export function authenticationReducer(state: IAuthState = initialState, action):
       };
 
     case LOGIN_SUCCESS.type:
-      localStorage.setItem('logged', 'true');
+
+      localStorage.setItem('access_token', action.payload.access_token);
+
       return Object.assign({}, state, {
         loggedIn: true,
         logginIn: false
       });
       
     case ME_SUCCESS.type:
-      localStorage.setItem('logged', 'true');
+      console.log('recibimos el /me', action.payload)
       return Object.assign({}, state, {
         loggedIn: true,
         user: action.payload
