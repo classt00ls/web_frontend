@@ -1,8 +1,14 @@
+import { ToolApi } from "../../api/ToolApi";
 import { IAuthState } from "../../Domain/Store";
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, ME_SUCCESS } from "../actions/userActions";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, ME_SUCCESS, SUGGESTIONS_SUCCESS } from "../actions/userActions";
 import { REGISTER_SUCCESS } from "../actionTypes";
 
-const initialState: IAuthState = {logginIn: false, loggedIn: false, user: null};
+const initialState: IAuthState = {
+  logginIn: false, 
+  loggedIn: false, 
+  user: null,
+  suggestions: []
+};
 
 // A partir del estado inicial y de la action se actualiza el estado
 export function authenticationReducer(state: IAuthState = initialState, action): IAuthState {
@@ -37,12 +43,22 @@ export function authenticationReducer(state: IAuthState = initialState, action):
       });
       
     case ME_SUCCESS.type:
-      console.log('recibimos el /me', action.payload)
+
+      ToolApi.getSuggestedTools(action.payload.id);
+      
       return Object.assign({}, state, {
         loggedIn: true,
         user: action.payload
       });
+      break;
       
+      case SUGGESTIONS_SUCCESS.type:
+        console.log('recibimos el /suggested', action.payload);
+
+        return Object.assign({}, state, {
+          suggestions: action.payload.data
+        });
+      break;
     default:
       return state
   }

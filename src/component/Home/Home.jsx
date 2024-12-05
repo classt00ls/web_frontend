@@ -6,6 +6,7 @@ import CardSection from "./CardSection/CardSection";
 import Section3 from "./Section3/Section3";
 import Section4 from "./Section4/Section4";
 import Sliders from "./Slider/Slider";
+import SuggestedTools from "./SuggestedTools/SuggestedTools";
 import VideoSection from "./VideoSection/VideoSection";
 
 const Home = () => {
@@ -14,7 +15,9 @@ const Home = () => {
   return (
     <div>
       <AiCategory></AiCategory>
+      
       <CardSection></CardSection>
+      <SuggestedTools></SuggestedTools>
       <Section3></Section3>
       <Sliders></Sliders>
       <Section4></Section4>

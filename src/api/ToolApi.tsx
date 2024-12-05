@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { anonApiCall, authApiCall } from "./apiCalls";
-
+import store from "../store/store";
+import { SUGGESTIONS_SUCCESS } from "../store/actions/userActions";
 
 /** Recupera los tool dados de alta para el usuario */
 const getAllTools = (
@@ -30,6 +31,20 @@ const getDetailTool = (
 	});
 }
 
+const getSuggestedTools = (
+    userId
+): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		const params = { userId };
+        
+		authApiCall.get("/tool/suggestions", { params })
+			.then(({ data, status }) => { 
+                store.dispatch({type: SUGGESTIONS_SUCCESS.type, payload: data});
+            })
+			.catch((error) => { reject(processError(error)) })
+            
+	});
+}
 
 const getFilteredlTool = (
     page = 0, 
@@ -48,7 +63,6 @@ const getFilteredlTool = (
 }
 
 const processError = (error: any) => {
-    console.log('lA MARMOTA: ', error)
 
     if (error.response) {
         const serverError = error.response.data;
@@ -73,5 +87,6 @@ const processError = (error: any) => {
 export const ToolApi = {
     getAllTools,
     getDetailTool,
-    getFilteredlTool
+    getFilteredlTool,
+    getSuggestedTools
   };
