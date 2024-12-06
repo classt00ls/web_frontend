@@ -128,7 +128,7 @@ const loginCall = (email: string, password: string): Promise<any> => {
 
 
 const processError = (error: any) => {
-	console.log('lA MARMOTA: ', error)
+	
     if (error.response) {
         const serverError = error.response.data;
         if(serverError.statusCode === 403) {

@@ -6,6 +6,8 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
 
+  const token = localStorage.getItem('access_token');
+
   const user = useSelector((state) => state.auth.user);
 
   const dropdownRefs = {
@@ -161,17 +163,14 @@ const Header = () => {
         </div>
         <div className="navbar-end flex gap-5  md:mr-10">
         { user ?
-        <Link
-        to="/addTools"
-        className="bg-[#3683B3] hover:bg-red-600 gap-2 flex items-center md:w-[135px] h-[37px] px-[10px] py-[18px] rounded-[30px]"
-      >
-        <p className="text-[8px] md:text-[18px] flex items-center font-bold">
-          +
-        </p>
-        <p className="text-[10px] md:text-[16px] flex font-semibold items-center text">
-          Add Tool AI
-        </p>
-      </Link>
+          <Link
+          to={`http://localhost:3010/verify?token=${token}`}
+          className="bg-[#3683B3] hover:bg-red-600 gap-1 flex justify-center md:w-[135px] h-[37px] px-[10px] py-[18px] rounded-[30px]"
+        >
+          <p className="text-[10px] md:text-[16px] flex font-semibold items-center text">
+            Discover
+          </p>
+        </Link>
       :
           <Link to="/signIn" className=" flex gap-1 md:gap-[16px] items-center">
             <img

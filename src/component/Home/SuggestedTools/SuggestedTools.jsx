@@ -9,7 +9,7 @@ const SuggestedTools = () => {
     // <div className=" absolute w-full bg-white rounded-t-[40px] mt-[-40px] ">
     <div className=" w-full bg-white  ">
       <div className="container  mx-auto px-4 py-8 mt-10">
-         <div className="grid justify-items-center  grid-cols-3 gap-3">
+         <div className="grid justify-items-center  grid-cols-4 gap-4">
           {suggestions?.map((suggestion, index) => (
             <Link to={`/product/${suggestion.id}`}>
             <div
