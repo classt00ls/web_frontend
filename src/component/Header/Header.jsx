@@ -54,16 +54,16 @@ const Header = () => {
 
   const navItems = (
     <>
-      <li>
+      {/* <li>
         <NavLink to={"/"}>Home</NavLink>
-      </li>
+      </li> */}
       {/* <li>
         <NavLink to={"/product"}>Product</NavLink>
       </li> */}
-      <li>
+      {/* <li>
         <NavLink to={"/tools"}>Tools</NavLink>
-      </li>
-      <li>
+      </li> */}
+      {/* <li>
         <details ref={dropdownRefs.explorer}>
           <summary onClick={(e) => handleSummaryClick(e, "explorer")}>
             Explorer
@@ -87,9 +87,9 @@ const Header = () => {
             <li>
               <NavLink to={"/community"}>Community</NavLink>
             </li>
-            {/* <li>
+            <li>
               <NavLink to={"/"}>Community-2</NavLink>
-            </li> */}
+            </li> 
           </ul>
         </details>
       </li>
@@ -100,9 +100,9 @@ const Header = () => {
             <li>
               <NavLink to={"/blog"}>Blog</NavLink>
             </li>
-            {/* <li>
+            <li>
               <NavLink to={"/"}>Blog-2</NavLink>
-            </li> */}
+            </li>
           </ul>
         </details>
       </li>
@@ -115,12 +115,12 @@ const Header = () => {
             <li>
               <NavLink to={"/advertise"}>Advertise</NavLink>
             </li>
-            {/* <li>
+            <li>
               <NavLink to={"/"}>Advertise-2</NavLink>
-            </li> */}
+            </li>
           </ul>
         </details>
-      </li>
+      </li> */}
     </>
   );
 

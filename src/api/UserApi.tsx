@@ -1,4 +1,4 @@
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, ME_SUCCESS } from "../store/actions/userActions";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, ME_SUCCESS, ME_UNAUTHORIZED } from "../store/actions/userActions";
 import store from "../store/store";
 import { anonApiCall, authApiCall } from "./apiCalls";
 
@@ -50,7 +50,7 @@ const recoverPassword = (token, email, password): Promise<any> => {
 	const params = {token, email, password};
 
 	return new Promise((resolve, reject) => {
-		authApiCall.post("/user/changePassword", params)
+		authApiCall.post("/web/auth/changePassword", params)
 			.then(({ data, status }) => resolve(data))
 			.catch((error) => reject(processError(error)))
 	});
@@ -68,7 +68,7 @@ const recoverPasswordSendEmail = (email): Promise<any> => {
 
 const getRole = (email): Promise<any> => {
 	return new Promise((resolve, reject) => {
-		authApiCall.get("/user/auth/getRole")
+		authApiCall.get("/web/auth/getRole")
 			.then(({ data, status }) => resolve(data))
 			.catch((error) => reject(processError(error)))
 	});
@@ -98,7 +98,7 @@ const loginCall = (email: string, password: string): Promise<any> => {
 
 		store.dispatch({type: LOGIN_REQUEST.type});
 		
-		anonApiCall.post("/auth/login", params, {
+		anonApiCall.post("/web/auth/login", params, {
 			withCredentials: true //correct
 		  })
 			.then(async ({ data, status }) => {
@@ -115,7 +115,7 @@ const loginCall = (email: string, password: string): Promise<any> => {
  const meCall = (): Promise<any> => {
 
 	return new Promise((resolve, reject) => {
-		authApiCall.get("/auth/me",{withCredentials: true})
+		authApiCall.get("/web/auth/me",{withCredentials: true})
 			.then(async ({ data, status }) => {
 
 				store.dispatch({type: ME_SUCCESS.type, payload: data});
@@ -140,6 +140,10 @@ const processError = (error: any) => {
         }
 		else if(serverError.statusCode === 400) {
             return 'error.'+serverError.message;
+        }
+		else if(serverError.statusCode === 401) {
+			store.dispatch({type: ME_UNAUTHORIZED.type, payload: null});
+			console.log('Intercepting Error: (401) Unauthorized ');
         }
         return serverError.message;
     } else if (error.request) {

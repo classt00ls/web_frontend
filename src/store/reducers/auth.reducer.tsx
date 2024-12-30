@@ -1,6 +1,6 @@
 import { ToolApi } from "../../api/ToolApi";
 import { IAuthState } from "../../Domain/Store";
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, ME_SUCCESS, SUGGESTIONS_SUCCESS } from "../actions/userActions";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, ME_SUCCESS, ME_UNAUTHORIZED, SUGGESTIONS_SUCCESS } from "../actions/userActions";
 import { REGISTER_SUCCESS } from "../actionTypes";
 
 const initialState: IAuthState = {
@@ -52,6 +52,14 @@ export function authenticationReducer(state: IAuthState = initialState, action):
       });
       break;
       
+      case ME_UNAUTHORIZED.type:
+      console.log('Setting logged to false')
+      return Object.assign({}, state, {
+        loggedIn: false,
+        user: null
+      });
+      break;
+
       case SUGGESTIONS_SUCCESS.type:
         console.log('recibimos el /suggested', action.payload);
 

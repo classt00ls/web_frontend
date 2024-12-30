@@ -2,7 +2,6 @@ import { FiSearch } from "react-icons/fi";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import backgroundImage from "../../assets/Rectangle 1.png";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Loader from "../Loader/Loader";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -87,11 +86,11 @@ const HomeLayout = () => {
                 <input
                   type="text"
                   onChange={e => {setText(e.target.value)}}
-                  className="text-center w-full text-[15px] pl-10 pr-4 py-3 rounded-full border-none focus:outline-none"
-                  placeholder="What are you looking for?"
+                  className="text-center w-full text-[15px] color-white pl-10 pr-4 py-3 rounded-full border-none focus:outline-none"
+                  placeholder="Introduce una palabra clave"
                 />
               </div>
-              <div className="flex items-center px-4 border-l  border-gray-300">
+              {/* <div className="flex items-center px-4 border-l  border-gray-300">
                 <HiOutlineMenuAlt2 className="text-gray-400 w-[15px] " />
                 <select className="ml-2 cursor-pointer text-[15px] bg-transparent border-none text-gray-600 focus:outline-none">
                   <option>All categories</option>
@@ -99,7 +98,7 @@ const HomeLayout = () => {
                     <option key={index}>{category.title}</option>
                   ))}
                 </select>
-              </div>
+              </div> */}
               <button className="bg-orange-500 text-[14px]  text-white px-[27px] py-[15px] rounded-full hover:bg-orange-600"
                 onClick={e => {searchAction()}}>
                 Search

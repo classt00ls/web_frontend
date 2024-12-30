@@ -16,13 +16,13 @@ const Home = () => {
     <div>
       <AiCategory></AiCategory>
       
-      <CardSection></CardSection>
+      {/* <CardSection></CardSection> */}
       <SuggestedTools></SuggestedTools>
-      <Section3></Section3>
+      {/* <Section3></Section3>
       <Sliders></Sliders>
       <Section4></Section4>
       <VideoSection></VideoSection>
-      <BlogSection></BlogSection>
+      <BlogSection></BlogSection> */}
     </div>
   );
 };

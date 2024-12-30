@@ -7,6 +7,7 @@ const SuggestedTools = () => {
 
   return (
     // <div className=" absolute w-full bg-white rounded-t-[40px] mt-[-40px] ">
+    // TODO: si no hi ha sugestions, no es renderita res
     <div className=" w-full bg-white  ">
       <div className="container  mx-auto px-4 py-8 mt-10">
          <div className="grid justify-items-center  grid-cols-4 gap-4">

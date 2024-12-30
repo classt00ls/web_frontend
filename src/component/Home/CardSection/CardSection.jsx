@@ -53,7 +53,7 @@ const CardSection = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="mb-20 mt-20">
+      {/* <div className="mb-20 mt-20">
         <div className="flex justify-evenly md:justify-between md:mx-20 ">
           <h1 className="md:text-[27px] font-bold  ">{sliders.main_message}</h1>
           <div className="flex items-center hover:text-orange-500 gap-2 ">
@@ -92,7 +92,7 @@ const CardSection = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

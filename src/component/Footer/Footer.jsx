@@ -89,23 +89,23 @@ const Footer = () => {
           </div>
         </aside>
         <nav>
-          <h6 className="footer-title text-[#FFFFFF] mb-2">Quick Links</h6>
+          {/* <h6 className="footer-title text-[#FFFFFF] mb-2">Quick Links</h6>
           {quickLinks.map((link, index) => (
             <Link key={index} to={link.url} className="block hover:underline">
               {link.title}
             </Link>
-          ))}
+          ))} */}
         </nav>
         <nav>
-          <h6 className="footer-title text-[#FFFFFF] mb-2">Profile</h6>
+          {/* <h6 className="footer-title text-[#FFFFFF] mb-2">Profile</h6>
           {profileLinks.map((link, index) => (
             <Link key={index} to={link.url} className="block hover:underline">
               {link.title}
             </Link>
-          ))}
+          ))} */}
         </nav>
         <nav>
-          <h6 className="footer-title text-[#FFFFFF]">
+          {/* <h6 className="footer-title text-[#FFFFFF]">
             Subscribe to our newsletter
           </h6>
           <a className="link link-hover">{newsletterText.newsletter_text}</a>
@@ -135,7 +135,7 @@ const Footer = () => {
                 Subscribe
               </button>
             </div>
-          </form>
+          </form> */}
         </nav>
       </div>
 
@@ -149,7 +149,7 @@ const Footer = () => {
             </p>
           </aside>
           <nav className="flex flex-col md:flex-row justify-center items-center place-self-center ">
-            <div className=" flex gap-3">
+            {/* <div className=" flex gap-3">
               <Link to="about">About</Link>
               <Link to="blog">Blog</Link>
               <Link to="support">Support</Link>
@@ -171,7 +171,7 @@ const Footer = () => {
               <Link to="facebook.com">
                 <FaYoutube className="text-white p-1 hover:bg-white hover:text-red-700 hover:rounded-full text-2xl" />
               </Link>
-            </div>
+            </div> */}
           </nav>
         </div>
       </div>

@@ -22,9 +22,10 @@ const Product = () => {
     let isMounted = true;
     (async () => {
       const response = await ToolApi.getDetailTool(id);
-      setToolData(response);
-
-      console.log("la toolsData: ", toolData);
+      if(isMounted) {
+        setToolData(response);
+        console.log("la toolsData: ", toolData);
+      }
     })()
     return () => { isMounted = false };
   }, [])
