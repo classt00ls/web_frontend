@@ -48,6 +48,7 @@ const AiCategory = () => {
   return (
     // <div className=" absolute w-full bg-white rounded-t-[40px] mt-[-40px] ">
     <div className=" w-full bg-white  ">
+      {categories ?( 
       <div className="container  mx-auto px-4 py-8 mt-10">
         <div className="grid justify-items-center  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
           {categories?.map((category, index) => (
@@ -66,6 +67,8 @@ const AiCategory = () => {
           ))}
         </div>
       </div>
+
+          )  : <></>}
     </div>
   );
 };

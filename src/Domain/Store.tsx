@@ -42,5 +42,5 @@ export interface IAuthState {
 	loggedIn: boolean, 
 	user: IAppUser|null, 
 	logginIn: boolean,
-	suggestions: Array<any>
+	suggestions: Array<any>|null
 }

@@ -7,15 +7,13 @@ const initialState: IAuthState = {
   logginIn: false, 
   loggedIn: false, 
   user: null,
-  suggestions: []
+  suggestions: null
 };
 
 // A partir del estado inicial y de la action se actualiza el estado
 export function authenticationReducer(state: IAuthState = initialState, action): IAuthState {
   switch (action.type) {
     case LOGIN_REQUEST.type:
-
-    console.log('LOGIN_REQUEST *********** ');
       return {
         ...state,
         logginIn: true
@@ -48,7 +46,8 @@ export function authenticationReducer(state: IAuthState = initialState, action):
       
       return Object.assign({}, state, {
         loggedIn: true,
-        user: action.payload
+        user: action.payload,
+        suggestions: null
       });
       break;
       
