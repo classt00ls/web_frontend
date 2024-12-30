@@ -153,7 +153,7 @@ const Sidebar = () => {
         <img src={search} alt="search" className="absolute left-10" />
         <input
           type="search"
-          placeholder="Search..."
+          placeholder=""
           className="border-[rgba(0, 0, 0, 0.1)] border w-[300px] rounded-full p-5 pl-12"
           onChange={e => setTextToSearch(e.target.value)}
         />
@@ -161,7 +161,7 @@ const Sidebar = () => {
           className="bg-orange-500 text-[14px]  text-white px-[20px] py-[10px] rounded-full hover:bg-orange-600 -m-[90px] h-fit"
           onClick={() => searchAction()}
         >
-          Search
+          Buscar
         </button>
       </div>
       <div className="pt-5 mt-4"></div>

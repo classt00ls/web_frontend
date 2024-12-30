@@ -71,9 +71,9 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center sm:py-12">
+    <div className="min-h-screen flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-600 shadow-lg transform rotate-6 sm:rotate-0 sm:rounded-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-r shadow-lg transform rotate-6 sm:rotate-0 sm:rounded-3xl"></div>
         <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
           <div className="max-w-md mx-auto">
             <div>
@@ -128,7 +128,7 @@ const AuthPage = () => {
                   </button>
                 </div>
               </form>
-              <div className="relative flex items-center justify-center py-4">
+              {/* <div className="relative flex items-center justify-center py-4">
                 <hr className="w-full border-gray-300" />
                 <span className="absolute bg-white px-4 text-gray-500">or</span>
               </div>
@@ -139,7 +139,7 @@ const AuthPage = () => {
                 <button className="flex items-center justify-center w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-900 transition duration-300">
                   <FaFacebook className="mr-2" /> Sign in with Facebook
                 </button>
-              </div>
+              </div> */}
               <div className="text-center text-sm mt-4">
                 {isSignUp ? (
                   <span>

@@ -6,15 +6,15 @@ const Product_section_1 = ({title}) => {
           Home
         </a>
         <span className="mx-1">{">"}</span>
-        <a href="/Listings" className="hover:underline">
+        <a href="/tools" className="hover:underline">
           Listings
         </a>
         <span className="mx-1">{">"}</span>
         <a
           className="text-orange-500 hover:underline"
-          href="/Listings/Jasper.AI"
+          href="#"
         >
-          hola - {title}
+          {title}
         </a>
       </h6>
     </div>

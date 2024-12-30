@@ -166,7 +166,7 @@ const Category_section1 = ({currentPage,loading,tools,totalPages, setCurrentPage
               </div>
             ))}
       </div>
-      <div className="mt-10 ml-5 ">
+      <div className="mt-10 mb-10 ml-5 ">
 
         <ResponsivePagination
           current={currentPage}
@@ -174,6 +174,7 @@ const Category_section1 = ({currentPage,loading,tools,totalPages, setCurrentPage
           onPageChange={setCurrentPage}
           previousLabel={"<"}
           nextLabel={">"}
+          maxWidth={500}
           previousClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-white flex text-center items-center justify-center absolute right-10 "
           nextClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-white flex text-center items-center justify-center absolute right-0  !text-black"
         />

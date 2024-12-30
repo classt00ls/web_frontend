@@ -24,7 +24,7 @@ const getDetailTool = (
 	return new Promise((resolve, reject) => {
 		const params = { id };
         
-		authApiCall.get("/tool/detail", { params })
+		anonApiCall.get("/tool/detail", { params })
 			.then(({ data, status }) => { resolve(data) })
 			.catch((error) => { reject(processError(error)) })
             
