@@ -4,7 +4,7 @@ import backgroundImage from "../../assets/Rectangle 1.png";
 import { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserApi } from "../../api/UserApi";
 
 
@@ -78,6 +78,8 @@ const HomeLayout = () => {
 
         {noHomeHeader ?( <></> ): (
           <div className="flex items-center justify-center mt-12   text-black ">
+            
+            
             <div className="flex items-center max-w-3xl bg-white p-3 h-[65px] md:w-[827px] shadow rounded-full overflow-hidden">
               <div className="relative flex-grow">
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -101,12 +103,21 @@ const HomeLayout = () => {
               </div> */}
               <button className="bg-orange-500 text-[14px]  text-white px-[27px] py-[15px] rounded-full hover:bg-orange-600"
                 onClick={e => {searchAction()}}>
-                Search
+                Buscar
               </button>
             </div>
           </div>
+          
         )}
-
+          {noHomeHeader ?( <></> ): (<NavLink to={"/tools"}
+            onClick={e => {}}
+            className="flex flex-col w-[180px] h-[30px] items-center p-1"
+          >
+            <h3 className="text-lg font-bold text-white">
+              Ver todas las IA
+            </h3>
+          </NavLink>
+          )}
         </div>
       </div>
     </div>
