@@ -148,7 +148,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="w-[300px]">
+    <div className="w-[300px] pt-4">
       <div className="flex items-center">
         <img src={search} alt="search" className="absolute left-10" />
         <input
@@ -164,8 +164,9 @@ const Sidebar = () => {
           Search
         </button>
       </div>
-      <hr className="mt-5" />
-      <div className="flex gap-2 justify-center items-center text-gray-500 py-5">
+      <div className="pt-5 mt-4"></div>
+      {/* <hr className="mt-5" /> */}
+      {/* <div className="flex gap-2 justify-center items-center text-gray-500 py-5">
         <button
           className={`py-1 ${
             listing == "category"
@@ -188,8 +189,8 @@ const Sidebar = () => {
           <img src={ listing == "filter"?filter_icon:filter_icon_1} alt="" />
           filter
         </button>
-      </div>
-      <hr className="mt-2" />
+      </div> */}
+      {/* <hr className="mt-2" /> */}
       {listing == "filter" && (
         <>
           <div className="border-t border-b border-gray-200 ">

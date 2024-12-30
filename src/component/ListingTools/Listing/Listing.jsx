@@ -17,7 +17,7 @@ const Listing = ({currentPage,loading,tools,totalPages, setCurrentPage}) => {
   
   
   return (
-    <div className="mt-8 ml-10  ">
+    <div className="ml-10 mr-10 bg-none ">
       <div className="md:ml-6">
         <div className="flex justify-between items-center">
           
@@ -31,7 +31,7 @@ const Listing = ({currentPage,loading,tools,totalPages, setCurrentPage}) => {
         </div>
       </div>
       <div className="md:ml-2">
-        <div className="flex flex-col sm:flex-row items-center justify-between p-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between p-2">
           <div className="flex items-center space-x-2 mb-4 sm:mb-0">
             {/* <FaSort className="text-gray-500" />
             <span className="text-gray-500 text-sm">Sort by:</span> 

@@ -39,7 +39,7 @@ const SidebarCategory = () => {
     return <Loader />;
   }
   return (
-    <div className="w-full bg-white rounded-t-[40px] mt-[-40px]">
+    <div className="w-full bg-white rounded-t-[40px] bg-white rounded-b-[40px] mt-[-40px]">
       <div className="container mx-auto px-4 py-8 mt-10">
         <div className="grid grid-cols-2  gap-4">
           {categoriesData.map((category, index) => (

@@ -20,7 +20,7 @@ const Category_section1 = ({currentPage,loading,tools,totalPages, setCurrentPage
   const toolsPerPage = 12;
 
   return (
-    <div className=" bg-white">
+    <div className=" bg-none">
       <div className="flex flex-wrap gap-8 p-5">
         {paginationHas &&
           tools?.map((tool) => (
