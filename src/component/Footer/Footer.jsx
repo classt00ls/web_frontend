@@ -82,10 +82,10 @@ const Footer = () => {
               <p>classtools.io@gmail.com</p>
             </div>
             <br />
-            <div className="flex gap-3 items-center ">
+            {/* <div className="flex gap-3 items-center ">
               <FaMobileAlt className="text-red-600 mt-1" />
               <p>(406) 555-0120</p>
-            </div>
+            </div> */}
           </div>
         </aside>
         <nav>

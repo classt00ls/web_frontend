@@ -33,7 +33,7 @@ const Product = () => {
   return (
     <>
     { 
-    toolData.url ?
+    toolData.name && toolData.features ?
       <div className="bg-white min-h-screen flex flex-col justify-center container  mx-auto p-4 md:p-10">
         <Product_section_1 title={toolData.name} />
         <Product_section_2 title={toolData.name}/>
@@ -41,7 +41,7 @@ const Product = () => {
         <Product_section_4 title={toolData.name} stars={toolData.stars} pricing={toolData.pricing} url={toolData.url}/>
         <Product_section_5 description={toolData.description} />
         <Product_section_6 title={toolData.name} features={toolData.features} />
-        <Product_section_7 />
+        {/* <Product_section_7 /> */}
       </div>
       :
       ""

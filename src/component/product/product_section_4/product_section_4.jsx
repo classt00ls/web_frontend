@@ -23,7 +23,7 @@ const Product_section_4 = ({stars, pricing, title, url}) => {
             <div className="flex items-center justify-center md:justify-start">
               <img src={`https://www.google.com/s2/favicons?domain=${url.split('/?')[0]}&sz=256 `} alt="review-logo" className="w-[200px] h-[200px] rounded-lg" />
             </div>
-            <div className="flex flex-col md:flex-row items-center my-10 text-[18px] md:text-[21px] space-y-4 md:space-y-0 md:space-x-4">
+            {/* <div className="flex flex-col md:flex-row items-center my-10 text-[18px] md:text-[21px] space-y-4 md:space-y-0 md:space-x-4">
               <button className="flex items-center text-orange-500 bg-white rounded-full px-4 py-2 border border-orange-700 hover:text-white hover:bg-orange-500">
                 <img src={arrowLogo} alt="Logo 2" className="h-4 mx-1 " />
                 <p className="text-[14px]"> Reply to listing</p>
@@ -32,7 +32,7 @@ const Product_section_4 = ({stars, pricing, title, url}) => {
                 <img src={flagLogo} alt="Logo 2" className="h-4 mx-1" />
                 <p className="text-[14px]"> Report to listing</p>
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -46,7 +46,7 @@ const Product_section_4 = ({stars, pricing, title, url}) => {
                 </h1>
                 <div className="flex mt-2  items-center ">
                   <p className="flex flex-col md:flex-row md:space-x-4 text-[16px] md:text-[18px] text-gray-500">
-                    <span
+                    {/* <span
                       id="review-count"
                       className="flex items-center space-x-2"
                     >
@@ -59,7 +59,7 @@ const Product_section_4 = ({stars, pricing, title, url}) => {
                     >
                       <img src={kmicon} alt="km-icon" className="h-6" />
                       <span className="text-[13px]">?</span>
-                    </span>
+                    </span> */}
                     <span
                       id="price"
                       className="flex items-center space-x-2 mt-2 md:mt-0"
@@ -77,7 +77,7 @@ const Product_section_4 = ({stars, pricing, title, url}) => {
                     <p className="text-[15px]">{url}</p>
                   </li>
 
-                  <li className="flex items-center my-2">
+                  {/* <li className="flex items-center my-2">
                     <img className="w-[15px] mr-2" src={gmailLogo} alt="" />
                     <p className="text-[15px]">no-mail</p>
                   </li>
@@ -86,7 +86,7 @@ const Product_section_4 = ({stars, pricing, title, url}) => {
                     <p className="text-[15px]">
                       ?
                     </p>
-                  </li>
+                  </li> */}
                 </ul>
                 <hr className="border-t-2 border-gray-300 my-5" />
                 <p className="font-bold text-black text-[20px]">

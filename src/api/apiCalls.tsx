@@ -19,6 +19,7 @@ export const anonApiCall = axios.create({
 	withCredentials: false,
 	baseURL: API_URL,
 	headers: {
+		'ngrok-skip-browser-warning': 'skip',
 		'Accept': 'application/json',
 		'Content-Type': 'application/json'
 	}

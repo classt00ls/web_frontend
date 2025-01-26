@@ -1,0 +1,11 @@
+{
+  "auth" : {
+    "continue_with_google" : "Continua con Google",
+    "sign_up": "Registrarse",
+    "sign_in": "Entrar",
+    "sign_in_title": "Entrar en Classtools",
+    "or": "O bien",
+    "password": "Contraseña",
+    "have_account": "Aún no estás en classtools ?"
+  }
+}

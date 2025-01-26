@@ -17,14 +17,14 @@ const Product_section_2 = ({title}) => {
           {title}
         </h1>
         <div className="flex items-center space-x-4 mt-4 md:mt-0">
-          <img src={loveLogo} alt="Logo 1" className="h-4" />
+          {/* <img src={loveLogo} alt="Logo 1" className="h-4" /> */}
           <div className="relative">
-            <button
+            {/* <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-black rounded-full p-1 hover:border border-orange-700"
             >
               <img src={shareLogo} alt="Logo 2" className="h-4" />
-            </button>
+            </button> */}
             {isOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded shadow-lg">
                 <ul>

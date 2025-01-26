@@ -58,7 +58,7 @@ const AiCategory = () => {
               className="flex flex-col w-[180px] h-[130px] items-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out"
             >
               <div className="w-[44px] h-[44px] mx-2">
-                <img src={category.imageUrl} alt="" />
+                <img src={category.imageUrl ?? "https://i.ibb.co/t3hXkN6/Icon10.png"} alt="" />
               </div>
               <h3 className="text-sm font-semibold text-gray-700">
                 {category.name}

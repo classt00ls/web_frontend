@@ -26,7 +26,7 @@ const Product_section_6 = ({title, features}) => {
 
         {/* Right Side */}
         <div className="w-full md:w-1/2">
-          <div>
+          {/* <div>
             <h1 className="text-black font-bold mt-5 text-[24px]">
               Cómo utilizar {title}
             </h1>
@@ -54,7 +54,7 @@ const Product_section_6 = ({title, features}) => {
                 <p className="mx-10">3. Ve la salida.</p>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
