@@ -27,11 +27,11 @@ export const anonApiCall = axios.create({
 
 
 
-const authRequest = (request) => {
+const addToken = (request) => {
 
 	const token = localStorage.getItem('access_token');
 
-	console.log('TRACE / authApiCall.interceptors -> Token recovered: ', token);
+// console.log('TRACE / authApiCall.interceptors -> Token recovered: ', token);
 
 	if (token) {
 		request.headers["Authorization"] = `Bearer ${token}`;
@@ -87,7 +87,10 @@ const anonError = async (error) => {
 
 
 // Interceptor antes de enviar una petición
-authApiCall.interceptors.request.use(authRequest, requestError);
+authApiCall.interceptors.request.use(addToken, requestError);
+
+// Interceptor antes de enviar una petición
+anonApiCall.interceptors.request.use(addToken, requestError);
 
 // Interceptor antes de procesar la respuesta recibida
 authApiCall.interceptors.response.use(authResponse);

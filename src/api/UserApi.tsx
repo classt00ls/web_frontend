@@ -112,7 +112,10 @@ const loginCall = (email: string, password: string): Promise<any> => {
 }
 
 
- const meCall = (): Promise<any> => {
+ const meCall = (token = null): Promise<any> => {
+	if(token) {
+		store.dispatch({type: LOGIN_SUCCESS.type, payload: {access_token: token}});
+	}
 
 	return new Promise((resolve, reject) => {
 		authApiCall.get("/web/auth/me",{withCredentials: true})

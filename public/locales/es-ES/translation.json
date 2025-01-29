@@ -6,6 +6,9 @@
     "sign_in_title": "Entrar en Classtools",
     "or": "O bien",
     "password": "Contraseña",
-    "have_account": "Aún no estás en classtools ?"
+    "have_account": "Aún no estás en classtools ?",
+    "error-fields-mandatory": "Rellena los campos obligatorios",
+    "error-password-minimum": "El password no cumple los requisitos",
+    "error_google": "Error durante el inicio de sesión"
   }
 }

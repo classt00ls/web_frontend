@@ -47,11 +47,16 @@ const AuthPage = () => {
 
     const handleGoogleLogin = async () => {
       try {
+
         const result = await signInWithPopup(auth, googleProvider);
         const user = result.user; // Datos del usuario autenticado
-        console.log("Usuario logueado:", user);
+        const token = await user.getIdToken();
+        await UserApi.meCall(token);
+				navigate("/");
+        
       } catch (error) {
-        console.error("Error durante el inicio de sesión:", error);
+        console.log(error)
+        toast.error(t('auth.error_google'));
       }
     };
 
@@ -59,26 +64,25 @@ const AuthPage = () => {
     event.preventDefault();
     if ((isEmpty(formData.email) || isEmpty(formData.password)) ) {
 
-			toast.error(t('login.error-fields-mandatory'));
+			toast.error(t('auth.error-fields-mandatory'));
 
 		} else if (size(formData.password) < 6 ) {
 
-			toast.error(t('login.error-password-minimum'));
+			toast.error(t('auth.error-password-minimum'));
 
 		} else {
 
       try {
         await UserApi.loginCall(formData.email, formData.password);
 
-        console.log('vamos al mecall ...')
-
         await UserApi.meCall();
         
 				navigate("/");
 
       } catch (error) {
-        console.log('error: ', error)
+
         toast.error("Failed to sign in. Please try again later.");
+
       }
     }
   };
