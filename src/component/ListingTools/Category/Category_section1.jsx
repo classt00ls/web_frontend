@@ -152,7 +152,7 @@ const Category_section1 = ({currentPage,loading,tools,totalPages, setCurrentPage
                   </p>
 
                   <ul className="mt-2 text-gray-700  text-[10px] space-y-1">
-                    {tool?.tags.map((item, index) => (
+                    {tool?.tags?.map((item, index) => (
                       <li key={index}>#{item}</li>
                     ))}
                   </ul>

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { anonApiCall, authApiCall } from "./apiCalls";
 import store from "../store/store";
-import { SUGGESTIONS_SUCCESS } from "../store/actions/userActions";
+import { PROMPT_SUGGESTIONS_SUCCESS, SUGGESTIONS_SUCCESS, TOOLS_RECEIVED } from "../store/actions/userActions";
 
 /** Recupera los tool dados de alta para el usuario */
 const getAllTools = (
@@ -11,7 +11,7 @@ const getAllTools = (
 	return new Promise((resolve, reject) => {
 		const params = { page, pageSize };
         
-		anonApiCall.get("/tool", { params })
+		anonApiCall.get("/tool/search", { params })
 			.then(({ data, status }) => { resolve(data) })
 			.catch((error) => { reject(processError(error)) })
             
@@ -37,9 +37,24 @@ const getSuggestedTools = (
 	return new Promise((resolve, reject) => {
 		const params = { userId };
         
-		authApiCall.get("/tool/suggestions", { params })
+		authApiCall.get("/user_tool_suggestions", { params })
 			.then(({ data, status }) => { 
                 store.dispatch({type: SUGGESTIONS_SUCCESS.type, payload: data});
+            })
+			.catch((error) => { console.log('No hay sugestions'); resolve(true)})
+            
+	});
+}
+
+const getSuggestedToolsFromPrompt = (
+    prompt
+): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		const params = { prompt };
+        
+		authApiCall.get("/tool/suggestions/prompt", { params })
+			.then(({ data, status }) => { 
+                store.dispatch({type: PROMPT_SUGGESTIONS_SUCCESS.type, payload: data});
             })
 			.catch((error) => { reject(processError(error)) })
             
@@ -55,8 +70,11 @@ const getFilteredlTool = (
 	return new Promise((resolve, reject) => {
 		const params = { page, pageSize, filters};
         
-		anonApiCall.post("/tool/filter", { params })
-			.then(({ data, status }) => { resolve(data) })
+		anonApiCall.get("/tool/search", { params })
+			.then(({ data, status }) => { 
+                store.dispatch({type: TOOLS_RECEIVED.type, payload: data});
+                resolve(data) 
+            })
 			.catch((error) => { reject(processError(error)) })
             
 	});
@@ -88,5 +106,6 @@ export const ToolApi = {
     getAllTools,
     getDetailTool,
     getFilteredlTool,
-    getSuggestedTools
+    getSuggestedTools,
+    getSuggestedToolsFromPrompt
   };

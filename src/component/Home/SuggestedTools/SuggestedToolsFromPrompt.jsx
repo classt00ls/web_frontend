@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const SuggestedTools = () => {
+const SuggestedToolsFromPrompt = () => {
 
-  const suggestions = useSelector(state => state.auth.suggestions);
+  const suggestions = useSelector(state => state.auth.prompt_suggestions);
 
   return (
     // <div className=" absolute w-full bg-white rounded-t-[40px] mt-[-40px] ">
@@ -11,7 +11,7 @@ const SuggestedTools = () => {
     (suggestions ?( 
     <div className=" w-full bg-white  ">
       <div className="container  mx-auto px-4 py-8 mt-10">
-         <div className="grid justify-items-center  grid-cols-4 gap-4">
+         <div className="grid justify-items-center  grid-cols-4 gap-4"> 
           {suggestions?.map((suggestion, index) => (
             <Link to={`/product/${suggestion.id}`}>
             <div
@@ -50,4 +50,4 @@ const SuggestedTools = () => {
 );
 }
 
-export default SuggestedTools;
+export default SuggestedToolsFromPrompt;

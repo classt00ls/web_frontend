@@ -45,9 +45,9 @@ const SidebarCategory = () => {
           {categoriesData.map((category, index) => (
             <div
               key={index}
-              className={`flex cursor-pointer flex-col w-[132px] h-[96px] items-center p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out`
+              className={`flex cursor-pointer flex-col w-[132px] h-[96px]  items-center p-4 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out`
                 +
-                `${category.clicked ? ' bg-blue-500 text-blue':' bg-white'}`
+                `${category.clicked ? ' blue_corporative':' bg-white'}`
               }
               onClick={() => selectCategory(category)}
             >

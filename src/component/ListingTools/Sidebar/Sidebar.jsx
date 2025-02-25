@@ -7,13 +7,14 @@ import ReactSelect from "../../UI/ReactSelect/ReactSelect";
 import SidebarCategory from "../Sidebar/SIdebarCategory";
 import CheckList from "./CheckList/CheckList";
 
-import cat_icon from '../../../assets/AI Icons/cat_icon.svg';
-import cat_icon2 from '../../../assets/AI Icons/cat_icon2.svg';
-import filter_icon from '../../../assets/AI Icons/filter_icon.svg';
-import filter_icon_1 from '../../../assets/AI Icons/filter_icon_1.svg';
+// import cat_icon from '../../../assets/AI Icons/cat_icon.svg';
+// import cat_icon2 from '../../../assets/AI Icons/cat_icon2.svg';
+// import filter_icon from '../../../assets/AI Icons/filter_icon.svg';
+// import filter_icon_1 from '../../../assets/AI Icons/filter_icon_1.svg';
 import Loader from "../../Loader/Loader";
 import "./Sidebar.css";
 import { useDispatch, useSelector } from "react-redux";
+import { ToolApi } from "../../../api/ToolApi";
 
 const Sidebar = () => {
   const { categoriesData,setSelectedCategory, subCategories } = useContext(dataContext);
@@ -131,9 +132,7 @@ const Sidebar = () => {
   const searchAction = async () => {
     try {
       // Actualizamos los filtros
-      dispatch({ type: 'CHANGE_FILTERS', title: textToSearch });
-      // Vamos a buscar las tools
-      dispatch({ type: 'set', refreshTools: true });
+      await ToolApi.getFilteredlTool(null, null, {'prompt': textToSearch});
 
     } catch (error) {
       dispatch({ type: 'set', errorMessage: error });

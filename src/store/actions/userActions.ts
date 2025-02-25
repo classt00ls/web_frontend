@@ -9,3 +9,7 @@ export const ME_SUCCESS = {type: "ME_SUCCESS"}
 export const ME_UNAUTHORIZED = {type: "ME_UNAUTHORIZED"}
 
 export const SUGGESTIONS_SUCCESS = {type: "SUGGESTIONS_SUCCESS"}
+
+export const PROMPT_SUGGESTIONS_SUCCESS = {type: "PROMPT_SUGGESTIONS_SUCCESS"}
+
+export const TOOLS_RECEIVED = {type: "TOOLS_RECEIVED"}

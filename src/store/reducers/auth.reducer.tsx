@@ -1,13 +1,15 @@
 import { ToolApi } from "../../api/ToolApi";
 import { IAuthState } from "../../Domain/Store";
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, ME_SUCCESS, ME_UNAUTHORIZED, SUGGESTIONS_SUCCESS } from "../actions/userActions";
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT_REQUEST, ME_SUCCESS, ME_UNAUTHORIZED, PROMPT_SUGGESTIONS_SUCCESS, SUGGESTIONS_SUCCESS, TOOLS_RECEIVED } from "../actions/userActions";
 import { REGISTER_SUCCESS } from "../actionTypes";
 
 const initialState: IAuthState = {
   logginIn: false, 
   loggedIn: false, 
   user: null,
-  suggestions: null
+  suggestions: null,
+  prompt_suggestions: null,
+  tools: {data:[]}
 };
 
 // A partir del estado inicial y de la action se actualiza el estado
@@ -41,8 +43,7 @@ export function authenticationReducer(state: IAuthState = initialState, action):
       });
       
     case ME_SUCCESS.type:
-
-      ToolApi.getSuggestedTools(action.payload.id);
+      
       
       return Object.assign({}, state, {
         loggedIn: true,
@@ -64,6 +65,22 @@ export function authenticationReducer(state: IAuthState = initialState, action):
 
         return Object.assign({}, state, {
           suggestions: action.payload.data
+        });
+      break;
+
+      case PROMPT_SUGGESTIONS_SUCCESS.type:
+        console.log('recibimos el /prompt suggested', action.payload);
+
+        return Object.assign({}, state, {
+          prompt_suggestions: action.payload.data
+        });
+      break;
+
+      case TOOLS_RECEIVED.type:
+        console.log('recibimos LOS TOOLS', action.payload);
+
+        return Object.assign({}, state, {
+          tools: action.payload
         });
       break;
     default:

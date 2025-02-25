@@ -6,11 +6,14 @@ import Loader from "../Loader/Loader";
 import { useDispatch } from "react-redux";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { UserApi } from "../../api/UserApi";
+import { useTranslation } from "react-i18next";
+import { ToolApi } from "../../api/ToolApi";
 
 
 const HomeLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
@@ -43,10 +46,11 @@ const HomeLayout = () => {
 
   const searchAction = async () => {
     try {
-      // Actualizamos los filtros
-      dispatch({ type: 'CHANGE_FILTERS', title: text });
-      // Vamos a buscar las tools
-      dispatch({ type: 'set', refreshTools: true });
+      await ToolApi.getFilteredlTool(null, null, {'prompt': text}); 
+      // // Actualizamos los filtros 
+      // dispatch({ type: 'CHANGE_FILTERS', title: text });
+      // // Vamos a buscar las tools
+      // dispatch({ type: 'set', refreshTools: true });
 
       navigate("/tools");
 
@@ -88,8 +92,8 @@ const HomeLayout = () => {
                 <input
                   type="text"
                   onChange={e => {setText(e.target.value)}}
-                  className="text-center w-full text-[15px] color-white pl-10 pr-4 py-3 rounded-full border-none focus:outline-none"
-                  placeholder="Introduce una palabra clave"
+                  className="text-center w-full text-[15px] green_corporative pl-10 pr-4 py-3 rounded-full border-none focus:outline-none"
+                  placeholder={t('home.searcher_placeholder')}
                 />
               </div>
               {/* <div className="flex items-center px-4 border-l  border-gray-300">
@@ -109,7 +113,8 @@ const HomeLayout = () => {
           </div>
           
         )}
-          {noHomeHeader ?( <></> ): (<NavLink to={"/tools"}
+          {noHomeHeader ?( <></> ): (
+          <NavLink to={"/tools"}
             onClick={e => {}}
             className="flex flex-col w-[180px] h-[30px] items-center p-1"
           >

@@ -10,11 +10,11 @@ const ListingTools = () => {
 
   const dispatch = useDispatch();
 
-  const [tools, setTools] = useState([]);
   const [loading, setLoading ] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-
+  
+  let totalPages = Math.ceil(useSelector(state => state.auth.tools.count)/12);
+  let tools = useSelector(state => state.auth.tools.data);
   const selectedCategories = useSelector(state => state.filters.selectedCategories);
   const textToSearch = useSelector(state => state.filters.title);
   const refreshTools = useSelector(state => state.changeState.refreshTools);
@@ -23,16 +23,13 @@ const ListingTools = () => {
   useEffect(() => {
     (async () => {
       try {
-        
-        setLoading(true);
-        const toolsData = await ToolApi.getFilteredlTool(1,12,filters);
-        console.log("hallo ...................", toolsData) 
-        setTools(toolsData.data);
-        setTotalPages(Math.round(toolsData.count/12));
         setLoading(false);
+        dispatch({ type: 'set', refreshTools: (tools?.length == 0) });
+        console.log('hasemo refresh: ', (tools?.length))
+        setCurrentPage(1);
 
       } catch (error) {
-
+        console.log('hasemo error: ', error)
         dispatch({ type: 'set', errorMessage: error });
         dispatch({ type: 'set', showError: true });
 
@@ -46,9 +43,7 @@ const ListingTools = () => {
       try {
         setLoading(true);
         setCurrentPage(1);
-        const toolsData = await ToolApi.getFilteredlTool(1,12,filters);
-        setTools(toolsData.data);
-        setTotalPages(Math.round(toolsData.count/12));
+        const toolsData = await ToolApi.getFilteredlTool(currentPage,12,filters);
         setLoading(false);
         dispatch({ type: 'set', refreshTools: false });
 
@@ -63,21 +58,12 @@ const ListingTools = () => {
 
   useEffect(() => {
     (async () => {
-      try {
+        console.log(' ---------- currentPage cambiado: ', currentPage);
         setLoading(true);
         const toolsData = await ToolApi.getFilteredlTool(currentPage,12,filters);
-        setTools(toolsData.data);     
-        setTotalPages(Math.round(toolsData.count/12));
         setLoading(false);
-
-      } catch (error) {
-
-        dispatch({ type: 'set', errorMessage: error });
-        dispatch({ type: 'set', showError: true });
-
-      }
     })()
-}, [currentPage])
+  }, [currentPage]);
 
   return (
     <div className="tools-container md:flex">

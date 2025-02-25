@@ -10,5 +10,8 @@
     "error-fields-mandatory": "Rellena los campos obligatorios",
     "error-password-minimum": "El password no cumple los requisitos",
     "error_google": "Error durante el inicio de sesión"
+  },
+  "home":{
+    "searcher_placeholder": "Introduce una descripción breve de lo que buscas"
   }
 }
