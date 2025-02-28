@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ResponsivePagination from "react-responsive-pagination";
-import heart from "../../../assets/AI Icons/heart.png";
+import heart from "../../../assets/AI Icons/heart.svg";
+import heart_filled from "../../../assets/AI Icons/heart_filled.svg";
 import bookmark from "../../../assets/Category/bookmark.png";
 import share from "../../../assets/Category/share.png";
 import card from "../../../assets/classtools_web_design/card_logo.png";
@@ -8,12 +9,70 @@ import star from "../../../assets/classtools_web_design/star_logo.png";
 
 import Loader from "../../Loader/Loader";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { ToolApi } from "../../../api/ToolApi";
+import { UserApi } from "../../../api/UserApi";
+import Tags from "../../Tags";
+import { useDispatch, useSelector } from "react-redux";
+import Tagify from "@yaireo/tagify";
+import TagsPrompt from "../../TagsPrompt";
 
-const Category_section1 = ({currentPage,loading,tools,totalPages, setCurrentPage}) => {
+
+var inputElem = document.getElementById('marmota') // the 'input' element which will be transformed into a Tagify component
+var tagify = new Tagify(inputElem, {
+  // A list of possible tags. This setting is optional if you want to allow
+  // any possible tag to be added without suggesting any to the user.
+  whitelist: ['foo', 'bar', 'and baz', 0, 1, 2]
+})
+
+
+const Category_section1 = ({}) => {
+
+  const dispatch = useDispatch();
+
+  const filters = useSelector(state => state.filters);
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const [loading, setLoading ] = useState(true);
+
+  let favorites = useSelector(state => {return state.auth.user?.favorites });
+
+  let refreshTools = useSelector(state => {return state.changeState.refreshTools });
+
+  let tools = useSelector(state => state.auth.tools.data);
+
+  let totalPages = Math.ceil(useSelector(state => state.auth.tools.count)/12);
 
   const [paginationHas, setPaginationHas] = useState(true);
+
+  console.log('FILTEEEEEEEERS: ',filters)
   
+  useEffect(() => {
+    (async () => {
+      dispatch({ type: 'set', refreshTools: true });
+    })()
+  }, [currentPage]);
+
+  useEffect(() => { 
+    (async () => {
+        setLoading(true);
+        
+        if(refreshTools) {
+          console.log('llamamos a search tools desde category');
+          await ToolApi.getFilteredlTool(currentPage,12,filters);
+          dispatch({ type: 'set', refreshTools: false });
+        }
+        setLoading(false);
+    })()
+  }, [refreshTools]);
+
+  const toggleFavorite = async (toolId) => {
+
+    await ToolApi.toggleFavorite(toolId);
+
+    await UserApi.meCall();
+    
+  };
 
   if (loading) { return <Loader />;  }
 
@@ -21,7 +80,10 @@ const Category_section1 = ({currentPage,loading,tools,totalPages, setCurrentPage
 
   return (
     <div className=" bg-none">
+      <Tags />
+      <TagsPrompt />
       <div className="flex flex-wrap gap-8 p-5">
+        
         {paginationHas &&
           tools?.map((tool) => (
             
@@ -41,9 +103,10 @@ const Category_section1 = ({currentPage,loading,tools,totalPages, setCurrentPage
                     </h1>
                   </div>
                   <img
-                    src={heart}
+                    src={favorites?.includes(tool.id) ? heart_filled : heart}
                     alt="icon"
                     className="w-[40px] h-[40px] mt-[-30px]"
+                    onClick={() => toggleFavorite(tool.id)}
                   />
                 </div>
 
@@ -113,10 +176,12 @@ const Category_section1 = ({currentPage,loading,tools,totalPages, setCurrentPage
                       {tool?.name}
                     </h1>
                   </div>
+                  
                   <img
-                    src={heart}
+                    src={favorites[tool.id] ? heart_filled : heart}
                     alt="icon"
                     className="w-[40px] h-[40px] mt-[-30px]"
+                    
                   />
                 </div>
 

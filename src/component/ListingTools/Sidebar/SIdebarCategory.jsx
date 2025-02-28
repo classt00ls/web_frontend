@@ -10,19 +10,30 @@ const SidebarCategory = () => {
   const selectedCategories = useSelector(state => state.filters.selectedCategories);
   const refreshTools = useSelector(state => state.changeState.refreshTools);
 
+  useEffect(() => { 
+    (async () => {
+
+      categoriesData.forEach(element => {
+        if (!selectedCategories.includes(element.name)) {
+          element.clicked = false;
+        }
+      });
+      
+    })()
+  }, [selectedCategories]);
 
   const selectCategory = async (category) => {
       try {
-        
         let actualCategories = selectedCategories;
 
-        if(actualCategories.includes(category.name)) {
-          category.clicked = false;
-          actualCategories = actualCategories.filter(filtered => filtered != category.name);
-        } else {
-          category.clicked = true;
-          actualCategories.push(category.name);
-        }
+      if(actualCategories.includes(category.name)) {
+        category.clicked = false;
+        actualCategories = actualCategories.filter(filtered => filtered != category.name);
+      } else {
+        category.clicked = true;
+        actualCategories.push(category.name);
+      }
+        
         // Actualizamos los filtros
         dispatch({ type: 'CHANGE_FILTERS', selectedCategories: actualCategories });
         // Vamos a buscar las tools

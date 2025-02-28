@@ -1,10 +1,9 @@
 import { FiSearch } from "react-icons/fi";
-import { HiOutlineMenuAlt2 } from "react-icons/hi";
 import backgroundImage from "../../assets/Rectangle 1.png";
 import { useEffect, useState } from "react";
 import Loader from "../Loader/Loader";
-import { useDispatch } from "react-redux";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { UserApi } from "../../api/UserApi";
 import { useTranslation } from "react-i18next";
 import { ToolApi } from "../../api/ToolApi";
@@ -15,10 +14,13 @@ const HomeLayout = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
+  
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [text, setText] = useState(true);
+
+  const filters = useSelector(state => state.filters);
 
   const noHomeHeader = location.pathname.includes("tools");
 
@@ -46,18 +48,25 @@ const HomeLayout = () => {
 
   const searchAction = async () => {
     try {
-      await ToolApi.getFilteredlTool(null, null, {'prompt': text}); 
-      // // Actualizamos los filtros 
-      // dispatch({ type: 'CHANGE_FILTERS', title: text });
-      // // Vamos a buscar las tools
-      // dispatch({ type: 'set', refreshTools: true });
-
+      dispatch({ type: 'CHANGE_FILTERS', prompt: text });
+      dispatch({ type: 'set', refreshTools: true });
       navigate("/tools");
 
     } catch (error) {
       dispatch({ type: 'set', errorMessage: error });
       dispatch({ type: 'set', showError: true });
     }
+};
+
+const viewAllAction = async () => {
+  try {
+    dispatch({ type: 'set', refreshTools: true });
+    navigate("/tools");
+
+  } catch (error) {
+    dispatch({ type: 'set', errorMessage: error });
+    dispatch({ type: 'set', showError: true });
+  }
 };
 
   if (loading) {
@@ -114,14 +123,15 @@ const HomeLayout = () => {
           
         )}
           {noHomeHeader ?( <></> ): (
-          <NavLink to={"/tools"}
-            onClick={e => {}}
+          <div
+            onClick={e => {viewAllAction()}}
             className="flex flex-col w-[180px] h-[30px] items-center p-1"
+            style={{cursor: 'pointer'}}
           >
             <h3 className="text-lg font-bold text-white">
               Ver todas las IA
             </h3>
-          </NavLink>
+          </div>
           )}
         </div>
       </div>

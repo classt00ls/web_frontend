@@ -6,62 +6,13 @@ import aiImage from "../../../assets/filter-image.png";
 import { dataContext } from "../../../Context/Context";
 import Loader from "../../Loader/Loader";
 import "./filter.css";
-import { useSelector } from "react-redux";
-import { ToolApi } from "../../../api/ToolApi";
 
 const Filter = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const { toolsData } = useContext(dataContext);
-  const refreshTools = useSelector(state => state.changeState.refreshTools);
   const [ loading, setLoading ] = useState(true);
-  const selectedCategories = useSelector(state => state.filters.selectedCategories);
-
-
-  const { pagination } = toolsData;
-  const [paginationHas, setPaginationHas] = useState(true);
   const [data, setData] = useState([]);
   // data object for ai tools
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-
-        const toolsData = await ToolApi.getFilteredlTool(currentPage,12,selectedCategories);
-        setData(toolsData.data);
-        
-        setTotalPages(Math.round(toolsData.count/12));
-        setLoading(false);
-
-      } catch (error) {
-
-        dispatch({ type: 'set', errorMessage: error });
-        dispatch({ type: 'set', showError: true });
-
-      }
-    })()
-}, [currentPage])
-
-useEffect(() => {
-  (async () => {
-    if(!refreshTools) return;
-    try {
-      setLoading(true);
-      const toolsData = await ToolApi.getFilteredlTool(1,12,filters);
-      setData(toolsData.data);
-      setTotalPages(Math.round(toolsData.count/12));
-      setLoading(false);
-      dispatch({ type: 'set', refreshTools: false });
-
-    } catch (error) {
-
-      dispatch({ type: 'set', errorMessage: error });
-      dispatch({ type: 'set', showError: true });
-
-    }
-  })()
-}, [refreshTools]);
 
 if (loading) {
   return <Loader />;

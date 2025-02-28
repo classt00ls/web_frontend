@@ -3,7 +3,8 @@ import { CHANGE_FILTERS } from "../actionTypes";
 const initialState = {
   selectedCategories: [],
   stars: 0,
-  title: ""
+  title: "",
+  prompt: ""
 };
 
 const filtersState = (state = initialState, {type = 'set', ...rest }) => {

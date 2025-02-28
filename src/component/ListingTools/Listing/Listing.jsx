@@ -4,7 +4,7 @@ import Loader from "../../Loader/Loader";
 import Filter from "../Filter/Filter";
 import Category_section1 from "../Category/Category_section1";
 
-const Listing = ({currentPage,loading,tools,totalPages, setCurrentPage}) => {
+const Listing = ({}) => {
   const { listing } = useContext(dataContext);
   
   const { categoriesData, selectedCategory, subCategories } = useContext(dataContext);
@@ -54,7 +54,7 @@ const Listing = ({currentPage,loading,tools,totalPages, setCurrentPage}) => {
         </div>
       </div>
 
-      {listing === "category" ? <Category_section1 setCurrentPage={setCurrentPage} currentPage={currentPage} loading={loading} tools={tools} totalPages={totalPages} /> : <Filter></Filter>}
+      {listing === "category" ? <Category_section1/> : <Filter></Filter>}
     </div>
   );
 };

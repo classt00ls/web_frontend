@@ -3,6 +3,7 @@ import { anonApiCall, authApiCall } from "./apiCalls";
 import store from "../store/store";
 import { PROMPT_SUGGESTIONS_SUCCESS, SUGGESTIONS_SUCCESS, TOOLS_RECEIVED } from "../store/actions/userActions";
 
+
 /** Recupera los tool dados de alta para el usuario */
 const getAllTools = (
     page = 0, 
@@ -61,6 +62,7 @@ const getSuggestedToolsFromPrompt = (
 	});
 }
 
+// El SEARCH principal
 const getFilteredlTool = (
     page = 0, 
     pageSize = null,
@@ -73,6 +75,26 @@ const getFilteredlTool = (
 		anonApiCall.get("/tool/search", { params })
 			.then(({ data, status }) => { 
                 store.dispatch({type: TOOLS_RECEIVED.type, payload: data});
+
+                resolve(data) 
+            })
+			.catch((error) => { 
+                reject(processError(error)) 
+            })
+            
+	});
+}
+
+const toggleFavorite = (
+    toolId
+): Promise<any> => {
+
+	return new Promise((resolve, reject) => {
+		const params = { id: toolId };
+        
+		authApiCall.get("/tool/favorite", { params })
+			.then(({ data, status }) => { 
+                console.log('favorito añadido')
                 resolve(data) 
             })
 			.catch((error) => { reject(processError(error)) })
@@ -103,6 +125,7 @@ const processError = (error: any) => {
 }
 
 export const ToolApi = {
+    toggleFavorite,
     getAllTools,
     getDetailTool,
     getFilteredlTool,

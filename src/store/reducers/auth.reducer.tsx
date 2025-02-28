@@ -44,7 +44,7 @@ export function authenticationReducer(state: IAuthState = initialState, action):
       
     case ME_SUCCESS.type:
       
-      
+    console.log('recibimos el /me', action.payload);
       return Object.assign({}, state, {
         loggedIn: true,
         user: action.payload,

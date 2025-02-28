@@ -13,8 +13,7 @@ import CheckList from "./CheckList/CheckList";
 // import filter_icon_1 from '../../../assets/AI Icons/filter_icon_1.svg';
 import Loader from "../../Loader/Loader";
 import "./Sidebar.css";
-import { useDispatch, useSelector } from "react-redux";
-import { ToolApi } from "../../../api/ToolApi";
+import { useDispatch } from "react-redux";
 
 const Sidebar = () => {
   const { categoriesData,setSelectedCategory, subCategories } = useContext(dataContext);
@@ -98,7 +97,6 @@ const Sidebar = () => {
         )
       
       setOptions(values);
-      console.log(options);
       
     }
     if (subCategories?.length > 0) {
@@ -132,7 +130,8 @@ const Sidebar = () => {
   const searchAction = async () => {
     try {
       // Actualizamos los filtros
-      await ToolApi.getFilteredlTool(null, null, {'prompt': textToSearch});
+      dispatch({ type: 'CHANGE_FILTERS', prompt: textToSearch });
+      dispatch({ type: 'set', refreshTools: true });
 
     } catch (error) {
       dispatch({ type: 'set', errorMessage: error });
