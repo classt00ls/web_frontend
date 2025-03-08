@@ -11,7 +11,7 @@ import { ToolApi } from "../../api/ToolApi";
 const HomeLayout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
@@ -41,6 +41,7 @@ const HomeLayout = () => {
     try {
       dispatch({ type: 'CHANGE_FILTERS', prompt: text });
       dispatch({ type: 'set', refreshTools: true });
+      await ToolApi.getFilteredlTool(1, 12, filters, i18n.language);
       navigate("/tools");
     } catch (error) {
       dispatch({ type: 'set', errorMessage: error });
@@ -51,6 +52,7 @@ const HomeLayout = () => {
   const viewAllAction = async () => {
     try {
       dispatch({ type: 'set', refreshTools: true });
+      await ToolApi.getFilteredlTool(1, 12, filters, i18n.language);
       navigate("/tools");
     } catch (error) {
       dispatch({ type: 'set', errorMessage: error });

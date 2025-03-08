@@ -6,6 +6,7 @@ import bookmark from "../../../assets/Category/bookmark.png";
 import share from "../../../assets/Category/share.png";
 import card from "../../../assets/classtools_web_design/card_logo.png";
 import star from "../../../assets/classtools_web_design/star_logo.png";
+import { useTranslation } from "react-i18next";
 
 import Loader from "../../Loader/Loader";
 import { Link } from "react-router-dom";
@@ -28,12 +29,15 @@ var tagify = new Tagify(inputElem, {
 const Category_section1 = ({}) => {
 
   const dispatch = useDispatch();
+  const { i18n } = useTranslation();
 
   const filters = useSelector(state => state.filters);
 
   const [currentPage, setCurrentPage] = useState(1);
 
   const [loading, setLoading ] = useState(true);
+
+  const [initialLoad, setInitialLoad] = useState(true);
 
   let favorites = useSelector(state => {return state.auth.user?.favorites });
 
@@ -53,16 +57,27 @@ const Category_section1 = ({}) => {
     })()
   }, [currentPage]);
 
+  useEffect(() => {
+    if (!initialLoad) {
+      (async () => {
+        setLoading(true);
+        await ToolApi.getFilteredlTool(currentPage, 12, filters, i18n.language);
+        setLoading(false);
+      })();
+    }
+  }, [i18n.language]);
+
   useEffect(() => { 
     (async () => {
         setLoading(true);
         
         if(refreshTools) {
           console.log('llamamos a search tools desde category');
-          await ToolApi.getFilteredlTool(currentPage,12,filters);
+          await ToolApi.getFilteredlTool(currentPage, 12, filters, i18n.language);
           dispatch({ type: 'set', refreshTools: false });
         }
         setLoading(false);
+        setInitialLoad(false);
     })()
   }, [refreshTools]);
 
@@ -114,7 +129,7 @@ const Category_section1 = ({}) => {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
                       <img src={star} alt="review-icon" className="h-4 w-4" />
-                      <span className="ml-2  text-[13px] text-gray-700">
+                      <span className="ml-2 text-[13px] text-gray-700">
                         {tool?.stars} ({tool?.stars} Reviews)
                       </span>
                     </div>
@@ -131,7 +146,6 @@ const Category_section1 = ({}) => {
                         className="h-4 w-4"
                       />
                       <span className="ml-2 text-[13px] text-red-600">
-                        {/* {tool?.totalBookmarked} */}
                         100
                       </span>
                     </div>
@@ -141,13 +155,13 @@ const Category_section1 = ({}) => {
                     {tool?.excerpt}
                   </p>
 
-                  <ul className="mt-2 text-gray-700  text-[10px] space-y-1">
+                  <ul className="mt-2 text-gray-700 text-[10px] space-y-1">
                     {tool?.tags.map((item, index) => (
                       <li key={item.id}>#{item.name}</li>
                     ))}
                   </ul>
 
-                  <div className="flex justify-end  mt-[-25px] ">
+                  <div className="flex justify-end mt-[-25px]">
                     <Link to={`/product/${tool.id}`}>
                       <img src={share} alt="share-icon" className="w-6 h-6" />
                     </Link>
@@ -189,7 +203,7 @@ const Category_section1 = ({}) => {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center">
                       <img src={star} alt="review-icon" className="h-4 w-4" />
-                      <span className="ml-2  text-[13px] text-gray-700">
+                      <span className="ml-2 text-[13px] text-gray-700">
                         {tool?.stars} ({tool?.stars} 0 Reviews)
                       </span>
                     </div>

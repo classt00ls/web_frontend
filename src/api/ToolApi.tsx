@@ -3,6 +3,10 @@ import { anonApiCall, authApiCall } from "./apiCalls";
 import store from "../store/store";
 import { PROMPT_SUGGESTIONS_SUCCESS, SUGGESTIONS_SUCCESS, TOOLS_RECEIVED } from "../store/actions/userActions";
 
+interface ToolFilters {
+    lang?: string;
+    [key: string]: any;
+}
 
 /** Recupera los tool dados de alta para el usuario */
 const getAllTools = (
@@ -12,7 +16,7 @@ const getAllTools = (
 	return new Promise((resolve, reject) => {
 		const params = { page, pageSize };
         
-		anonApiCall.get("/tool/search", { params })
+		anonApiCall.get("/tool/search/lang", { params })
 			.then(({ data, status }) => { resolve(data) })
 			.catch((error) => { reject(processError(error)) })
             
@@ -66,13 +70,18 @@ const getSuggestedToolsFromPrompt = (
 const getFilteredlTool = (
     page = 0, 
     pageSize = null,
-    filters = []
+    filters: ToolFilters = {},
+    language = 'es'
 ): Promise<any> => {
 
 	return new Promise((resolve, reject) => {
-		const params = { page, pageSize, filters};
+		// Extraemos solo el código de idioma base (es, en, etc.)
+		const baseLanguage = language.split('-')[0];
+		// Añadimos el language a los filters
+		filters.lang = baseLanguage;
+		const params = { page, pageSize, filters };
         
-		anonApiCall.get("/tool/search", { params })
+		anonApiCall.get("/tool/search/lang", { params })
 			.then(({ data, status }) => { 
                 store.dispatch({type: TOOLS_RECEIVED.type, payload: data});
 
