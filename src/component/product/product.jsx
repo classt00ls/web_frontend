@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import { useTranslation } from "react-i18next";
 
 import Product_section_1 from "./product_section_1/product_section_1";
 import Product_section_2 from "./product_section_2/product_section_2";
@@ -13,22 +13,21 @@ import { ToolApi } from "../../api/ToolApi";
 
 
 const Product = () => {
-
   let { id } = useParams();
-
+  const { i18n } = useTranslation();
   const [toolData, setToolData] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
     (async () => {
-      const response = await ToolApi.getDetailTool(id);
+      const response = await ToolApi.getDetailTool(id, i18n.language);
       if(isMounted) {
         setToolData(response);
         //console.log("la toolsData: ", toolData);
       }
     })()
     return () => { isMounted = false };
-  }, [])
+  }, [id, i18n.language]);
 
   return (
     <>

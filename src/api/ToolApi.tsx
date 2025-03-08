@@ -24,10 +24,13 @@ const getAllTools = (
 }
 
 const getDetailTool = (
-    id
+    id,
+    language = 'es'
 ): Promise<any> => {
 	return new Promise((resolve, reject) => {
-		const params = { id };
+		// Extraemos solo el código de idioma base (es, en, etc.)
+		const baseLanguage = language.split('-')[0];
+		const params = { id, lang: baseLanguage };
         
 		anonApiCall.get("/tool/detail", { params })
 			.then(({ data, status }) => { resolve(data) })

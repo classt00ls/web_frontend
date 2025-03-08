@@ -1,3 +1,5 @@
+import React from "react";
+import { useTranslation } from "react-i18next";
 import I from "../../../../src/assets/classtools_web_design/Group.png";
 import H from "../../../../src/assets/classtools_web_design/Vector (4).png";
 import G from "../../../../src/assets/classtools_web_design/Vector (5).png";
@@ -9,14 +11,19 @@ import YTLogo from "../../../../src/assets/classtools_web_design/Group 262.png";
 
 import parse from 'html-react-parser'
 
-const Product_section_6 = ({title, features}) => {
+const Product_section_6 = ({ title, features }) => {
+  const { t } = useTranslation();
+
+  // Nos aseguramos de que el título esté en el formato correcto
+  const formattedTitle = title ? title.trim() : '';
+
   return (
     <section className=" mt-10">
       <div className="flex flex-col md:flex-row">
         {/* Left Side */}
         <div className="w-full md:w-1/2 md:pr-20">
           <h1 className="text-black font-bold mt-5  text-[24px] ">
-            Principales características de {title}
+            {t('product.main_features', { title: formattedTitle })}
           </h1>
           <br />
           {parse (features)}
