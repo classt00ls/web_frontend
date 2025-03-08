@@ -1,13 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import logo from "/src/assets/CLASSTOOLS_LOGOS_1111 1.png";
 import SignInlogo from "/src/assets/Group 2.png";
 import { useSelector } from "react-redux";
+import LanguageSelector from "../UI/LanguageSelector/LanguageSelector";
 
 const Header = () => {
-
+  const { t } = useTranslation();
   const token = localStorage.getItem('access_token');
-
   const user = useSelector((state) => state.auth.user);
 
   const dropdownRefs = {
@@ -126,7 +127,7 @@ const Header = () => {
 
   return (
     <div>
-      <div className="navbar bg-[#1F1B2D] text-white  ">
+      <div className="navbar bg-[#1F1B2D] text-white">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -153,7 +154,7 @@ const Header = () => {
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost text-xl">
-            <img className="w-16  md:w-[150px] md:h-[45px]" src={logo} alt="" />
+            <img className="w-16 md:w-[150px] md:h-[45px]" src={logo} alt="" />
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -161,28 +162,29 @@ const Header = () => {
             {navItems}
           </ul>
         </div>
-        <div className="navbar-end flex gap-5  md:mr-10">
-        { user ?
-          <Link
-          to={`http://localhost:3010/verify?token=${token}`}
-          className="bg-[#3683B3] hover:bg-red-600 gap-1 flex justify-center md:w-[135px] h-[37px] px-[10px] py-[18px] rounded-[30px]"
-        >
-          <p className="text-[10px] md:text-[16px] flex font-semibold items-center text">
-            Discover
-          </p>
-        </Link>
-      :
-          <Link to="/signIn" className=" flex gap-1 md:gap-[16px] items-center">
-            <img
-              className="w-[5px] h-[10px]  md:w-[8px]  md:h-[14px]"
-              src={SignInlogo}
-              alt=""
-            />
-            <p className="text-[#63EA32] text-[7px] md:text-[14px] font-semibold">
-              Sign in
-            </p>
-          </Link>
-}
+        <div className="navbar-end flex items-center gap-5 md:mr-10">
+          <LanguageSelector />
+          {user ? (
+            <Link
+              to={`http://localhost:3010/verify?token=${token}`}
+              className="bg-[#3683B3] hover:bg-red-600 gap-1 flex justify-center md:w-[135px] h-[37px] px-[10px] py-[18px] rounded-[30px]"
+            >
+              <p className="text-[10px] md:text-[16px] flex font-semibold items-center text">
+                {t('header.discover')}
+              </p>
+            </Link>
+          ) : (
+            <Link to="/signIn" className="flex gap-1 md:gap-[16px] items-center">
+              <img
+                className="w-[5px] h-[10px] md:w-[8px] md:h-[14px]"
+                src={SignInlogo}
+                alt=""
+              />
+              <p className="text-[#63EA32] text-[7px] md:text-[14px] font-semibold">
+                {t('header.sign_in')}
+              </p>
+            </Link>
+          )}
         </div>
       </div>
     </div>

@@ -1,0 +1,26 @@
+{
+  "auth" : {
+    "continue_with_google" : "Continue with Google",
+    "sign_up": "Sign Up",
+    "sign_in": "Sign In",
+    "sign_in_title": "Sign In to Classtools",
+    "or": "Or",
+    "password": "Password",
+    "have_account": "Don't have an account yet?",
+    "error-fields-mandatory": "Please fill in all required fields",
+    "error-password-minimum": "Password does not meet requirements",
+    "error_google": "Error during sign in"
+  },
+  "home":{
+    "searcher_placeholder": "Enter a brief description of what you're looking for",
+    "main_title": "Smart solutions for a better future",
+    "subtitle": "Learn, create and innovate with AI",
+    "description": "Unlock your potential with ClassTools.io: artificial intelligence at everyone's fingertips, in the most complete AI directory.",
+    "search_button": "Search",
+    "view_all": "View all AI"
+  },
+  "header": {
+    "discover": "Discover",
+    "sign_in": "Sign In"
+  }
+} 

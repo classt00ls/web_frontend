@@ -12,6 +12,15 @@
     "error_google": "Error durante el inicio de sesión"
   },
   "home":{
-    "searcher_placeholder": "Introduce una descripción breve de lo que buscas"
+    "searcher_placeholder": "Introduce una descripción breve de lo que buscas",
+    "main_title": "Soluciones inteligentes para un futuro mejor",
+    "subtitle": "Aprende, crea e innova con la IA",
+    "description": "Despierta tu potencial con ClassTools.io: la inteligencia artificial al alcance de todos, en el directorio de IA más completo.",
+    "search_button": "Buscar",
+    "view_all": "Ver todas las IA"
+  },
+  "header": {
+    "discover": "Descubrir",
+    "sign_in": "Entrar"
   }
 }
