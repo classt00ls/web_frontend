@@ -5,6 +5,7 @@ export default {
     extend: {
       fontFamily: {
         lekton: ['"Lekton"', 'sans-serif'],
+        montserrat: ['"Montserrat"', 'sans-serif'],
       },
     },
   },

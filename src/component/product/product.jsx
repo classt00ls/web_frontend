@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import Product_section_3 from "./product_section_3/product_section_3";
 import ProductDescription from "./product_description/product_description";
 import Product_section_6 from "./product_section_6/product_section_6";
 import { ToolApi } from "../../api/ToolApi";
@@ -34,10 +33,7 @@ const Product = () => {
           pricing={toolData.pricing}
           url={toolData.url}
           description={toolData.description}
-        />
-        <Product_section_3 
-          stars={toolData.stars} 
-          pricing={toolData.pricing}
+          video_url={toolData.video_url}
         />
         <Product_section_6 title={toolData.name} features={toolData.features} />
       </div>

@@ -2,18 +2,27 @@ import React, { useState } from "react";
 import parse from 'html-react-parser';
 import price from "../../../../src/assets/classtools_web_design/card_logo.png";
 import globeLogo from "../../../assets/classtools_web_design/Globe.png";
-import loveLogo from "../../../../src/assets/classtools_web_design/love_logo.png";
 import shareLogo from "../../../../src/assets/classtools_web_design/share_logo.png";
 import ytLogo from "../../../../src/assets/classtools_web_design/yt_logo2.png";
 import xLogo from "../../../../src/assets/classtools_web_design/x_logo.png";
 import linkLogo from "../../../../src/assets/classtools_web_design/linkedin_logo.png";
+import ReviewLogo from "../../../../src/assets/classtools_web_design/star_logo.png";
 
-const ProductDescription = ({ stars, pricing, title, url, description }) => {
+// Importar Montserrat
+import '@fontsource/montserrat';
+
+const ProductDescription = ({ stars, pricing, title, url, description, video_url }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const truncateDescription = (text) => {
+    if (typeof text !== 'string') return text;
+    if (text.length <= 500) return text;
+    return text.substring(0, 500) + '...';
   };
 
   return (
@@ -96,11 +105,25 @@ const ProductDescription = ({ stars, pricing, title, url, description }) => {
         </div>
       </div>
 
+      {/* Rating and Price Section */}
+      <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 mb-5">
+        <p className="flex flex-col md:flex-row md:space-x-4 text-[16px] md:text-[18px]">
+          <span id="review-count" className="flex items-center space-x-2">
+            <img src={ReviewLogo} alt="review-icon" className="h-4" />
+            <span className="text-[14px]">{stars} (0 Reviews)</span>
+          </span>
+          <span id="price" className="flex items-center space-x-2 mt-2 md:mt-0 ml-0 md:ml-4">
+            <img src={price} alt="price-icon" className="h-8" />
+            <span className="text-[14px]">{pricing}</span>
+          </span>
+        </p>
+      </div>
+
       {/* Main Content Section */}
       <section className="mt-5">
         <div className="flex flex-col justify-between md:flex-row">
           {/* Left Side - Description */}
-          <div className="w-full md:w-1/2 pr-0 md:pr-20">
+          <div className="w-full md:w-2/3 pr-0 md:pr-20">
             <div className="w-full">
               <div className="flex items-center justify-center md:justify-start mb-8">
                 <img 
@@ -113,32 +136,34 @@ const ProductDescription = ({ stars, pricing, title, url, description }) => {
               {!isExpanded ? (
                 <div>
                   {typeof description === "string" ? (
-                    <div className="text-[#1F1B2DBA] text-[15px]">
-                      {parse(description || '')}
+                    <div className="text-[#1F1B2DBA] text-[17px] font-montserrat leading-relaxed">
+                      {parse(truncateDescription(description) || '')}
                     </div>
                   ) : (
-                    <div className="text-[#1F1B2DBA] text-[15px]">
-                      {description}
+                    <div className="text-[#1F1B2DBA] text-[17px] font-montserrat leading-relaxed">
+                      {truncateDescription(description)}
                     </div>
                   )}
-                  <div className="text-orange-500 mt-4">
-                    <button
-                      onClick={handleToggle}
-                      className="text-[14px] md:text-[16px]"
-                    >
-                      Leer más
-                    </button>
-                  </div>
+                  {description && description.length > 500 && (
+                    <div className="text-orange-500 mt-4">
+                      <button
+                        onClick={handleToggle}
+                        className="text-[14px] md:text-[16px] font-montserrat"
+                      >
+                        Leer más
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div>
-                  <div className="text-[#1F1B2DBA] text-[15px]">
+                  <div className="text-[#1F1B2DBA] text-[17px] font-montserrat leading-relaxed">
                     {typeof description === "string" ? parse(description || '') : description}
                   </div>
                   <div className="text-orange-500 mt-4">
                     <button
                       onClick={handleToggle}
-                      className="text-[14px] md:text-[16px]"
+                      className="text-[14px] md:text-[16px] font-montserrat"
                     >
                       Leer menos
                     </button>
@@ -149,20 +174,12 @@ const ProductDescription = ({ stars, pricing, title, url, description }) => {
           </div>
 
           {/* Right Side - Info Card */}
-          <div className="md:w-[500px] mt-3 md:mt-0">
+          <div className="md:w-[400px] mt-3 md:mt-0">
             <div className="p-4 rounded-3xl">
               <div className="bg-white p-6 rounded-2xl border-2">
                 <h1 className="text-black font-bold text-[20px] pt-5">
                   {title}
                 </h1>
-                <div className="flex mt-2 items-center">
-                  <p className="flex flex-col md:flex-row md:space-x-4 text-[16px] md:text-[18px] text-gray-500">
-                    <span id="price" className="flex items-center space-x-2 mt-2 md:mt-0">
-                      <img src={price} alt="price-icon" className="h-8" />
-                      <span className="text-[13px]">{pricing}</span>
-                    </span>
-                  </p>
-                </div>
                 <hr className="border-t-2 border-gray-300 my-5" />
                 <ul className="text-[15px] md:text-[18px] text-gray-500">
                   <li className="flex items-center my-2">
@@ -171,9 +188,21 @@ const ProductDescription = ({ stars, pricing, title, url, description }) => {
                   </li>
                 </ul>
                 <hr className="border-t-2 border-gray-300 my-5" />
-                <p className="font-bold text-black text-[20px]">
+                <p className="font-bold text-black text-[20px] mb-5">
                   {pricing}
                 </p>
+                {video_url && (
+                  <div className="relative w-full pt-[56.25%]">
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full rounded-lg"
+                      src={video_url}
+                      title={`Video de ${title}`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>
