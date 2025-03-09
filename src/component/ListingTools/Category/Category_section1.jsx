@@ -32,6 +32,7 @@ const Category_section1 = ({}) => {
   const { i18n } = useTranslation();
 
   const filters = useSelector(state => state.filters);
+  const user = useSelector(state => state.auth.user);
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -39,8 +40,7 @@ const Category_section1 = ({}) => {
 
   const [initialLoad, setInitialLoad] = useState(true);
 
-  let favorites = useSelector(state => {return state.auth.user?.favorites });
-
+  const favorites = user?.favorites || [];
   let refreshTools = useSelector(state => {return state.changeState.refreshTools });
 
   let tools = useSelector(state => state.auth.tools.data);
@@ -124,12 +124,17 @@ const Category_section1 = ({}) => {
                       </h1>
                     </Link>
                   </div>
-                  <img
-                    src={favorites?.includes(tool.id) ? heart_filled : heart}
-                    alt="icon"
-                    className="w-[40px] h-[40px] mt-[-30px]"
-                    onClick={() => toggleFavorite(tool.id)}
-                  />
+                  {user && (
+                    <img
+                      src={favorites.includes(tool.id) ? heart_filled : heart}
+                      alt="icon"
+                      className="w-[40px] h-[40px] mt-[-30px] cursor-pointer hover:scale-110 transition-transform duration-200"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleFavorite(tool.id);
+                      }}
+                    />
+                  )}
                 </div>
 
                 <div className="mt-4">
@@ -211,13 +216,17 @@ const Category_section1 = ({}) => {
                       </h1>
                     </Link>
                   </div>
-                  
-                  <img
-                    src={favorites[tool.id] ? heart_filled : heart}
-                    alt="icon"
-                    className="w-[40px] h-[40px] mt-[-30px]"
-                    
-                  />
+                  {user && (
+                    <img
+                      src={favorites.includes(tool.id) ? heart_filled : heart}
+                      alt="icon"
+                      className="w-[40px] h-[40px] mt-[-30px] cursor-pointer hover:scale-110 transition-transform duration-200"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleFavorite(tool.id);
+                      }}
+                    />
+                  )}
                 </div>
 
                 <div className="mt-4">

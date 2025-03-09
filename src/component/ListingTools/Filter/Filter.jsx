@@ -2,23 +2,33 @@ import { useContext, useEffect, useState } from "react";
 import ResponsivePagination from "react-responsive-pagination";
 import { Link } from "react-router-dom";
 import heart from "../../../assets/AI Icons/heart.svg";
+import heart_filled from "../../../assets/AI Icons/heart_filled.svg";
 import aiImage from "../../../assets/filter-image.png";
 import { dataContext } from "../../../Context/Context";
 import Loader from "../../Loader/Loader";
 import "./filter.css";
+import { useSelector } from "react-redux";
+import { ToolApi } from "../../../api/ToolApi";
+import { UserApi } from "../../../api/UserApi";
 
 const Filter = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [ loading, setLoading ] = useState(true);
   const [data, setData] = useState([]);
-  // data object for ai tools
+  const user = useSelector(state => state.auth.user);
+  const favorites = user?.favorites || [];
 
-if (loading) {
-  return <Loader />;
-}
+  const toggleFavorite = async (toolId) => {
+    await ToolApi.toggleFavorite(toolId);
+    await UserApi.meCall();
+  };
 
-const toolsPerPage = 12;
+  if (loading) {
+    return <Loader />;
+  }
+
+  const toolsPerPage = 12;
 
   return (
     <div className="mt-10">
@@ -32,11 +42,17 @@ const toolsPerPage = 12;
               <Link to={tool.link} key={tool.id}>
                 <div className="relative rounded-lg">
                   <img src={aiImage} alt={tool.name} className="" />
-                  <img
-                    src={heart}
-                    alt="icon"
-                    className="absolute top-2 right-2"
-                  />
+                  {user && (
+                    <img
+                      src={favorites.includes(tool.id) ? heart_filled : heart}
+                      alt="icon"
+                      className="absolute top-2 right-2 cursor-pointer hover:scale-110 transition-transform duration-200"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleFavorite(tool.id);
+                      }}
+                    />
+                  )}
                 </div>
                 <h2 className="font-semibold text-[18px] mt-5">{tool.title}</h2>
               </Link>
@@ -63,11 +79,17 @@ const toolsPerPage = 12;
                       {tool?.name}
                     </h1>
                   </div>
-                  <img
-                    src={heart}
-                    alt="icon"
-                    className="w-[40px] h-[40px] mt-[-30px]"
-                  />
+                  {user && (
+                    <img
+                      src={favorites.includes(tool.id) ? heart_filled : heart}
+                      alt="icon"
+                      className="w-[40px] h-[40px] mt-[-30px] cursor-pointer hover:scale-110 transition-transform duration-200"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        toggleFavorite(tool.id);
+                      }}
+                    />
+                  )}
                 </div>
 
                 <div className="mt-4">
