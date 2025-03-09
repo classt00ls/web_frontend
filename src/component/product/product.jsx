@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import ProductDescription from "./product_description/product_description";
-import Product_section_6 from "./product_section_6/product_section_6";
 import { ToolApi } from "../../api/ToolApi";
 
 const Product = () => {
@@ -34,8 +33,8 @@ const Product = () => {
           url={toolData.url}
           description={toolData.description}
           video_url={toolData.video_url}
+          features={toolData.features}
         />
-        <Product_section_6 title={toolData.name} features={toolData.features} />
       </div>
       :
       ""

@@ -7,13 +7,16 @@ import ytLogo from "../../../../src/assets/classtools_web_design/yt_logo2.png";
 import xLogo from "../../../../src/assets/classtools_web_design/x_logo.png";
 import linkLogo from "../../../../src/assets/classtools_web_design/linkedin_logo.png";
 import ReviewLogo from "../../../../src/assets/classtools_web_design/star_logo.png";
+import YTLogo from "../../../../src/assets/classtools_web_design/Group 262.png";
+import { useTranslation } from "react-i18next";
 
 // Importar Montserrat
 import '@fontsource/montserrat';
 
-const ProductDescription = ({ stars, pricing, title, url, description, video_url }) => {
+const ProductDescription = ({ stars, pricing, title, url, description, video_url, features }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
 
   const handleToggle = () => {
     setIsExpanded(!isExpanded);
@@ -184,7 +187,14 @@ const ProductDescription = ({ stars, pricing, title, url, description, video_url
                 <ul className="text-[15px] md:text-[18px] text-gray-500">
                   <li className="flex items-center my-2">
                     <img className="w-[15px] mr-2" src={globeLogo} alt="" />
-                    <p className="text-[15px]">{url}</p>
+                    <a 
+                      href={url} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-[15px] text-orange-500 hover:underline"
+                    >
+                      {url}
+                    </a>
                   </li>
                 </ul>
                 <hr className="border-t-2 border-gray-300 my-5" />
@@ -203,6 +213,69 @@ const ProductDescription = ({ stars, pricing, title, url, description, video_url
                     />
                   </div>
                 )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features and How to Use Section */}
+      <section className="mt-16">
+        <div className="flex flex-col md:flex-row">
+          {/* Left Side - Features */}
+          <div className="w-full md:w-1/2 md:pr-20">
+            <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+              <h2 className="text-black font-bold text-[24px] mb-6 flex items-center">
+                <span className="w-2 h-8 bg-orange-500 rounded-full mr-3"></span>
+                {t('product.main_features', { title })}
+              </h2>
+              <div className="text-[17px] font-montserrat leading-relaxed text-[#1F1B2DBA] prose prose-headings:text-orange-500 prose-strong:text-orange-500">
+                {parse(features || '')}
+              </div>
+            </div>
+          </div>
+
+          {/* Right Side - How to Use */}
+          <div className="w-full md:w-1/2 mt-8 md:mt-0">
+            <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+              <h2 className="text-black font-bold text-[24px] mb-6 flex items-center">
+                <span className="w-2 h-8 bg-orange-500 rounded-full mr-3"></span>
+                {t('product.how_to_use', { title })}
+              </h2>
+              
+              {video_url && (
+                <div className="flex items-center mt-4 mb-6 text-[15px]">
+                  <img
+                    className="w-[20px] h-[13px]"
+                    src={YTLogo}
+                    alt="youtube-icon"
+                  />
+                  <a
+                    href={video_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mx-2 text-blue-500 hover:underline"
+                  >
+                    Ver tutorial en YouTube
+                  </a>
+                </div>
+              )}
+
+              <div className="bg-gray-50 rounded-lg p-6">
+                <ul className="text-[15px] font-montserrat space-y-4">
+                  <li className="flex items-center">
+                    <span className="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center mr-3 text-sm">1</span>
+                    <p>Elige una plantilla</p>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center mr-3 text-sm">2</span>
+                    <p>Añade tus entradas</p>
+                  </li>
+                  <li className="flex items-center">
+                    <span className="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center mr-3 text-sm">3</span>
+                    <p>Ve la salida</p>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

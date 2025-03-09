@@ -22,5 +22,9 @@
   "header": {
     "discover": "Discover",
     "sign_in": "Sign In"
+  },
+  "product": {
+    "main_features": "Main features of {{title}}",
+    "how_to_use": "How to use {{title}}"
   }
 } 

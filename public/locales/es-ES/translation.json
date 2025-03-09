@@ -22,5 +22,9 @@
   "header": {
     "discover": "Descubrir",
     "sign_in": "Entrar"
+  },
+  "product": {
+    "main_features": "Características principales de {{title}}",
+    "how_to_use": "Cómo utilizar {{title}}"
   }
 }
