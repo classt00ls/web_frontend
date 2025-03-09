@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 // Importar Montserrat
 import '@fontsource/montserrat';
 
-const ProductDescription = ({ stars, pricing, title, url, description, video_url, features, excerpt, prosAndCons }) => {
+const ProductDescription = ({ stars, pricing, title, url, description, video_url, features, excerpt, prosAndCons, howToUse }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
@@ -26,6 +26,11 @@ const ProductDescription = ({ stars, pricing, title, url, description, video_url
     if (typeof text !== 'string') return text;
     if (text.length <= 500) return text;
     return text.substring(0, 500) + '...';
+  };
+
+  const processHowToUse = (content) => {
+    if (!content) return '';
+    return content.replace(/<li>(.*?):(.*?)<\/li>/g, '<li>$1$2</li>');
   };
 
   return (
@@ -235,6 +240,17 @@ const ProductDescription = ({ stars, pricing, title, url, description, video_url
                 {t('product.main_features', { title })}
               </h2>
               <div className="text-[17px] font-montserrat leading-relaxed text-[#1F1B2DBA] prose prose-headings:text-orange-500 prose-strong:text-orange-500">
+                <style>
+                  {`
+                    .prose li {
+                      margin-top: 1.5em !important;
+                      margin-bottom: 1.5em !important;
+                    }
+                    .prose h2:first-of-type {
+                      display: none !important;
+                    }
+                  `}
+                </style>
                 {parse(features || '')}
               </div>
             </div>
@@ -247,40 +263,60 @@ const ProductDescription = ({ stars, pricing, title, url, description, video_url
                 <span className="w-2 h-8 bg-orange-500 rounded-full mr-3"></span>
                 {t('product.how_to_use', { title })}
               </h2>
-              
-              {video_url && (
-                <div className="flex items-center mt-4 mb-6 text-[15px]">
-                  <img
-                    className="w-[20px] h-[13px]"
-                    src={YTLogo}
-                    alt="youtube-icon"
-                  />
-                  <a
-                    href={video_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mx-2 text-blue-500 hover:underline"
-                  >
-                    Ver tutorial en YouTube
-                  </a>
+              <div id="howToUseContent">
+                <style>
+                  {`
+                    #howToUseContent h2 {
+                      font-weight: bold !important;
+                      text-align: center !important;
+                      margin-bottom: 1.5em !important;
+                    }
+                    #howToUseText h2:first-of-type {
+                      display: none !important;
+                    }
+                    #howToUseText h3:nth-of-type(2) {
+                      text-align: center !important;
+                      font-weight: bold !important;
+                      margin-bottom: 2em !important;
+                    }
+                    #howToUseText ul {
+                      list-style: none !important;
+                      padding-left: 0 !important;
+                    }
+                    #howToUseText li {
+                      display: flex !important;
+                      align-items: flex-start !important;
+                      margin-top: 1.5em !important;
+                      margin-bottom: 1.5em !important;
+                      counter-increment: item !important;
+                      font-weight: normal !important;
+                    }
+                    #howToUseText strong {
+                      display: none !important;
+                    }
+                    #howToUseText li:before {
+                      content: counter(item) "" !important;
+                      width: 20px !important;
+                      height: 20px !important;
+                      border-radius: 50% !important;
+                      background-color: #f97316 !important;
+                      color: white !important;
+                      display: flex !important;
+                      align-items: center !important;
+                      justify-content: center !important;
+                      margin-right: 10px !important;
+                      margin-top: 2px !important;
+                      font-size: 12px !important;
+                      flex-shrink: 0 !important;
+                    }
+                  `}
+                </style>
+                
+                <div className="bg-gray-50 rounded-lg p-6">
+                  <div id="howToUseText" className="text-[17px] font-montserrat leading-relaxed text-[#1F1B2DBA]">
+                    {parse(processHowToUse(howToUse) || '')}
+                  </div>
                 </div>
-              )}
-
-              <div className="bg-gray-50 rounded-lg p-6">
-                <ul className="text-[15px] font-montserrat space-y-4">
-                  <li className="flex items-center">
-                    <span className="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center mr-3 text-sm">1</span>
-                    <p>Elige una plantilla</p>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center mr-3 text-sm">2</span>
-                    <p>Añade tus entradas</p>
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-6 h-6 rounded-full bg-orange-500 text-white flex items-center justify-center mr-3 text-sm">3</span>
-                    <p>Ve la salida</p>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>
@@ -307,6 +343,53 @@ const ProductDescription = ({ stars, pricing, title, url, description, video_url
                       margin-bottom: 1em !important;
                       text-decoration: underline !important;
                       text-underline-offset: 8px !important;
+                    }
+                    #prosAndConsContent h3:first-of-type {
+                      text-decoration-color: #22c55e !important;
+                    }
+                    #prosAndConsContent h3:nth-of-type(2) {
+                      text-decoration-color: #dc2626 !important;
+                    }
+                    #prosAndConsContent h3:nth-of-type(3) {
+                      text-decoration-color: #60a5fa !important;
+                    }
+                    #prosAndConsContent ul {
+                      list-style: none !important;
+                      padding-left: 0 !important;
+                    }
+                    #prosAndConsContent li {
+                      display: flex !important;
+                      align-items: center !important;
+                      margin-bottom: 1em !important;
+                      counter-increment: item !important;
+                    }
+                    #prosAndConsContent li:before {
+                      content: counter(item) !important;
+                      width: 24px !important;
+                      height: 24px !important;
+                      border-radius: 50% !important;
+                      background-color: #f97316 !important;
+                      color: white !important;
+                      display: flex !important;
+                      align-items: center !important;
+                      justify-content: center !important;
+                      margin-right: 12px !important;
+                      font-size: 14px !important;
+                      flex-shrink: 0 !important;
+                      font-weight: 600 !important;
+                    }
+                    #prosAndConsContent strong {
+                      margin-right: 8px !important;
+                    }
+                    #prosAndConsContent > ul:first-of-type li:before {
+                      background-color: #22c55e !important;
+                      color: white !important;
+                      font-weight: 700 !important;
+                    }
+                    #prosAndConsContent > ul:nth-of-type(2) li:before {
+                      background-color: #dc2626 !important;
+                      color: white !important;
+                      font-weight: 700 !important;
                     }
                   `}
                 </style>

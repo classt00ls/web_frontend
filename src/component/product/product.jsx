@@ -36,6 +36,7 @@ const Product = () => {
           features={toolData.features}
           excerpt={toolData.excerpt}
           prosAndCons={toolData.prosAndCons}
+          howToUse={toolData.howToUse}
         />
       </div>
       :
