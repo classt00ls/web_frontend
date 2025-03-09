@@ -34,6 +34,8 @@ const Product = () => {
           description={toolData.description}
           video_url={toolData.video_url}
           features={toolData.features}
+          excerpt={toolData.excerpt}
+          prosAndCons={toolData.prosAndCons}
         />
       </div>
       :

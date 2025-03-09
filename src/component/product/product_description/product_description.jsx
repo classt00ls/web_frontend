@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 // Importar Montserrat
 import '@fontsource/montserrat';
 
-const ProductDescription = ({ stars, pricing, title, url, description, video_url, features }) => {
+const ProductDescription = ({ stars, pricing, title, url, description, video_url, features, excerpt, prosAndCons }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
@@ -128,12 +128,17 @@ const ProductDescription = ({ stars, pricing, title, url, description, video_url
           {/* Left Side - Description */}
           <div className="w-full md:w-2/3 pr-0 md:pr-20">
             <div className="w-full">
-              <div className="flex items-center justify-center md:justify-start mb-8">
+              <div className="flex items-center justify-center md:justify-start mb-8 gap-8">
                 <img 
                   src={`https://www.google.com/s2/favicons?domain=${url.split('/?')[0]}&sz=256`} 
                   alt={title} 
                   className="w-[200px] h-[200px] rounded-lg" 
                 />
+                {excerpt && (
+                  <div className="text-[15px] text-[#4B9EFF] font-montserrat font-medium leading-relaxed italic">
+                    {excerpt}
+                  </div>
+                )}
               </div>
               
               {!isExpanded ? (
@@ -281,6 +286,36 @@ const ProductDescription = ({ stars, pricing, title, url, description, video_url
           </div>
         </div>
       </section>
+
+      {/* Pros and Cons Section */}
+      {prosAndCons && (
+        <section className="mt-16">
+          <div className="w-full">
+            <div className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm">
+              <h2 className="text-black font-bold text-[24px] mb-6 flex items-center">
+                <span className="w-2 h-8 bg-orange-500 rounded-full mr-3"></span>
+                {t('product.pros_and_cons', { title })}
+              </h2>
+              <div id="prosAndConsContent" className="text-[17px] font-montserrat leading-relaxed text-[#1F1B2DBA] prose max-w-none">
+                <style>
+                  {`
+                    #prosAndConsContent h3 {
+                      color: #3B3486 !important;
+                      font-size: 22px !important;
+                      font-weight: bold !important;
+                      margin-top: 2em !important;
+                      margin-bottom: 1em !important;
+                      text-decoration: underline !important;
+                      text-underline-offset: 8px !important;
+                    }
+                  `}
+                </style>
+                {parse(prosAndCons || '')}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
     </>
   );
 };

@@ -25,6 +25,7 @@
   },
   "product": {
     "main_features": "Main features of {{title}}",
-    "how_to_use": "How to use {{title}}"
+    "how_to_use": "How to use {{title}}",
+    "pros_and_cons": "Pros and cons of {{title}}"
   }
 } 
