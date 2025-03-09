@@ -9,15 +9,7 @@ const ActiveFilters = ({ filters, onRemoveFilter,  onClearAllFilters }) => {
   return (
     <div style={{ marginBottom: '20px' }}>
       <h3>{t('filters.active_filters')}: </h3>
-      {/* Botón para borrar todo */}
-      <button 
-        onClick={onClearAllFilters} 
-        className="clear-all-button"
-        style={{ marginBottom: '10px' }}
-      >
-        {t('filters.clear_all')}
-      </button>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', marginTop: '10px' }}>
         {filters.map((filter, index) => (
           <div
             key={index}
@@ -47,6 +39,15 @@ const ActiveFilters = ({ filters, onRemoveFilter,  onClearAllFilters }) => {
             </button>
           </div>
         ))}
+        {/* Botón para borrar todo - solo se muestra si hay filtros */}
+        {filters.length > 0 && (
+          <button 
+            onClick={onClearAllFilters} 
+            className="clear-all-button"
+          >
+            {t('filters.clear_all')}
+          </button>
+        )}
       </div>
     </div>
   );

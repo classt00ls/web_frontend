@@ -181,9 +181,9 @@ const Category_section1 = ({}) => {
                   </ul>
 
                   <div className="flex justify-end mt-[-25px]">
-                    <Link to={`/product/${tool.id}`}>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer">
                       <img src={share} alt="share-icon" className="w-6 h-6" />
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
@@ -270,9 +270,9 @@ const Category_section1 = ({}) => {
                   </ul>
 
                   <div className="flex justify-end  mt-[-25px] ">
-                    <Link to={`/product/${tool.id}`}>
+                    <a href={tool.url} target="_blank" rel="noopener noreferrer">
                       <img src={share} alt="share-icon" className="w-6 h-6" />
-                    </Link>
+                    </a>
                   </div>
                 </div>
               </div>
