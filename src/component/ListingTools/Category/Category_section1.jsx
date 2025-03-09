@@ -89,6 +89,11 @@ const Category_section1 = ({}) => {
     
   };
 
+  const truncateExcerpt = (text) => {
+    if (!text) return '';
+    return text.length > 250 ? text.substring(0, 250) + '...' : text;
+  };
+
   if (loading) { return <Loader />;  }
 
   const toolsPerPage = 12;
@@ -113,9 +118,11 @@ const Category_section1 = ({}) => {
                       alt={tool?.name}
                       className="w-[72px] h-[72px] rounded-lg"
                     />
-                    <h1 className="font-bold text-black text-[24px] px-4 ">
-                      {tool?.name}
-                    </h1>
+                    <Link to={`/product/${tool.id}`} className="hover:text-orange-500 transition-colors" target="_blank" rel="noopener noreferrer">
+                      <h1 className="font-bold text-black text-[24px] px-4">
+                        {tool?.name}
+                      </h1>
+                    </Link>
                   </div>
                   <img
                     src={favorites?.includes(tool.id) ? heart_filled : heart}
@@ -151,9 +158,21 @@ const Category_section1 = ({}) => {
                     </div>
                   </div>
 
-                  <p className="mt-2 text-gray-700 text-[10px] py-2 border-t border-b border-gray-300 font-lekton">
-                    {tool?.excerpt}
-                  </p>
+                  <div className="flex flex-col">
+                    <p className="mt-2 text-gray-700 text-[13px] py-2 border-t border-b border-gray-300 font-montserrat">
+                      {truncateExcerpt(tool?.excerpt)}
+                    </p>
+                    {tool?.excerpt?.length > 250 && (
+                      <Link 
+                        to={`/product/${tool.id}`}
+                        className="text-orange-500 text-[12px] mt-1 font-montserrat hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Mostrar más
+                      </Link>
+                    )}
+                  </div>
 
                   <ul className="mt-2 text-gray-700 text-[10px] space-y-1">
                     {tool?.tags.map((item, index) => (
@@ -186,9 +205,11 @@ const Category_section1 = ({}) => {
                       alt={tool?.name}
                       className="w-[72px] h-[72px] rounded-lg"
                     />
-                    <h1 className="font-bold text-black text-[24px] px-4 ">
-                      {tool?.name}
-                    </h1>
+                    <Link to={`/product/${tool.id}`} className="hover:text-orange-500 transition-colors" target="_blank" rel="noopener noreferrer">
+                      <h1 className="font-bold text-black text-[24px] px-4">
+                        {tool?.name}
+                      </h1>
+                    </Link>
                   </div>
                   
                   <img
@@ -226,9 +247,21 @@ const Category_section1 = ({}) => {
                     </div>
                   </div>
 
-                  <p className="mt-2 text-gray-700 text-[10px] py-2 border-t border-b border-gray-300 font-lekton">
-                    {tool?.excerpt}
-                  </p>
+                  <div className="flex flex-col">
+                    <p className="mt-2 text-gray-700 text-[13px] py-2 border-t border-b border-gray-300 font-montserrat">
+                      {truncateExcerpt(tool?.excerpt)}
+                    </p>
+                    {tool?.excerpt?.length > 250 && (
+                      <Link 
+                        to={`/product/${tool.id}`}
+                        className="text-orange-500 text-[12px] mt-1 font-montserrat hover:underline"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Mostrar más
+                      </Link>
+                    )}
+                  </div>
 
                   <ul className="mt-2 text-gray-700  text-[10px] space-y-1">
                     {tool?.tags?.map((item, index) => (

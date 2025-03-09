@@ -1,19 +1,21 @@
 import React from 'react';
 import './Tag.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const ActiveFilters = ({ filters, onRemoveFilter,  onClearAllFilters }) => {
+  const { t } = useTranslation();
 
   return (
     <div style={{ marginBottom: '20px' }}>
-      <h3>Filtros Activos: </h3>
+      <h3>{t('filters.active_filters')}: </h3>
       {/* Botón para borrar todo */}
       <button 
         onClick={onClearAllFilters} 
         className="clear-all-button"
         style={{ marginBottom: '10px' }}
       >
-        Borrar todo
+        {t('filters.clear_all')}
       </button>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
         {filters.map((filter, index) => (
