@@ -9,9 +9,9 @@ const Listing = ({}) => {
   
   const { categoriesData, selectedCategory, subCategories } = useContext(dataContext);
 
-  if (categoriesData?.length < 1  || subCategories?.length < 1) {
-    return <Loader />;
-  }
+  // if (categoriesData?.length < 1  || subCategories?.length < 1) {
+  //   return <Loader />;
+  // }
   
   // console.log(subCategories.map((item) => item.title));
   

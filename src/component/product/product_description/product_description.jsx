@@ -9,6 +9,7 @@ import linkLogo from "../../../../src/assets/classtools_web_design/linkedin_logo
 import ReviewLogo from "../../../../src/assets/classtools_web_design/star_logo.png";
 import YTLogo from "../../../../src/assets/classtools_web_design/Group 262.png";
 import { useTranslation } from "react-i18next";
+import { slugify } from "../../../utils/slugify";
 
 // Importar Montserrat
 import '@fontsource/montserrat';
@@ -48,7 +49,7 @@ const ProductDescription = ({ stars, pricing, title, url, description, video_url
           <span className="mx-1">{">"}</span>
           <a
             className="text-orange-500 hover:underline"
-            href="#"
+            href={`/tool/${slugify(title)}`}
           >
             {title}
           </a>
@@ -213,14 +214,26 @@ const ProductDescription = ({ stars, pricing, title, url, description, video_url
                 </p>
                 {video_url && (
                   <div className="relative w-full pt-[56.25%]">
-                    <iframe
-                      className="absolute top-0 left-0 w-full h-full rounded-lg"
-                      src={video_url}
-                      title={`Video de ${title}`}
-                      frameBorder="0"
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                    />
+                    {video_url.includes('embed') ? (
+                      <iframe
+                        className="absolute top-0 left-0 w-full h-full rounded-lg"
+                        src={video_url}
+                        title={`Video de ${title}`}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      />
+                    ) : (
+                      <video
+                        className="absolute top-0 left-0 w-full h-full rounded-lg"
+                        src={video_url}
+                        title={`Video de ${title}`}
+                        controls
+                        preload="metadata"
+                      >
+                        Tu navegador no soporta el elemento video.
+                      </video>
+                    )}
                   </div>
                 )}
               </div>

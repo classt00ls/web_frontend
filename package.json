@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:all": "concurrently \"npm run dev\" \"cd dashboard && npm run dev\"",
     "build": "vite build",
+    "build:all": "vite build && cd dashboard && npm run build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
@@ -21,6 +23,7 @@
     "i18next-http-backend": "^3.0.2",
     "install": "^0.13.0",
     "lodash": "^4.17.21",
+    "next": "^15.2.3",
     "npm": "^10.8.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -33,6 +36,7 @@
     "react-slick": "^0.30.2",
     "react-toastify": "^10.0.5",
     "redux": "^5.0.1",
+    "sharp": "^0.33.5",
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
@@ -40,6 +44,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
+    "concurrently": "^9.1.2",
     "daisyui": "^4.12.10",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.3",

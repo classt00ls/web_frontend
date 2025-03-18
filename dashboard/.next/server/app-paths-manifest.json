@@ -1,0 +1,5 @@
+{
+  "/page": "app/page.js",
+  "/dashboard/home/page": "app/dashboard/home/page.js",
+  "/dashboard/probar-ia/page": "app/dashboard/probar-ia/page.js"
+}

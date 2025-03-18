@@ -16,6 +16,7 @@ import Tags from "../../Tags";
 import { useDispatch, useSelector } from "react-redux";
 import Tagify from "@yaireo/tagify";
 import TagsPrompt from "../../TagsPrompt";
+import { slugify } from "../../../utils/slugify";
 
 
 var inputElem = document.getElementById('marmota') // the 'input' element which will be transformed into a Tagify component
@@ -104,11 +105,11 @@ const Category_section1 = ({}) => {
       <TagsPrompt />
       <div className="flex flex-wrap gap-8 p-5">
         
-        {paginationHas &&
-          tools?.map((tool) => (
+        {paginationHas && tools && tools.length > 0 &&
+          tools.map((tool) => tool && (
             
               <div
-                key={tool?.id}
+                key={tool.id}
                 className="bg-gray-100 w-[316px] p-5 rounded-lg shadow-lg"
               >
                 <div className="flex items-center justify-between">
@@ -118,7 +119,7 @@ const Category_section1 = ({}) => {
                       alt={tool?.name}
                       className="w-[72px] h-[72px] rounded-lg"
                     />
-                    <Link to={`/product/${tool.id}`} className="hover:text-orange-500 transition-colors" target="_blank" rel="noopener noreferrer">
+                    <Link to={`/tool/${slugify(tool.name)}`} className="hover:text-orange-500 transition-colors" target="_blank" rel="noopener noreferrer">
                       <h1 className="font-bold text-black text-[24px] px-4">
                         {tool?.name}
                       </h1>
@@ -169,7 +170,7 @@ const Category_section1 = ({}) => {
                     </p>
                     {tool?.excerpt?.length > 250 && (
                       <Link 
-                        to={`/product/${tool.id}`}
+                        to={`/tool/${slugify(tool.name)}`}
                         className="text-orange-500 text-[12px] mt-1 font-montserrat hover:underline"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -210,7 +211,7 @@ const Category_section1 = ({}) => {
                       alt={tool?.name}
                       className="w-[72px] h-[72px] rounded-lg"
                     />
-                    <Link to={`/product/${tool.id}`} className="hover:text-orange-500 transition-colors" target="_blank" rel="noopener noreferrer">
+                    <Link to={`/tool/${slugify(tool.name)}`} className="hover:text-orange-500 transition-colors" target="_blank" rel="noopener noreferrer">
                       <h1 className="font-bold text-black text-[24px] px-4">
                         {tool?.name}
                       </h1>
@@ -262,7 +263,7 @@ const Category_section1 = ({}) => {
                     </p>
                     {tool?.excerpt?.length > 250 && (
                       <Link 
-                        to={`/product/${tool.id}`}
+                        to={`/tool/${slugify(tool.name)}`}
                         className="text-orange-500 text-[12px] mt-1 font-montserrat hover:underline"
                         target="_blank"
                         rel="noopener noreferrer"

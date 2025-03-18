@@ -166,7 +166,7 @@ const Header = () => {
           <LanguageSelector />
           {user ? (
             <Link
-              to={`http://localhost:3010/verify?token=${token}`}
+              to="/dashboard"
               className="bg-[#3683B3] hover:bg-red-600 gap-1 flex justify-center md:w-[135px] h-[37px] px-[10px] py-[18px] rounded-[30px]"
             >
               <p className="text-[10px] md:text-[16px] flex font-semibold items-center text">

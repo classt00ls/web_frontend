@@ -60,6 +60,14 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "/tool/:slug",
+        element: (
+          <div>
+            <Product></Product>
+          </div>
+        ),
+      },
+      {
         path: "/signIn",
         element: (
           <div>

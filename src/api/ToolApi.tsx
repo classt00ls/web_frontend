@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { anonApiCall, authApiCall } from "./apiCalls";
 import store from "../store/store";
 import { PROMPT_SUGGESTIONS_SUCCESS, SUGGESTIONS_SUCCESS, TOOLS_RECEIVED } from "../store/actions/userActions";
+import { deslugify } from "../utils/slugify";
 
 interface ToolFilters {
     lang?: string;
@@ -136,11 +137,54 @@ const processError = (error: any) => {
     }
 }
 
+const getDetailToolBySlug = (
+    slug,
+    language = 'es'
+): Promise<any> => {
+    return new Promise((resolve, reject) => {
+        console.log('🚀 Iniciando búsqueda...');
+        console.log('📥 Slug recibido:', slug);
+        console.log('🌍 Idioma:', language);
+
+        const baseLanguage = language.split('-')[0];
+        console.log('🌍 Idioma base:', baseLanguage);
+
+        const originalTitle = deslugify(slug);
+        console.log('🔍🔍🔍 BUSCANDO HERRAMIENTA 🔍🔍🔍');
+        console.log('=====================================');
+        console.log('🎯 Título original:', originalTitle);
+        console.log('=====================================');
+        
+        const params = { 
+            title: originalTitle,
+            lang: baseLanguage 
+        };
+        console.log('📤 Enviando request con params:', params);
+        
+        anonApiCall.get("/tool/slug", { params })
+            .then(({ data }) => {
+                console.log('📥 Respuesta recibida:', data);
+                if (data) {
+                    console.log('✅ Herramienta encontrada');
+                    resolve(data);
+                } else {
+                    console.log('❌ Herramienta NO encontrada');
+                    reject(new Error("Tool not found"));
+                }
+            })
+            .catch((error) => {
+                console.log('🔥 Error en la petición:', error);
+                reject(processError(error));
+            });
+    });
+}
+
 export const ToolApi = {
     toggleFavorite,
     getAllTools,
     getDetailTool,
+    getDetailToolBySlug,
     getFilteredlTool,
     getSuggestedTools,
     getSuggestedToolsFromPrompt
-  };
+};

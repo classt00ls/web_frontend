@@ -4,22 +4,48 @@ import { useTranslation } from "react-i18next";
 
 import ProductDescription from "./product_description/product_description";
 import { ToolApi } from "../../api/ToolApi";
+import { slugify } from "../../utils/slugify";
 
 const Product = () => {
-  let { id } = useParams();
+  let { slug } = useParams();
   const { i18n } = useTranslation();
   const [toolData, setToolData] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     let isMounted = true;
-    (async () => {
-      const response = await ToolApi.getDetailTool(id, i18n.language);
-      if(isMounted) {
-        setToolData(response);
+    
+    const fetchData = async () => {
+      console.log('🎯 Componente Product - Iniciando búsqueda');
+      console.log('🔑 Slug recibido en componente:', slug);
+      console.log('🌍 Idioma en componente:', i18n.language);
+      
+      try {
+        const response = await ToolApi.getDetailToolBySlug(slug, i18n.language);
+        console.log('✅ Respuesta recibida en componente:', response);
+        if (isMounted && response) {
+          setToolData(response);
+        }
+      } catch (err) {
+        console.log('❌ Error en componente:', err);
+        if (isMounted) {
+          setError(err.message);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+        }
       }
-    })()
+    };
+
+    fetchData();
     return () => { isMounted = false };
-  }, [id, i18n.language]);
+  }, [slug, i18n.language]);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!toolData) return <div>No data found</div>;
 
   return (
     <>
