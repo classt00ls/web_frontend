@@ -156,6 +156,7 @@ const Sidebar = () => {
           placeholder=""
           className="border-[rgba(0, 0, 0, 0.1)] border w-[300px] rounded-full p-5 pl-12"
           onChange={e => setTextToSearch(e.target.value)}
+          onKeyPress={e => e.key === 'Enter' && searchAction()}
         />
         <button 
           className="bg-orange-500 text-[14px]  text-white px-[20px] py-[10px] rounded-full hover:bg-orange-600 -m-[90px] h-fit"
