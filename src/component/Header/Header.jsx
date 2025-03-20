@@ -6,10 +6,21 @@ import SignInlogo from "/src/assets/Group 2.png";
 import { useSelector } from "react-redux";
 import LanguageSelector from "../UI/LanguageSelector/LanguageSelector";
 
+// URL del dashboard - Usar variable de entorno o fallback a localhost:3001
+const DASHBOARD_URL = import.meta.env.VITE_DASHBOARD_URL || 'https://discover-dashboard-n519wk4y4-classtools-projects.vercel.app';
+
 const Header = () => {
   const { t } = useTranslation();
   const token = localStorage.getItem('access_token');
   const user = useSelector((state) => state.auth.user);
+
+  // Generar URL del dashboard con token como parámetro GET 
+  const getDashboardUrl = () => {
+    // Usar la variable token que ya está definida
+    // Construir URL con el token como parámetro GET
+    const separator = DASHBOARD_URL.includes('?') ? '&' : '?';
+    return `${DASHBOARD_URL}${separator}token=${token || ''}`;
+  };
 
   const dropdownRefs = {
     explorer: useRef(null),
@@ -20,7 +31,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      Object.keys(dropdownRefs).forEach((key) => {
+      Object.keys(dropdownRefs).forEach((key) => { 
         if (
           dropdownRefs[key].current &&
           !dropdownRefs[key].current.contains(event.target)
@@ -165,14 +176,14 @@ const Header = () => {
         <div className="navbar-end flex items-center gap-5 md:mr-10">
           <LanguageSelector />
           {user ? (
-            <Link
-              to="/dashboard"
+            <a
+              href={getDashboardUrl()}
               className="bg-[#3683B3] hover:bg-red-600 gap-1 flex justify-center md:w-[135px] h-[37px] px-[10px] py-[18px] rounded-[30px]"
             >
               <p className="text-[10px] md:text-[16px] flex font-semibold items-center text">
                 {t('header.discover')}
               </p>
-            </Link>
+            </a>
           ) : (
             <Link to="/signIn" className="flex gap-1 md:gap-[16px] items-center">
               <img

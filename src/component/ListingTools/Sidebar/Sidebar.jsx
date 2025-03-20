@@ -131,6 +131,8 @@ const Sidebar = () => {
     try {
       // Actualizamos los filtros
       dispatch({ type: 'CHANGE_FILTERS', prompt: textToSearch });
+      // Eliminamos los filtros de categorías cuando se aplica un filtro por prompt
+      dispatch({ type: 'CHANGE_FILTERS', selectedCategories: [] });
       dispatch({ type: 'set', refreshTools: true });
 
     } catch (error) {

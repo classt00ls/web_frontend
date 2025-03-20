@@ -35,6 +35,8 @@ const AiCategory = () => {
 
     // Actualizamos los filtros
     dispatch({ type: 'CHANGE_FILTERS', selectedCategories: [target] });
+    // Eliminamos el filtro de prompt cuando se selecciona una categoría
+    dispatch({ type: 'CHANGE_FILTERS', prompt: '' });
     // Vamos a buscar las tools
     dispatch({ type: 'set', refreshTools: true });
 

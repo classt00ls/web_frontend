@@ -32,6 +32,8 @@ const SidebarCategory = () => {
       } else {
         category.clicked = true;
         actualCategories.push(category.name);
+        // Eliminamos el filtro de prompt cuando se selecciona una categoría
+        dispatch({ type: 'CHANGE_FILTERS', prompt: '' });
       }
         
         // Actualizamos los filtros
