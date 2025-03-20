@@ -146,8 +146,8 @@ const Filter = () => {
           onPageChange={setCurrentPage}
           previousLabel={"<"}
           nextLabel={">"}
-          previousClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-white flex text-center items-center justify-center absolute right-10 "
-          nextClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-white flex text-center items-center justify-center absolute right-0  !text-black"
+          previousClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-10 border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
+          nextClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-0 border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
         />
       </div>
     </div>

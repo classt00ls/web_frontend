@@ -13,23 +13,56 @@ import AIAgentsIcon from "../../../assets/icons/AIAgentsIcon";
 import PersonalAssistantIcon from "../../../assets/icons/PersonalAssistantIcon";
 import MusicIcon from "../../../assets/icons/MusicIcon";
 import TranslatorIcon from "../../../assets/icons/TranslatorIcon";
-
-
+import { useTranslation } from "react-i18next";
+import './AiCategoryStyles.css';
 
 const AiCategory = () => {
-
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [particles, setParticles] = useState([]);
+  const [lines, setLines] = useState([]);
+
+  // Generar partículas y líneas para el fondo
+  useEffect(() => {
+    // Crear partículas
+    const newParticles = [];
+    for (let i = 0; i < 30; i++) {
+      newParticles.push({
+        id: i,
+        left: Math.random() * 100 + '%',
+        top: Math.random() * 100 + '%',
+        size: Math.random() * 3 + 2 + 'px',
+        animationDuration: Math.random() * 5 + 10 + 's',
+        animationDelay: Math.random() * 5 + 's'
+      });
+    }
+    setParticles(newParticles);
+
+    // Crear líneas
+    const newLines = [];
+    for (let i = 0; i < 12; i++) {
+      newLines.push({
+        id: i,
+        left: Math.random() * 100 + '%',
+        top: Math.random() * 100 + '%',
+        width: Math.random() * 200 + 50 + 'px',
+        transform: `rotate(${Math.random() * 360}deg)`,
+        animationDuration: Math.random() * 8 + 10 + 's',
+        animationDelay: Math.random() * 5 + 's'
+      });
+    }
+    setLines(newLines);
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        // const response = await axios.get(`${BaseUrl}/categories`);
         const response = await TagApi.getAllCategories();
         setCategories(response);
         setLoading(false);
@@ -42,7 +75,6 @@ const AiCategory = () => {
   }, []);
 
   const gotools = (target) => {
-
     // Actualizamos los filtros
     dispatch({ type: 'CHANGE_FILTERS', selectedCategories: [target] });
     // Eliminamos el filtro de prompt cuando se selecciona una categoría
@@ -57,27 +89,31 @@ const AiCategory = () => {
   const renderCategoryIcon = (category) => {
     switch (category.name) {
       case "Research":
-        return <ResearchIcon className="w-full h-full" />;
+        return <ResearchIcon className="category-icon" />;
       case "Education":
-        return <EducationIcon className="w-full h-full" />;
+        return <EducationIcon className="category-icon" />;
       case "Low-Code/No-Code":
-        return <LowCodeIcon className="w-full h-full" />;
+        return <LowCodeIcon className="category-icon" />;
       case "Workflows":
-        return <WorkflowsIcon className="w-full h-full" />;
+        return <WorkflowsIcon className="category-icon" />;
       case "Marketing":
-        return <MarketingIcon className="w-full h-full" />;
+        return <MarketingIcon className="category-icon" />;
       case "Video Editing":
-        return <VideoEditingIcon className="w-full h-full" />;
+        return <VideoEditingIcon className="category-icon" />;
       case "AI Agents":
-        return <AIAgentsIcon className="w-full h-full" />;
+        return <AIAgentsIcon className="category-icon" />;
       case "Personal Assistant":
-        return <PersonalAssistantIcon className="w-full h-full" />;
+        return <PersonalAssistantIcon className="category-icon" />;
       case "Music":
-        return <MusicIcon className="w-full h-full" />;
+        return <MusicIcon className="category-icon" />;
       case "Translator":
-        return <TranslatorIcon className="w-full h-full" />;
+        return <TranslatorIcon className="category-icon" />;
       default:
-        return <img src={category.imageUrl ?? "https://i.ibb.co/t3hXkN6/Icon10.png"} alt="" />;
+        return <img 
+                 src={category.imageUrl ?? "https://i.ibb.co/t3hXkN6/Icon10.png"} 
+                 alt="" 
+                 className="category-icon" 
+               />;
     }
   };
 
@@ -86,29 +122,62 @@ const AiCategory = () => {
   }
 
   return (
-    // <div className=" absolute w-full bg-white rounded-t-[40px] mt-[-40px] ">
-    <div className=" w-full bg-white  ">
-      {categories ?( 
-      <div className="container  mx-auto px-4 py-8 mt-10">
-        <div className="grid justify-items-center  grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+    <div className="ai-categories-container">
+      {/* Partículas de fondo */}
+      {particles.map((particle) => (
+        <div
+          key={particle.id}
+          className="category-particle"
+          style={{
+            left: particle.left,
+            top: particle.top,
+            width: particle.size,
+            height: particle.size,
+            animation: `iconPulse ${particle.animationDuration} infinite alternate ${particle.animationDelay}`
+          }}
+        />
+      ))}
+      
+      {/* Líneas de conexión */}
+      {lines.map((line) => (
+        <div
+          key={line.id}
+          className="category-line"
+          style={{
+            left: line.left,
+            top: line.top,
+            width: line.width,
+            transform: line.transform,
+            animation: `iconPulse ${line.animationDuration} infinite alternate ${line.animationDelay}`
+          }}
+        />
+      ))}
+      
+      <h2 className="ai-categories-title">
+        {t('categories.explore_ai_tools') || "Explora las herramientas de IA"}
+      </h2>
+      
+      {categories ? (
+        <div className="categories-grid">
           {categories?.map((category, index) => (
-            <Link
-              onClick={e => gotools(category.name)}
+            <div
+              onClick={() => gotools(category.name)}
               key={index}
-              className="flex flex-col w-[180px] h-[130px] items-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out"
+              className="category-card"
             >
-              <div className="w-[44px] h-[44px] mx-2">
+              <div className="category-icon-container">
+                <div className="icon-glow"></div>
                 {renderCategoryIcon(category)}
               </div>
-              <h3 className="text-sm font-semibold text-gray-700">
+              <h3 className="category-title">
                 {category.name}
               </h3>
-            </Link>
+            </div>
           ))}
         </div>
-      </div>
-
-          )  : <></>}
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

@@ -4,9 +4,11 @@
     "sign_up": "Registrarse",
     "sign_in": "Entrar",
     "sign_in_title": "Entrar en Classtools",
+    "sign_up_title": "Registrarse en Classtools",
     "or": "O bien",
     "password": "Contraseña",
     "have_account": "Aún no estás en classtools ?",
+    "already_have_account": "¿Ya tienes una cuenta?",
     "error-fields-mandatory": "Rellena los campos obligatorios",
     "error-password-minimum": "El password no cumple los requisitos",
     "error_google": "Error durante el inicio de sesión"
@@ -18,6 +20,11 @@
     "description": "Despierta tu potencial con ClassTools.io: la inteligencia artificial al alcance de todos, en el directorio de IA más completo.",
     "search_button": "Buscar",
     "view_all": "Ver todas las IA"
+  },
+  "categories": {
+    "explore_ai_tools": "Explora las herramientas de IA",
+    "view_all": "Ver todas",
+    "no_categories": "No se encontraron categorías"
   },
   "header": {
     "discover": "Descubrir",

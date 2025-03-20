@@ -6,7 +6,7 @@ import SignInlogo from "/src/assets/Group 2.png";
 import { useSelector, useDispatch } from "react-redux";
 import LanguageSelector from "../UI/LanguageSelector/LanguageSelector";
 import { ToolApi } from "../../api/ToolApi";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaRocket } from "react-icons/fa";
 import './Header.css';
 
 // URL del dashboard - Usar variable de entorno o fallback a localhost:3001
@@ -182,9 +182,12 @@ const Header = () => {
               <li className="mt-2">
                 <button 
                   onClick={viewAllAction}
-                  className="bg-white text-blue-500 hover:bg-gray-100 transition-all duration-300 rounded-full px-4 py-1 text-sm font-medium w-full text-center"
+                  className="login-button flex gap-1 items-center bg-transparent hover:bg-[#2a2a40] px-3 py-2 rounded-full transition-all duration-300 border border-transparent hover:border-[#63EA32] group w-full justify-center"
                 >
-                  {t('home.view_all')}
+                  <FaRocket className="text-[#63EA32] text-[18px] transition-all duration-300 group-hover:text-[20px] filter drop-shadow-md group-hover:drop-shadow-glow" />
+                  <p className="text-[#63EA32] text-[13px] font-semibold group-hover:font-bold transition-all duration-300">
+                    {t('home.view_all')}
+                  </p>
                 </button>
               </li>
             </ul>
@@ -199,9 +202,12 @@ const Header = () => {
           </ul>
           <button 
             onClick={viewAllAction} 
-            className="bg-transparent border border-white hover:bg-white hover:text-gray-800 transition-all duration-300 rounded-full px-5 py-2 text-white font-medium"
+            className="login-button flex gap-1 md:gap-[8px] items-center bg-transparent hover:bg-[#2a2a40] px-3 py-2 rounded-full transition-all duration-300 border border-transparent hover:border-[#63EA32] group ml-3"
           >
-            {t('home.view_all')}
+            <FaRocket className="text-[#63EA32] text-[18px] md:text-[20px] transition-all duration-300 group-hover:text-[20px] md:group-hover:text-[22px] filter drop-shadow-md group-hover:drop-shadow-glow" />
+            <p className="text-[#63EA32] text-[12px] md:text-[14px] font-semibold group-hover:font-bold transition-all duration-300">
+              {t('home.view_all')}
+            </p>
           </button>
         </div>
         <div className="navbar-end flex items-center gap-5 md:mr-10">

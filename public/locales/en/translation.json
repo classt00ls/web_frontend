@@ -4,9 +4,11 @@
     "sign_up": "Sign Up",
     "sign_in": "Sign In",
     "sign_in_title": "Sign In to Classtools",
+    "sign_up_title": "Sign Up to Classtools",
     "or": "Or",
     "password": "Password",
     "have_account": "Don't have an account yet?",
+    "already_have_account": "Already have an account?",
     "error-fields-mandatory": "Please fill in all required fields",
     "error-password-minimum": "Password does not meet requirements",
     "error_google": "Error during sign in"
@@ -18,6 +20,11 @@
     "description": "Unlock your potential with ClassTools.io: artificial intelligence at everyone's fingertips, in the most complete AI directory.",
     "search_button": "Search",
     "view_all": "View all AI"
+  },
+  "categories": {
+    "explore_ai_tools": "Explore AI Tools",
+    "view_all": "View All",
+    "no_categories": "No categories found"
   },
   "header": {
     "discover": "Discover",

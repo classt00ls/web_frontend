@@ -1,23 +1,24 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaUserAlt,
   FaLock,
   FaEnvelope,
-  FaGoogle
+  FaGoogle,
+  FaExclamationCircle
 } from "react-icons/fa";
+import { RiAiGenerate } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserApi } from './../../api/UserApi';
 import { isEmpty, size } from 'lodash';
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+import './AuthStyles.css';
 
-import { auth, googleProvider } from "./../../firebaseConfig"; // Asegúrate de usar la ruta correcta
+import { auth, googleProvider } from "./../../firebaseConfig";
 import { signInWithPopup } from "firebase/auth";
 
 const AuthPage = () => {
-
   const { t } = useTranslation()
   const navigate = useNavigate();
 
@@ -33,6 +34,41 @@ const AuthPage = () => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [formData, setformData] = useState(defaultFormValue());
+  const [isLoading, setIsLoading] = useState(false);
+  const [particles, setParticles] = useState([]);
+  const [lines, setLines] = useState([]);
+
+  // Generar partículas para el fondo
+  useEffect(() => {
+    // Crear partículas
+    const newParticles = [];
+    for (let i = 0; i < 50; i++) {
+      newParticles.push({
+        id: i,
+        left: Math.random() * 100 + '%',
+        top: Math.random() * 100 + '%',
+        size: Math.random() * 3 + 2 + 'px',
+        animationDuration: Math.random() * 5 + 10 + 's',
+        animationDelay: Math.random() * 5 + 's'
+      });
+    }
+    setParticles(newParticles);
+
+    // Crear líneas
+    const newLines = [];
+    for (let i = 0; i < 20; i++) {
+      newLines.push({
+        id: i,
+        left: Math.random() * 100 + '%',
+        top: Math.random() * 100 + '%',
+        width: Math.random() * 200 + 50 + 'px',
+        transform: `rotate(${Math.random() * 360}deg)`,
+        animationDuration: Math.random() * 8 + 10 + 's',
+        animationDelay: Math.random() * 5 + 's'
+      });
+    }
+    setLines(newLines);
+  }, []);
 
   const toggleSignUp = () => {
     setIsSignUp(!isSignUp);
@@ -41,150 +77,178 @@ const AuthPage = () => {
   // Cada vez que cambian los datos del formulario
 	const onChange = (e, fieldName) => {
 		setformData({ ...formData, [fieldName]: e.nativeEvent.target.value });
-    console.log(' ... formdata: ', formData)
 	}
 
-    const handleGoogleLogin = async () => {
-      try {
-
-        const result = await signInWithPopup(auth, googleProvider);
-        const user = result.user; // Datos del usuario autenticado
-        const token = await user.getIdToken();
-        await UserApi.meCall(token);
-				navigate("/");
-        
-      } catch (error) {
-        console.log(error)
-        toast.error(t('auth.error_google'));
-      }
-    };
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      const token = await user.getIdToken();
+      await UserApi.meCall(token);
+      navigate("/");
+    } catch (error) {
+      toast.error(t('auth.error_google'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if ((isEmpty(formData.email) || isEmpty(formData.password)) ) {
-
 			toast.error(t('auth.error-fields-mandatory'));
-
 		} else if (size(formData.password) < 6 ) {
-
 			toast.error(t('auth.error-password-minimum'));
-
 		} else {
-
       try {
+        setIsLoading(true);
         await UserApi.loginCall(formData.email, formData.password);
-
         await UserApi.meCall();
-        
 				navigate("/");
-
       } catch (error) {
-
         toast.error("Failed to sign in. Please try again later.");
-
+      } finally {
+        setIsLoading(false);
       }
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center sm:py-12">
-      <div className="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div className="absolute inset-0 bg-gradient-to-r shadow-lg transform rotate-6 sm:rotate-0 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-          <div className="max-w-md mx-auto">
-            <div>
-              <h1 className="text-2xl font-semibold text-center">
-                {isSignUp ? "Sign Up" : t('auth.sign_in_title')}
-              </h1>
+    <div className="auth-container">
+      {/* Partículas de fondo */}
+      {particles.map((particle) => (
+        <div
+          key={particle.id}
+          className="neural-particle"
+          style={{
+            left: particle.left,
+            top: particle.top,
+            width: particle.size,
+            height: particle.size,
+            animation: `iconPulse ${particle.animationDuration} infinite alternate ${particle.animationDelay}`
+          }}
+        />
+      ))}
+      
+      {/* Líneas de conexión */}
+      {lines.map((line) => (
+        <div
+          key={line.id}
+          className="neural-line"
+          style={{
+            left: line.left,
+            top: line.top,
+            width: line.width,
+            transform: line.transform,
+            animation: `iconPulse ${line.animationDuration} infinite alternate ${line.animationDelay}`
+          }}
+        />
+      ))}
+
+      <div className="auth-card">
+        <div className="card-glow"></div>
+        
+        <div>
+          <h1 className="auth-title">
+            <RiAiGenerate style={{ verticalAlign: 'middle', marginRight: '10px', fontSize: '2rem' }} />
+            {isSignUp ? t('auth.sign_up_title') : t('auth.sign_in_title')}
+          </h1>
+        </div>
+        
+        <form onSubmit={handleSubmit}>
+          {isSignUp && (
+            <div className="input-group">
+              <FaUserAlt className="input-icon" />
+              <input
+                type="text"
+                className="auth-input"
+                placeholder="Username"
+                onChange={(e) => onChange(e, "username")}
+                required
+              />
+              <div className="input-focus-effect"></div>
             </div>
-            <div className="divide-y divide-gray-200">
-              <form
-                className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7"
-                onSubmit={handleSubmit}
-              >
-                {isSignUp && (
-                  <div className="relative">
-                    <FaUserAlt className="absolute left-3 top-4 text-gray-400" />
-                    <input
-                      type="text"
-                      className="w-full px-10 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                      placeholder="Username"
-                      onChange={(e) => onChange(e, "username")}
-                      required
-                    />
-                  </div>
-                )}
-                <div className="relative">
-                  <FaEnvelope className="absolute left-3 top-4 text-gray-400" />
-                  <input
-                    type="email"
-                    className="w-full px-10 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    placeholder="Email"
-                    onChange={(e) => onChange(e, "email")}
-                    required
-                  />
-                </div>
-                <div className="relative">
-                  <FaLock className="absolute left-3 top-4 text-gray-400" />
-                  <input
-                    type="password"
-                    className="w-full px-10 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    placeholder={t('auth.password')}
-                    value={formData.password}
-                    onChange={(e) =>  onChange(e, "password")}
-                    required
-                  />
-                </div>
-                <div className="relative">
-                  <button
-                    type="submit"
-                    className="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 transition duration-300"
-                  >
-                    {isSignUp ? t('auth.sign_up') : t('auth.sign_in')}
-                  </button>
-                </div>
-              </form>
-              <div className="relative flex items-center justify-center py-4">
-                <hr className="w-full border-gray-300" />
-                <span className="absolute bg-white px-4 text-gray-500">{t('auth.or')}</span>
-              </div>
-              <div className="flex flex-col space-y-4">
-                <button 
-                  onClick={handleGoogleLogin}
-                  className="flex items-center justify-center w-full bg-red-500 text-white py-3 rounded-lg hover:bg-red-600 transition duration-300">
-                  <FaGoogle className="mr-2" /> {t('auth.continue_with_google')}
-                </button>
-                {/* <button className="flex items-center justify-center w-full bg-blue-800 text-white py-3 rounded-lg hover:bg-blue-900 transition duration-300">
-                  <FaFacebook className="mr-2" /> Sign in with Facebook
-                </button> */}
-              </div>
-              <div className="text-center text-sm mt-4">
-                {isSignUp ? (
-                  <span>
-                    Already have an account?{" "}
-                    <button
-                      onClick={toggleSignUp}
-                      className="text-blue-500 hover:underline"
-                    >
-                      Sign In
-                    </button>
-                  </span>
-                ) : (
-                  <span>
-                    {t('auth.have_account')}{" "}
-                    <button
-                      onClick={toggleSignUp}
-                      className="text-blue-500 hover:underline"
-                    >
-                      {t('auth.sign_up')}
-                    </button>
-                  </span>
-                )}
-              </div>
-            </div>
+          )}
+          
+          <div className="input-group">
+            <FaEnvelope className="input-icon" />
+            <input
+              type="email"
+              className="auth-input"
+              placeholder="Email"
+              onChange={(e) => onChange(e, "email")}
+              required
+            />
+            <div className="input-focus-effect"></div>
           </div>
+          
+          <div className="input-group">
+            <FaLock className="input-icon" />
+            <input
+              type="password"
+              className="auth-input"
+              placeholder={t('auth.password')}
+              value={formData.password}
+              onChange={(e) => onChange(e, "password")}
+              required
+            />
+            <div className="input-focus-effect"></div>
+          </div>
+          
+          <button
+            type="submit"
+            className="auth-button primary-button"
+            disabled={isLoading}
+          >
+            {isLoading && <span className="loading-indicator"></span>}
+            {isSignUp ? t('auth.sign_up') : t('auth.sign_in')}
+          </button>
+        </form>
+        
+        <div className="auth-divider">
+          <div className="divider-line"></div>
+          <span className="divider-text">{t('auth.or')}</span>
+          <div className="divider-line"></div>
+        </div>
+        
+        <button 
+          onClick={handleGoogleLogin}
+          className="auth-button google-button"
+          disabled={isLoading}
+        >
+          {isLoading ? 
+            <span className="loading-indicator"></span> : 
+            <FaGoogle className="google-icon" />
+          }
+          {t('auth.continue_with_google')}
+        </button>
+        
+        <div className="auth-footer">
+          {isSignUp ? (
+            <span>
+              {t('auth.already_have_account')}{" "}
+              <span
+                onClick={toggleSignUp}
+                className="auth-link"
+              >
+                {t('auth.sign_in')}
+              </span>
+            </span>
+          ) : (
+            <span>
+              {t('auth.have_account')}{" "}
+              <span
+                onClick={toggleSignUp}
+                className="auth-link"
+              >
+                {t('auth.sign_up')}
+              </span>
+            </span>
+          )}
         </div>
       </div>
+      
       {/* Toast Container */}
       <ToastContainer
         position="top-right"
@@ -196,7 +260,7 @@ const AuthPage = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="colored"
+        theme="dark"
       />
     </div>
   );
