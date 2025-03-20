@@ -50,6 +50,11 @@ const HomeLayout = () => {
     }
   };
 
+  const handleHashtagClick = (hashtagText) => {
+    setText(hashtagText);
+    // No ejecutamos searchAction() para que el usuario tenga que pulsar Enter o el botón de buscar
+  };
+
   const viewAllAction = async () => {
     try {
       dispatch({ type: 'set', refreshTools: true });
@@ -91,65 +96,37 @@ const HomeLayout = () => {
                       className="w-full text-[16px] pl-5 pr-4 py-4 border-none focus:outline-none bg-[#f0f0f2] transition-colors duration-300"
                       placeholder={t('home.searcher_placeholder')}
                       onKeyPress={e => e.key === 'Enter' && searchAction()}
+                      value={text === true ? "" : text}
                     />
                   </div>
                   <button 
-                    className="bg-[#3c3c3e] text-white p-4 hover:bg-[#2c2c2e] transition-all duration-300 mr-1 my-1 rounded-lg shadow-md"
+                    className="search-button bg-[#3c3c3e] text-white p-4 hover:bg-[#2a2a40] transition-all duration-300 mr-1 my-1 rounded-lg shadow-md flex items-center justify-center border border-transparent hover:border-[#63EA32]"
                     onClick={searchAction}
                     aria-label={t('home.search_button')}
                   >
-                    <svg 
-                      width="24" 
-                      height="24" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="tech-search-icon"
-                    >
-                      <defs>
-                        <linearGradient id="techGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#ffffff" />
-                          <stop offset="100%" stopColor="#e0e0e0" />
-                        </linearGradient>
-                        <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="white" stopOpacity="0.8" />
-                          <stop offset="100%" stopColor="white" stopOpacity="0.2" />
-                        </linearGradient>
-                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                          <feGaussianBlur stdDeviation="1" result="blur" />
-                          <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                        </filter>
-                      </defs>
-                      
-                      {/* Círculo principal de la lupa */}
-                      <circle cx="10" cy="10" r="6" stroke="url(#techGradient)" strokeWidth="2" fill="none" />
-                      
-                      {/* Mango de la lupa */}
-                      <path d="M14.5 14.5L19.5 19.5" stroke="white" strokeWidth="3" strokeLinecap="round" />
-                      
-                      {/* Detalles tecnológicos - círculos concéntricos */}
-                      <circle cx="10" cy="10" r="8" stroke="white" strokeWidth="0.5" strokeDasharray="1 2" fill="none" />
-                      <circle cx="10" cy="10" r="3" stroke="white" strokeWidth="0.5" strokeDasharray="3 1" fill="none" />
-                      
-                      {/* Detalles tech en el mango */}
-                      <path d="M15 15L16 16" stroke="white" strokeWidth="0.5" />
-                      <path d="M16 16L17 17" stroke="white" strokeWidth="0.5" />
-                      <path d="M17 17L18 18" stroke="white" strokeWidth="0.5" />
-                      
-                      {/* Reflejo en el círculo */}
-                      <path d="M10 7C10 7 7.5 8 7.5 10" stroke="url(#glowGradient)" strokeWidth="1" strokeLinecap="round" />
-                      
-                      {/* Puntos de detalle */}
-                      <circle cx="10" cy="10" r="0.5" fill="white" />
-                      <circle cx="19.5" cy="19.5" r="0.75" fill="white" filter="url(#glow)" />
-                      
-                      {/* Líneas de circuito */}
-                      <path d="M5 10H3" stroke="white" strokeWidth="0.5" strokeLinecap="round" />
-                      <path d="M10 5V3" stroke="white" strokeWidth="0.5" strokeLinecap="round" />
-                      <path d="M10 17V15" stroke="white" strokeWidth="0.5" strokeLinecap="round" />
-                      <path d="M17 10H15" stroke="white" strokeWidth="0.5" strokeLinecap="round" />
-                    </svg>
+                    <FiSearch className="search-icon-main text-[26px] md:text-[30px]" />
                   </button>
+                </div>
+                
+                <div className="flex justify-center mt-4 gap-4 text-white">
+                  <span 
+                    className="bg-[#3c3c3e] bg-opacity-80 px-3 py-1 rounded-full text-sm cursor-pointer hover:bg-opacity-100 transition-all duration-300"
+                    onClick={() => handleHashtagClick("Generar informes de datos")}
+                  >
+                    #GenerarInformesDatos
+                  </span>
+                  <span 
+                    className="bg-[#3c3c3e] bg-opacity-80 px-3 py-1 rounded-full text-sm cursor-pointer hover:bg-opacity-100 transition-all duration-300"
+                    onClick={() => handleHashtagClick("Mejorar fotos personales")}
+                  >
+                    #MejorarFotosPersonales
+                  </span>
+                  <span 
+                    className="bg-[#3c3c3e] bg-opacity-80 px-3 py-1 rounded-full text-sm cursor-pointer hover:bg-opacity-100 transition-all duration-300"
+                    onClick={() => handleHashtagClick("Transcribir entrevistas")}
+                  >
+                    #TranscribirEntrevistas
+                  </span>
                 </div>
               </div>
             </div>

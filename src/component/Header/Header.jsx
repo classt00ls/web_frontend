@@ -6,6 +6,8 @@ import SignInlogo from "/src/assets/Group 2.png";
 import { useSelector, useDispatch } from "react-redux";
 import LanguageSelector from "../UI/LanguageSelector/LanguageSelector";
 import { ToolApi } from "../../api/ToolApi";
+import { FaUserCircle } from "react-icons/fa";
+import './Header.css';
 
 // URL del dashboard - Usar variable de entorno o fallback a localhost:3001
 const DASHBOARD_URL = import.meta.env.VITE_DASHBOARD_URL || 'https://discover-dashboard-n519wk4y4-classtools-projects.vercel.app';
@@ -214,13 +216,9 @@ const Header = () => {
               </p>
             </a>
           ) : (
-            <Link to="/signIn" className="flex gap-1 md:gap-[16px] items-center">
-              <img
-                className="w-[5px] h-[10px] md:w-[8px] md:h-[14px]"
-                src={SignInlogo}
-                alt=""
-              />
-              <p className="text-[#63EA32] text-[7px] md:text-[14px] font-semibold">
+            <Link to="/signIn" className="login-button flex gap-1 md:gap-[8px] items-center bg-transparent hover:bg-[#2a2a40] px-3 py-2 rounded-full transition-all duration-300 border border-transparent hover:border-[#63EA32] group">
+              <FaUserCircle className="text-[#63EA32] text-[20px] md:text-[24px] transition-all duration-300 group-hover:text-[22px] md:group-hover:text-[26px] filter drop-shadow-md group-hover:drop-shadow-glow" />
+              <p className="text-[#63EA32] text-[10px] md:text-[14px] font-semibold group-hover:font-bold transition-all duration-300">
                 {t('header.sign_in')}
               </p>
             </Link>
