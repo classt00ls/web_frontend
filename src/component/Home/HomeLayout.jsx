@@ -151,12 +151,6 @@ const HomeLayout = () => {
                     </svg>
                   </button>
                 </div>
-                <div className="flex justify-between text-xs text-gray-400 mt-2 px-2 font-light">
-                  <span className="transition-colors duration-300 hover:text-gray-200">{t('home.search_button')}</span>
-                  <span onClick={viewAllAction} style={{cursor: 'pointer'}} className="transition-colors duration-300 hover:text-white">
-                    {t('home.view_all')}
-                  </span>
-                </div>
               </div>
             </div>
           )}

@@ -3,6 +3,16 @@ import { useEffect, useState } from "react";
 import Loader from "../../Loader/Loader";
 import { TagApi } from "../../../api/TagApi";
 import { useDispatch } from "react-redux";
+import ResearchIcon from "../../../assets/icons/ResearchIcon";
+import EducationIcon from "../../../assets/icons/EducationIcon";
+import LowCodeIcon from "../../../assets/icons/LowCodeIcon";
+import WorkflowsIcon from "../../../assets/icons/WorkflowsIcon";
+import MarketingIcon from "../../../assets/icons/MarketingIcon";
+import VideoEditingIcon from "../../../assets/icons/VideoEditingIcon";
+import AIAgentsIcon from "../../../assets/icons/AIAgentsIcon";
+import PersonalAssistantIcon from "../../../assets/icons/PersonalAssistantIcon";
+import MusicIcon from "../../../assets/icons/MusicIcon";
+import TranslatorIcon from "../../../assets/icons/TranslatorIcon";
 
 
 
@@ -43,6 +53,34 @@ const AiCategory = () => {
     navigate("/tools");
   }
 
+  // Función para renderizar el icono adecuado según la categoría
+  const renderCategoryIcon = (category) => {
+    switch (category.name) {
+      case "Research":
+        return <ResearchIcon className="w-full h-full" />;
+      case "Education":
+        return <EducationIcon className="w-full h-full" />;
+      case "Low-Code/No-Code":
+        return <LowCodeIcon className="w-full h-full" />;
+      case "Workflows":
+        return <WorkflowsIcon className="w-full h-full" />;
+      case "Marketing":
+        return <MarketingIcon className="w-full h-full" />;
+      case "Video Editing":
+        return <VideoEditingIcon className="w-full h-full" />;
+      case "AI Agents":
+        return <AIAgentsIcon className="w-full h-full" />;
+      case "Personal Assistant":
+        return <PersonalAssistantIcon className="w-full h-full" />;
+      case "Music":
+        return <MusicIcon className="w-full h-full" />;
+      case "Translator":
+        return <TranslatorIcon className="w-full h-full" />;
+      default:
+        return <img src={category.imageUrl ?? "https://i.ibb.co/t3hXkN6/Icon10.png"} alt="" />;
+    }
+  };
+
   if (loading) {
     return <Loader />;
   }
@@ -60,7 +98,7 @@ const AiCategory = () => {
               className="flex flex-col w-[180px] h-[130px] items-center p-6 bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-300 ease-in-out"
             >
               <div className="w-[44px] h-[44px] mx-2">
-                <img src={category.imageUrl ?? "https://i.ibb.co/t3hXkN6/Icon10.png"} alt="" />
+                {renderCategoryIcon(category)}
               </div>
               <h3 className="text-sm font-semibold text-gray-700">
                 {category.name}

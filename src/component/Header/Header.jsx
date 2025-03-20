@@ -1,18 +1,22 @@
 import React, { useEffect, useRef } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "/src/assets/CLASSTOOLS_LOGOS_1111 1.png";
 import SignInlogo from "/src/assets/Group 2.png";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import LanguageSelector from "../UI/LanguageSelector/LanguageSelector";
+import { ToolApi } from "../../api/ToolApi";
 
 // URL del dashboard - Usar variable de entorno o fallback a localhost:3001
 const DASHBOARD_URL = import.meta.env.VITE_DASHBOARD_URL || 'https://discover-dashboard-n519wk4y4-classtools-projects.vercel.app';
 
 const Header = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const token = localStorage.getItem('access_token');
   const user = useSelector((state) => state.auth.user);
+  const filters = useSelector(state => state.filters);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Generar URL del dashboard con token como parámetro GET 
   const getDashboardUrl = () => {
@@ -61,6 +65,17 @@ const Header = () => {
       dropdown.setAttribute("open", "");
     } else {
       dropdown.removeAttribute("open");
+    }
+  };
+
+  const viewAllAction = async () => {
+    try {
+      dispatch({ type: 'set', refreshTools: true });
+      await ToolApi.getFilteredlTool(1, 12, filters, i18n.language);
+      navigate("/tools");
+    } catch (error) {
+      dispatch({ type: 'set', errorMessage: error });
+      dispatch({ type: 'set', showError: true });
     }
   };
 
@@ -162,16 +177,30 @@ const Header = () => {
               className="menu menu-sm dropdown-content text-black bg-blue-500 rounded-box z-50 mt-3 w-52 p-2 shadow"
             >
               {navItems}
+              <li className="mt-2">
+                <button 
+                  onClick={viewAllAction}
+                  className="bg-white text-blue-500 hover:bg-gray-100 transition-all duration-300 rounded-full px-4 py-1 text-sm font-medium w-full text-center"
+                >
+                  {t('home.view_all')}
+                </button>
+              </li>
             </ul>
           </div>
           <Link to="/" className="btn btn-ghost text-xl">
             <img className="w-16 md:w-[150px] md:h-[45px]" src={logo} alt="" />
           </Link>
         </div>
-        <div className="navbar-center hidden lg:flex">
+        <div className="navbar-center hidden lg:flex items-center">
           <ul tabIndex={0} className="menu menu-horizontal px-1">
             {navItems}
           </ul>
+          <button 
+            onClick={viewAllAction} 
+            className="bg-transparent border border-white hover:bg-white hover:text-gray-800 transition-all duration-300 rounded-full px-5 py-2 text-white font-medium"
+          >
+            {t('home.view_all')}
+          </button>
         </div>
         <div className="navbar-end flex items-center gap-5 md:mr-10">
           <LanguageSelector />

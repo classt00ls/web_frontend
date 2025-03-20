@@ -2,6 +2,16 @@ import { useContext, useEffect } from "react";
 import Loader from "../../Loader/Loader";
 import { dataContext } from "../../../Context/Context";
 import { useDispatch, useSelector } from "react-redux";
+import ResearchIcon from "../../../assets/icons/ResearchIcon";
+import EducationIcon from "../../../assets/icons/EducationIcon";
+import LowCodeIcon from "../../../assets/icons/LowCodeIcon";
+import WorkflowsIcon from "../../../assets/icons/WorkflowsIcon";
+import MarketingIcon from "../../../assets/icons/MarketingIcon";
+import VideoEditingIcon from "../../../assets/icons/VideoEditingIcon";
+import AIAgentsIcon from "../../../assets/icons/AIAgentsIcon";
+import PersonalAssistantIcon from "../../../assets/icons/PersonalAssistantIcon";
+import MusicIcon from "../../../assets/icons/MusicIcon";
+import TranslatorIcon from "../../../assets/icons/TranslatorIcon";
 
 const SidebarCategory = () => {
   const { categoriesData, setCategoriesData, selectedCategory, setSelectedCategory } = useContext(dataContext);
@@ -47,6 +57,33 @@ const SidebarCategory = () => {
       }
   };
 
+  // Función para renderizar el icono adecuado según la categoría
+  const renderCategoryIcon = (category) => {
+    switch (category.name) {
+      case "Research":
+        return <ResearchIcon className="w-full h-full" />;
+      case "Education":
+        return <EducationIcon className="w-full h-full" />;
+      case "Low-Code/No-Code":
+        return <LowCodeIcon className="w-full h-full" />;
+      case "Workflows":
+        return <WorkflowsIcon className="w-full h-full" />;
+      case "Marketing":
+        return <MarketingIcon className="w-full h-full" />;
+      case "Video Editing":
+        return <VideoEditingIcon className="w-full h-full" />;
+      case "AI Agents":
+        return <AIAgentsIcon className="w-full h-full" />;
+      case "Personal Assistant":
+        return <PersonalAssistantIcon className="w-full h-full" />;
+      case "Music":
+        return <MusicIcon className="w-full h-full" />;
+      case "Translator":
+        return <TranslatorIcon className="w-full h-full" />;
+      default:
+        return <img src={category?.imageUrl} alt="" />;
+    }
+  };
 
   if (categoriesData.length < 1) {
     return <Loader />;
@@ -65,7 +102,7 @@ const SidebarCategory = () => {
               onClick={() => selectCategory(category)}
             >
               <div className="w-[30px] h-[30px] mx-2">
-                <img src={category?.imageUrl} alt="" />
+                {renderCategoryIcon(category)}
               </div>
               <h3 className="text-xs font-semibold text-gray-700 text-center">
                 {category.name}
