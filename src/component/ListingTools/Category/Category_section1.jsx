@@ -288,8 +288,7 @@ const Category_section1 = ({}) => {
               </div>
             ))}
       </div>
-      <div className="mt-10 mb-10 ml-5 ">
-
+      <div className="mt-10 mb-10 ml-5">
         <ResponsivePagination
           current={currentPage}
           total={totalPages}

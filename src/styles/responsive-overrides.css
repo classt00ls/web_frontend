@@ -1,0 +1,203 @@
+/* Archivo CSS exclusivo para responsividad móvil
+   NO modifica ningún estilo de escritorio, solo añade reglas para pantallas pequeñas */
+
+/* Estilos generales responsivos - solo aplicados en móvil */
+@media (max-width: 768px) {
+  /* Contenedor principal de herramientas */
+  .tools-container {
+    position: relative;
+    padding-bottom: 80px; /* Espacio para el botón flotante */
+    overflow-x: hidden;
+  }
+  
+  /* Sidebar en modo móvil - ocupar toda la pantalla */
+  .tools-container > div:first-child {
+    position: fixed;
+    top: 0;
+    left: -100%; /* Inicialmente oculto fuera de la pantalla */
+    width: 100%; /* Ocupar todo el ancho */
+    max-width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    background-color: white;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+  }
+  
+  /* Clase para mostrar el sidebar - será añadida/removida por JS */
+  .tools-container > div.sidebar-visible {
+    left: 0;
+  }
+  
+  /* Overlay cuando el sidebar está visible - será añadido/removido por JS */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  .sidebar-overlay.visible {
+    display: block;
+  }
+  
+  /* Contenido principal */
+  .tools-container > div:last-child {
+    width: 100%;
+  }
+  
+  /* Ajustes para los inputs del sidebar */
+  .tools-container > div:first-child input[type="search"] {
+    width: 100% !important;
+    padding: 10px 40px 10px 35px !important;
+    font-size: 16px !important;
+  }
+  
+  .tools-container > div:first-child button {
+    padding: 8px 15px !important;
+    font-size: 14px !important;
+    right: 5px !important;
+    top: 5px !important;
+    margin: 0 !important;
+    position: absolute !important;
+  }
+  
+  /* Botón flotante para mostrar el sidebar - será añadido con JS */
+  .filter-toggle-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #63EA32;
+    color: #2a2a40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10000; /* Mayor z-index para estar por encima del sidebar */
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Estilos adicionales para el botón toggler cuando el sidebar está abierto */
+  .filter-toggle-button.is-active {
+    background-color: #ff3b30;
+  }
+  
+  /* Listado en modo responsivo */
+  .ml-10 {
+    margin-left: 0 !important;
+  }
+  
+  .mr-10 {
+    margin-right: 0 !important;
+  }
+  
+  /* Ajuste del grid de tarjetas */
+  .flex.flex-wrap.gap-8,
+  .flex.flex-wrap.gap-\[29px\] {
+    justify-content: center !important;
+    gap: 16px !important;
+  }
+  
+  /* Ajuste de las tarjetas individuales */
+  .bg-gray-100.w-\[316px\] {
+    width: 100% !important;
+    max-width: 316px !important;
+  }
+  
+  /* Ajuste del texto en las tarjetas */
+  .font-bold.text-black.text-\[24px\] {
+    font-size: 18px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+  
+  /* Ajustes de las imágenes en tarjetas */
+  .w-\[72px\].h-\[72px\] {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  
+  .w-\[40px\].h-\[40px\] {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  
+  /* Ajustes de paginación */
+  .pagination {
+    justify-content: center !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 15px !important;
+    margin-top: 30px !important;
+    margin-bottom: 30px !important;
+    flex-wrap: wrap !important;
+    gap: 5px !important;
+  }
+  
+  .pagination > .page-item {
+    height: 28px !important;
+    width: 28px !important;
+    font-size: 14px !important;
+  }
+  
+  /* Para el responsive pagination component específico */
+  .mt-10.mb-10.ml-5 {
+    margin-left: 0 !important;
+    text-align: center !important;
+    position: relative !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+  
+  /* Ajuste de los botones anterior/siguiente */
+  .w-\[34px\].h-\[34px\].mr-10.md\:mr-28 {
+    position: relative !important;
+    margin-right: 5px !important;
+    right: auto !important;
+  }
+  
+  /* Colocación específica para los botones anterior/siguiente */
+  .pagination > .page-item [aria-label="Previous"],
+  .pagination > .page-item [aria-label="Next"] {
+    font-size: 16px !important;
+  }
+  
+  /* Ocultar algunos números de página en pantallas muy pequeñas */
+  @media (max-width: 400px) {
+    .pagination > .page-item:not(:first-child):not(:last-child):not(.active):not(:nth-child(2)):not(:nth-last-child(2)) {
+      display: none !important;
+    }
+  }
+  
+  .w-\[34px\].h-\[34px\] {
+    width: 30px !important;
+    height: 30px !important;
+  }
+}
+
+/* Estilos para pantallas muy pequeñas */
+@media (max-width: 400px) {
+  .bg-gray-100.w-\[316px\] {
+    padding: 10px !important;
+  }
+  
+  .font-bold.text-black.text-\[24px\] {
+    font-size: 16px !important;
+  }
+  
+  .w-\[72px\].h-\[72px\] {
+    width: 40px !important;
+    height: 40px !important;
+  }
+} 

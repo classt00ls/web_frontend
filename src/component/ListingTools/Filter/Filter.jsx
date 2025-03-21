@@ -139,7 +139,7 @@ const Filter = () => {
             ))}
       </div>
 
-      <div className="  mt-10">
+      <div className="mt-10">
         <ResponsivePagination
           current={currentPage}
           total={totalPages}
