@@ -1,7 +1,8 @@
 import axios from 'axios';
-import Configuration from '../configuration/config';
+/// <reference types="vite/client" />
 
-const API_URL = Configuration.API_URL;
+// Usar directamente la variable de entorno de Vite
+const API_URL = import.meta.env.VITE_API_URL || 'https://6408-92-59-163-224.ngrok-free.app';
 
 // Llamadas que requeriran de auth token
 export const authApiCall = axios.create({
