@@ -1,6 +1,60 @@
 /* Archivo CSS exclusivo para responsividad móvil
    NO modifica ningún estilo de escritorio, solo añade reglas para pantallas pequeñas */
 
+/* Prevenir scroll horizontal en todo dispositivo */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* BOTÓN TOGGLE DEL SIDEBAR - SIEMPRE VISIBLE EN MÓVIL */
+#sidebarToggleBtn, 
+#sidebarToggleBtn-fallback {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #63EA32;
+  color: white;
+  border: none;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  cursor: pointer;
+  z-index: 99999999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+/* Ocultar explícitamente en desktop */
+@media (min-width: 769px) {
+  #sidebarToggleBtn, 
+  #sidebarToggleBtn-fallback {
+    display: none !important;
+  }
+}
+
+/* Asegurar que el botón siempre sea visible en dispositivos móviles */
+@media (max-width: 768px) {
+  #sidebarToggleBtn, 
+  #sidebarToggleBtn-fallback {
+    display: flex !important;
+  }
+
+  /* Ocultar el botón de fallback si el principal existe */
+  body:has(#sidebarToggleBtn) #sidebarToggleBtn-fallback {
+    display: none !important;
+  }
+}
+
+/* Estilo del botón cuando el sidebar está abierto */
+#sidebarToggleBtn.active,
+#sidebarToggleBtn-fallback.active {
+  background-color: #ff3b30;
+}
+
 /* Estilos generales responsivos - solo aplicados en móvil */
 @media (max-width: 768px) {
   /* Contenedor principal de herramientas */
@@ -8,6 +62,11 @@
     position: relative;
     padding-bottom: 80px; /* Espacio para el botón flotante */
     overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    box-sizing: border-box;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   
   /* Sidebar en modo móvil - ocupar toda la pantalla */
@@ -22,8 +81,10 @@
     background-color: white;
     transition: left 0.3s ease;
     overflow-y: auto;
+    overflow-x: hidden;
     box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
+    box-sizing: border-box;
   }
   
   /* Clase para mostrar el sidebar - será añadida/removida por JS */
@@ -50,6 +111,13 @@
   /* Contenido principal */
   .tools-container > div:last-child {
     width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Contenedores y elementos flexibles */
+  .flex {
+    flex-wrap: wrap;
   }
   
   /* Ajustes para los inputs del sidebar */
@@ -57,6 +125,7 @@
     width: 100% !important;
     padding: 10px 40px 10px 35px !important;
     font-size: 16px !important;
+    box-sizing: border-box !important;
   }
   
   .tools-container > div:first-child button {
@@ -106,12 +175,26 @@
   .flex.flex-wrap.gap-\[29px\] {
     justify-content: center !important;
     gap: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
   /* Ajuste de las tarjetas individuales */
   .bg-gray-100.w-\[316px\] {
     width: 100% !important;
-    max-width: 316px !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Contenido de las tarjetas */
+  .flex.items-center.justify-between,
+  .flex.justify-between.items-center {
+    flex-wrap: wrap !important;
   }
   
   /* Ajuste del texto en las tarjetas */
@@ -120,17 +203,20 @@
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+    max-width: 100% !important;
   }
   
   /* Ajustes de las imágenes en tarjetas */
   .w-\[72px\].h-\[72px\] {
     width: 50px !important;
     height: 50px !important;
+    min-width: 50px !important;
   }
   
   .w-\[40px\].h-\[40px\] {
     width: 30px !important;
     height: 30px !important;
+    min-width: 30px !important;
   }
   
   /* Ajustes de paginación */
@@ -143,6 +229,7 @@
     margin-bottom: 30px !important;
     flex-wrap: wrap !important;
     gap: 5px !important;
+    max-width: 100% !important;
   }
   
   .pagination > .page-item {
@@ -158,6 +245,10 @@
     position: relative !important;
     display: flex !important;
     justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
   }
   
   /* Ajuste de los botones anterior/siguiente */
@@ -184,20 +275,39 @@
     width: 30px !important;
     height: 30px !important;
   }
+
+  /* Ajustes para los contenedores principales y elementos que puedan causar scroll horizontal */
+  .container, 
+  main, 
+  section, 
+  div[class*="container"],
+  .flex,
+  .grid,
+  .p-5 {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
 }
 
 /* Estilos para pantallas muy pequeñas */
 @media (max-width: 400px) {
   .bg-gray-100.w-\[316px\] {
     padding: 10px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   
   .font-bold.text-black.text-\[24px\] {
     font-size: 16px !important;
+    max-width: 100% !important;
   }
   
   .w-\[72px\].h-\[72px\] {
     width: 40px !important;
     height: 40px !important;
+    min-width: 40px !important;
   }
 } 

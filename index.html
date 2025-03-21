@@ -4,17 +4,155 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>ClassToolsIo</title>
+  <style>
+    html, body, #root {
+      max-width: 100%;
+      overflow-x: hidden;
+      box-sizing: border-box;
+    }
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+  </style>
   <!-- CSS responsivo - cargado después de los estilos principales para sobrescribir solo en móvil -->
   <link rel="stylesheet" href="/src/styles/responsive-overrides.css">
 </head>
 
 <body>
   <div id="root"></div>
+  
+  <!-- Botón de fallback para el sidebar con onclick directo -->
+  <button id="sidebarToggleBtn-fallback" onclick="toggleSidebar()" style="position:fixed;bottom:20px;right:20px;width:56px;height:56px;border-radius:50%;background-color:#63EA32;color:white;border:none;box-shadow:0 2px 10px rgba(0,0,0,0.3);cursor:pointer;z-index:99999999;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+  </button>
+  
+  <!-- Script para función de toggle sencilla -->
+  <script>
+    function toggleSidebar() {
+      console.log('🖱️ CLICK DIRECTO EN BOTÓN FALLBACK');
+      const sidebar = document.querySelector('.tools-container > div:first-child');
+      if (!sidebar) return;
+      
+      sidebar.style.position = 'fixed';
+      sidebar.style.top = '0';
+      sidebar.style.left = '0';
+      sidebar.style.width = '100%';
+      sidebar.style.height = '100%';
+      sidebar.style.background = '#fff';
+      sidebar.style.zIndex = '999999';
+      sidebar.style.padding = '20px';
+      sidebar.style.overflowY = 'auto';
+      sidebar.style.display = 'block';
+      
+      document.body.style.overflow = 'hidden';
+      
+      const overlay = document.createElement('div');
+      overlay.id = 'sidebarOverlay';
+      overlay.style.position = 'fixed';
+      overlay.style.top = '0';
+      overlay.style.left = '0';
+      overlay.style.width = '100%';
+      overlay.style.height = '100%';
+      overlay.style.background = 'rgba(0,0,0,0.5)';
+      overlay.style.zIndex = '999990';
+      document.body.appendChild(overlay);
+      
+      // Crear header si no existe
+      if (!sidebar.querySelector('.sidebar-header')) {
+        const header = document.createElement('div');
+        header.className = 'sidebar-header';
+        header.style.display = 'flex';
+        header.style.justifyContent = 'space-between';
+        header.style.alignItems = 'center';
+        header.style.marginBottom = '20px';
+        header.style.paddingBottom = '10px';
+        header.style.borderBottom = '1px solid #eee';
+        
+        const title = document.createElement('h2');
+        title.textContent = 'Filtros';
+        title.style.margin = '0';
+        title.style.fontSize = '20px';
+        title.style.fontWeight = 'bold';
+        
+        const closeBtn = document.createElement('button');
+        closeBtn.innerHTML = '&times;';
+        closeBtn.style.background = 'none';
+        closeBtn.style.border = 'none';
+        closeBtn.style.fontSize = '28px';
+        closeBtn.style.cursor = 'pointer';
+        closeBtn.onclick = function() {
+          cerrarSidebar();
+        };
+        
+        header.appendChild(title);
+        header.appendChild(closeBtn);
+        sidebar.insertBefore(header, sidebar.firstChild);
+      }
+      
+      overlay.onclick = cerrarSidebar;
+      
+      // Cambiar el botón
+      const btnFallback = document.getElementById('sidebarToggleBtn-fallback');
+      if (btnFallback) {
+        btnFallback.style.backgroundColor = '#ff3b30';
+        btnFallback.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+        btnFallback.onclick = cerrarSidebar;
+      }
+    }
+    
+    function cerrarSidebar() {
+      console.log('🚪 CERRANDO SIDEBAR');
+      const sidebar = document.querySelector('.tools-container > div:first-child');
+      if (!sidebar) return;
+      
+      sidebar.style.position = '';
+      sidebar.style.top = '';
+      sidebar.style.left = '';
+      sidebar.style.width = '';
+      sidebar.style.height = '';
+      sidebar.style.background = '';
+      sidebar.style.zIndex = '';
+      sidebar.style.padding = '';
+      sidebar.style.overflowY = '';
+      sidebar.style.display = '';
+      
+      document.body.style.overflow = '';
+      
+      const overlay = document.getElementById('sidebarOverlay');
+      if (overlay) overlay.remove();
+      
+      const header = sidebar.querySelector('.sidebar-header');
+      if (header) header.remove();
+      
+      // Restaurar botón
+      const btnFallback = document.getElementById('sidebarToggleBtn-fallback');
+      if (btnFallback) {
+        btnFallback.style.backgroundColor = '#63EA32';
+        btnFallback.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>';
+        btnFallback.onclick = toggleSidebar;
+      }
+    }
+  </script>
+  
   <script type="module" src="/src/main.jsx"></script>
   <!-- Script para manejar responsividad en dispositivos móviles -->
-  <script src="/src/styles/responsive-handler.js"></script>
+  <script src="/src/styles/responsive-handler.js" defer></script>
+  
+  <!-- Script para eliminar overlays oscuros -->
+  <script>
+    // Ejecutar cada segundo para eliminar cualquier overlay que quede
+    setInterval(function() {
+      // Eliminar SOLO los sidebarOverlay
+      const overlays = document.querySelectorAll('#sidebarOverlay');
+      if (overlays.length > 0) {
+        overlays.forEach(function(overlay) {
+          overlay.remove();
+        });
+      }
+    }, 1000);
+  </script>
 </body>
 
 </html>

@@ -103,14 +103,14 @@ const Category_section1 = ({}) => {
     <div className=" bg-none">
       <Tags />
       <TagsPrompt />
-      <div className="flex flex-wrap gap-8 p-5">
+      <div className="flex flex-wrap gap-8 p-5 mx-auto w-full box-border">
         
         {paginationHas && tools && tools.length > 0 &&
           tools.map((tool) => tool && (
             
               <div
                 key={tool.id}
-                className="bg-gray-100 w-[316px] p-5 rounded-lg shadow-lg"
+                className="bg-gray-100 w-full sm:w-[316px] p-3 sm:p-5 rounded-lg shadow-lg box-border"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
@@ -202,7 +202,7 @@ const Category_section1 = ({}) => {
             .map((tool) => (
               <div
                 key={tool?.id}
-                className="bg-gray-100 w-[316px] p-5 rounded-lg shadow-lg"
+                className="bg-gray-100 w-full sm:w-[316px] p-3 sm:p-5 rounded-lg shadow-lg box-border"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
@@ -296,8 +296,8 @@ const Category_section1 = ({}) => {
           previousLabel={"<"}
           nextLabel={">"}
           maxWidth={500}
-          previousClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-10 border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
-          nextClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-0 border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
+          previousClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute left-0 md:left-[-60px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
+          nextClassName="w-[34px] h-[34px] mr-10 md:mr-0 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-0 md:right-[-60px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
         />
       </div>
     </div>

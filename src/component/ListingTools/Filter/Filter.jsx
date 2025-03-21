@@ -32,7 +32,7 @@ const Filter = () => {
 
   return (
     <div className="mt-10">
-      <div className="flex flex-wrap gap-[29px]">
+      <div className="flex flex-wrap gap-[29px] mx-auto w-full box-border">
         {paginationHas &&
           data?.slice(
               (currentPage - 1) * toolsPerPage,
@@ -66,7 +66,7 @@ const Filter = () => {
             .map((tool) => (
               <div
                 key={tool?.id}
-                className="bg-gray-100 w-[316px] p-5 rounded-lg shadow-lg"
+                className="bg-gray-100 w-full sm:w-[316px] p-3 sm:p-5 rounded-lg shadow-lg box-border"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
@@ -146,8 +146,8 @@ const Filter = () => {
           onPageChange={setCurrentPage}
           previousLabel={"<"}
           nextLabel={">"}
-          previousClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-10 border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
-          nextClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-0 border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
+          previousClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute left-0 md:left-[-60px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
+          nextClassName="w-[34px] h-[34px] mr-10 md:mr-0 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-0 md:right-[-60px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
         />
       </div>
     </div>
