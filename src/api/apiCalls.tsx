@@ -1,12 +1,12 @@
-import axios from 'axios';
 /// <reference types="vite/client" />
+import axios from 'axios';
 
 // Usar directamente la variable de entorno de Vite
 const API_URL = import.meta.env.VITE_API_URL || 'https://6408-92-59-163-224.ngrok-free.app';
 
 // Llamadas que requeriran de auth token
 export const authApiCall = axios.create({
-	withCredentials: false,
+	withCredentials: true,
 	baseURL: API_URL,
 	headers: {
 		'ngrok-skip-browser-warning': 'skip',
@@ -89,9 +89,6 @@ const anonError = async (error) => {
 
 // Interceptor antes de enviar una petición
 authApiCall.interceptors.request.use(addToken, requestError);
-
-// Interceptor antes de enviar una petición
-anonApiCall.interceptors.request.use(addToken, requestError);
 
 // Interceptor antes de procesar la respuesta recibida
 authApiCall.interceptors.response.use(authResponse);
