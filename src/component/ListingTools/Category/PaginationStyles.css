@@ -1,0 +1,63 @@
+/* Estilos personalizados para la paginación */
+
+/* Contenedor principal */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Todos los items de paginación */
+.pagination .page-item a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: white;
+  background-color: #121225;
+  border: 1px solid #444460;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* Item activo/seleccionado */
+.pagination .page-item.active a {
+  background-color: #63EA32;
+  color: #121225;
+  border-color: #63EA32;
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(99, 234, 50, 0.4);
+}
+
+/* Hover en los items */
+.pagination .page-item:not(.active) a:hover {
+  background-color: #2a2a40;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Botones de navegación anterior/siguiente */
+.pagination .page-item.navigate a {
+  background-color: #2a2a40;
+  border-color: #63EA32;
+}
+
+/* Botones deshabilitados */
+.pagination .page-item.disabled a {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Estilos responsivos */
+@media (max-width: 640px) {
+  .pagination .page-item a {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+} 

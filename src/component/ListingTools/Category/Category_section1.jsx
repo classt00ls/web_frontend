@@ -7,6 +7,7 @@ import share from "../../../assets/Category/share.png";
 import card from "../../../assets/classtools_web_design/card_logo.png";
 import star from "../../../assets/classtools_web_design/star_logo.png";
 import { useTranslation } from "react-i18next";
+import './PaginationStyles.css';
 
 import Loader from "../../Loader/Loader";
 import { Link } from "react-router-dom";
@@ -288,7 +289,7 @@ const Category_section1 = ({}) => {
               </div>
             ))}
       </div>
-      <div className="mt-10 mb-10 ml-5">
+      <div className="mt-10 mb-10 flex justify-center w-full relative">
         <ResponsivePagination
           current={currentPage}
           total={totalPages}
@@ -296,8 +297,11 @@ const Category_section1 = ({}) => {
           previousLabel={"<"}
           nextLabel={">"}
           maxWidth={500}
-          previousClassName="w-[34px] h-[34px] mr-10 md:mr-28 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute left-0 md:left-[-60px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
-          nextClassName="w-[34px] h-[34px] mr-10 md:mr-0 rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-0 md:right-[-60px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
+          className="pagination"
+          pageItemClassName="page-item"
+          activeItemClassName="active"
+          previousClassName="w-[34px] h-[34px] rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute left-4 md:left-[-100px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
+          nextClassName="w-[34px] h-[34px] rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-4 md:right-[-100px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
         />
       </div>
     </div>
