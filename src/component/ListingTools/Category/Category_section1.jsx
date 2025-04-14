@@ -9,7 +9,11 @@ import star from "../../../assets/classtools_web_design/star_logo.png";
 import { useTranslation } from "react-i18next";
 import './PaginationStyles.css';
 
-import Loader from "../../Loader/Loader";
+// Importamos los nuevos componentes y hooks de carga
+import { SkeletonToolCard } from "../../Loader/SkeletonLoader";
+import LoadingSpinner from "../../Loader/LoadingSpinner";
+import useLoading from "../../../hooks/useLoading";
+
 import { Link } from "react-router-dom";
 import { ToolApi } from "../../../api/ToolApi";
 import { UserApi } from "../../../api/UserApi";
@@ -31,14 +35,17 @@ var tagify = new Tagify(inputElem, {
 const Category_section1 = ({}) => {
 
   const dispatch = useDispatch();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const filters = useSelector(state => state.filters);
   const user = useSelector(state => state.auth.user);
 
   const [currentPage, setCurrentPage] = useState(1);
-
-  const [loading, setLoading ] = useState(true);
+  
+  // Usamos nuestro hook para manejar el estado de carga
+  const { loading, withLoading } = useLoading("category-tools");
+  // Estado para la carga inicial (para mostrar spinner de pantalla completa en carga inicial)
+  const [initialLoading, setInitialLoading] = useState(true);
 
   const [initialLoad, setInitialLoad] = useState(true);
 
@@ -61,34 +68,27 @@ const Category_section1 = ({}) => {
 
   useEffect(() => {
     if (!initialLoad) {
-      (async () => {
-        setLoading(true);
+      withLoading(async () => {
         await ToolApi.getFilteredlTool(currentPage, 12, filters, i18n.language);
-        setLoading(false);
-      })();
+      });
     }
-  }, [i18n.language]);
+  }, [i18n.language, withLoading, currentPage, filters, initialLoad]);
 
   useEffect(() => { 
-    (async () => {
-        setLoading(true);
-        
-        if(refreshTools) {
-          console.log('llamamos a search tools desde category');
-          await ToolApi.getFilteredlTool(currentPage, 12, filters, i18n.language);
-          dispatch({ type: 'set', refreshTools: false });
-        }
-        setLoading(false);
+    if (refreshTools) {
+      withLoading(async () => {
+        console.log('llamamos a search tools desde category');
+        await ToolApi.getFilteredlTool(currentPage, 12, filters, i18n.language);
+        dispatch({ type: 'set', refreshTools: false });
         setInitialLoad(false);
-    })()
-  }, [refreshTools]);
+        setInitialLoading(false);
+      });
+    }
+  }, [refreshTools, withLoading, currentPage, filters, i18n.language, dispatch]);
 
   const toggleFavorite = async (toolId) => {
-
     await ToolApi.toggleFavorite(toolId);
-
     await UserApi.meCall();
-    
   };
 
   const truncateExcerpt = (text) => {
@@ -96,214 +96,245 @@ const Category_section1 = ({}) => {
     return text.length > 250 ? text.substring(0, 250) + '...' : text;
   };
 
-  if (loading) { return <Loader />;  }
-
   const toolsPerPage = 12;
 
+  // Para mostrar un spinner de pantalla completa solo en la carga inicial
+  if (initialLoading && initialLoad) {
+    return <LoadingSpinner fullscreen={true} size="large" text={t('common.loading', 'Cargando herramientas...')} />;
+  }
+
   return (
-    <div className=" bg-none">
+    <div className="bg-none">
       <Tags />
       <TagsPrompt />
+      
+      {/* Spinner que se muestra en la parte superior mientras se cargan datos (incluso al cambiar de página) */}
+      {loading && (
+        <div className="flex justify-center my-4">
+          <LoadingSpinner variant="primary" text="Actualizando resultados..." />
+        </div>
+      )}
+      
       <div className="flex flex-wrap gap-8 p-5 mx-auto w-full box-border">
         
-        {paginationHas && tools && tools.length > 0 &&
-          tools.map((tool) => tool && (
-            
-              <div
-                key={tool.id}
-                className="bg-gray-100 w-full sm:w-[316px] p-3 sm:p-5 rounded-lg shadow-lg box-border"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <img
-                      src={`https://www.google.com/s2/favicons?domain=${tool?.url.split('/?')[0]}&sz=256 `}
-                      alt={tool?.name}
-                      className="w-[72px] h-[72px] rounded-lg"
-                    />
-                    <Link to={`/tool/${slugify(tool.name)}`} className="hover:text-orange-500 transition-colors" target="_blank" rel="noopener noreferrer">
-                      <h1 className="font-bold text-black text-[24px] px-4">
-                        {tool?.name}
-                      </h1>
-                    </Link>
-                  </div>
-                  {user && (
-                    <img
-                      src={favorites.includes(tool.id) ? heart_filled : heart}
-                      alt="icon"
-                      className="w-[40px] h-[40px] mt-[-30px] cursor-pointer hover:scale-110 transition-transform duration-200"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        toggleFavorite(tool.id);
-                      }}
-                    />
-                  )}
-                </div>
-
-                <div className="mt-4">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <img src={star} alt="review-icon" className="h-4 w-4" />
-                      <span className="ml-2 text-[13px] text-gray-700">
-                        {tool?.stars} ({tool?.stars} Reviews)
-                      </span>
-                    </div>
-                    <div className="flex items-center">
-                      <img src={card} alt="type-icon" className="h-4 w-4" />
-                      <span className="ml-2 text-[13px] text-gray-700">
-                        {tool?.pricing}
-                      </span>
-                    </div>
-                    <div className="flex items-center">
-                      <img
-                        src={bookmark}
-                        alt="bookmark-icon"
-                        className="h-4 w-4"
-                      />
-                      <span className="ml-2 text-[13px] text-red-600">
-                        100
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col">
-                    <p className="mt-2 text-gray-700 text-[13px] py-2 border-t border-b border-gray-300 font-montserrat">
-                      {truncateExcerpt(tool?.excerpt)}
-                    </p>
-                    {tool?.excerpt?.length > 250 && (
-                      <Link 
-                        to={`/tool/${slugify(tool.name)}`}
-                        className="text-orange-500 text-[12px] mt-1 font-montserrat hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Mostrar más
-                      </Link>
-                    )}
-                  </div>
-
-                  <ul className="mt-2 text-gray-700 text-[10px] space-y-1">
-                    {tool?.tags.map((item, index) => (
-                      <li key={item.id}>#{item.name}</li>
-                    ))}
-                  </ul>
-
-                  <div className="flex justify-end mt-[-25px]">
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer">
-                      <img src={share} alt="share-icon" className="w-6 h-6" />
-                    </a>
-                  </div>
-                </div>
-              </div>
+        {loading ? (
+          // Mostramos skeletons durante la carga
+          <>
+            {[...Array(6)].map((_, index) => (
+              <SkeletonToolCard key={`skeleton-${index}`} />
             ))}
-        {!paginationHas && tools
-            ?.slice(
-              (currentPage - 1) * toolsPerPage,
-              currentPage * toolsPerPage
-            )
-            .map((tool) => (
-              <div
-                key={tool?.id}
-                className="bg-gray-100 w-full sm:w-[316px] p-3 sm:p-5 rounded-lg shadow-lg box-border"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
-                    <img
-                      src={tool?.url.split('/?')[0]}
-                      alt={tool?.name}
-                      className="w-[72px] h-[72px] rounded-lg"
-                    />
-                    <Link to={`/tool/${slugify(tool.name)}`} className="hover:text-orange-500 transition-colors" target="_blank" rel="noopener noreferrer">
-                      <h1 className="font-bold text-black text-[24px] px-4">
-                        {tool?.name}
-                      </h1>
-                    </Link>
-                  </div>
-                  {user && (
-                    <img
-                      src={favorites.includes(tool.id) ? heart_filled : heart}
-                      alt="icon"
-                      className="w-[40px] h-[40px] mt-[-30px] cursor-pointer hover:scale-110 transition-transform duration-200"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        toggleFavorite(tool.id);
-                      }}
-                    />
-                  )}
-                </div>
-
-                <div className="mt-4">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <img src={star} alt="review-icon" className="h-4 w-4" />
-                      <span className="ml-2 text-[13px] text-gray-700">
-                        {tool?.stars} ({tool?.stars} 0 Reviews)
-                      </span>
+          </>
+        ) : (
+          <>
+            {paginationHas && tools && tools.length > 0 &&
+              tools.map((tool) => tool && (
+                
+                  <div
+                    key={tool.id}
+                    className="bg-gray-100 w-full sm:w-[316px] p-3 sm:p-5 rounded-lg shadow-lg box-border"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <img
+                          src={`https://www.google.com/s2/favicons?domain=${tool?.url.split('/?')[0]}&sz=256 `}
+                          alt={tool?.name}
+                          className="w-[72px] h-[72px] rounded-lg"
+                        />
+                        <Link to={`/tool/${slugify(tool.name)}`} className="hover:text-orange-500 transition-colors" target="_blank" rel="noopener noreferrer">
+                          <h1 className="font-bold text-black text-[24px] px-4">
+                            {tool?.name}
+                          </h1>
+                        </Link>
+                      </div>
+                      {user && (
+                        <img
+                          src={favorites.includes(tool.id) ? heart_filled : heart}
+                          alt="icon"
+                          className="w-[40px] h-[40px] mt-[-30px] cursor-pointer hover:scale-110 transition-transform duration-200"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            toggleFavorite(tool.id);
+                          }}
+                        />
+                      )}
                     </div>
-                    <div className="flex items-center">
-                      <img src={card} alt="type-icon" className="h-4 w-4" />
-                      <span className="ml-2 text-[13px] text-gray-700">
-                        {tool?.price}
-                      </span>
+
+                    <div className="mt-4">
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                          <img src={star} alt="review-icon" className="h-4 w-4" />
+                          <span className="ml-2 text-[13px] text-gray-700">
+                            {tool?.stars} ({tool?.stars} Reviews)
+                          </span>
+                        </div>
+                        <div className="flex items-center">
+                          <img src={card} alt="type-icon" className="h-4 w-4" />
+                          <span className="ml-2 text-[13px] text-gray-700">
+                            {tool?.pricing}
+                          </span>
+                        </div>
+                        <div className="flex items-center">
+                          <img
+                            src={bookmark}
+                            alt="bookmark-icon"
+                            className="h-4 w-4"
+                          />
+                          <span className="ml-2 text-[13px] text-red-600">
+                            100
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col">
+                        <p className="mt-2 text-gray-700 text-[13px] py-2 border-t border-b border-gray-300 font-montserrat">
+                          {truncateExcerpt(tool?.excerpt)}
+                        </p>
+                        {tool?.excerpt?.length > 250 && (
+                          <Link 
+                            to={`/tool/${slugify(tool.name)}`}
+                            className="text-orange-500 text-[12px] mt-1 font-montserrat hover:underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Mostrar más
+                          </Link>
+                        )}
+                      </div>
+
+                      <ul className="mt-2 text-gray-700 text-[10px] space-y-1">
+                        {tool?.tags.map((item, index) => (
+                          <li key={item.id}>#{item.name}</li>
+                        ))}
+                      </ul>
+
+                      <div className="flex justify-end mt-[-25px]">
+                        <a href={tool.url} target="_blank" rel="noopener noreferrer">
+                          <img src={share} alt="share-icon" className="w-6 h-6" />
+                        </a>
+                      </div>
                     </div>
-                    <div className="flex items-center">
-                      <img
-                        src={bookmark}
-                        alt="bookmark-icon"
-                        className="h-4 w-4"
-                      />
-                      <span className="ml-2 text-[13px] text-red-600">
-                        {/* {tool?.totalBookmarked} */}
-                        100
-                      </span>
+                  </div>
+                ))}
+            {!paginationHas && tools
+                ?.slice(
+                  (currentPage - 1) * toolsPerPage,
+                  currentPage * toolsPerPage
+                )
+                .map((tool) => (
+                  <div
+                    key={tool?.id}
+                    className="bg-gray-100 w-full sm:w-[316px] p-3 sm:p-5 rounded-lg shadow-lg box-border"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <img
+                          src={tool?.url.split('/?')[0]}
+                          alt={tool?.name}
+                          className="w-[72px] h-[72px] rounded-lg"
+                        />
+                        <Link to={`/tool/${slugify(tool.name)}`} className="hover:text-orange-500 transition-colors" target="_blank" rel="noopener noreferrer">
+                          <h1 className="font-bold text-black text-[24px] px-4">
+                            {tool?.name}
+                          </h1>
+                        </Link>
+                      </div>
+                      {user && (
+                        <img
+                          src={favorites.includes(tool.id) ? heart_filled : heart}
+                          alt="icon"
+                          className="w-[40px] h-[40px] mt-[-30px] cursor-pointer hover:scale-110 transition-transform duration-200"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            toggleFavorite(tool.id);
+                          }}
+                        />
+                      )}
+                    </div>
+
+                    <div className="mt-4">
+                      <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                          <img src={star} alt="review-icon" className="h-4 w-4" />
+                          <span className="ml-2 text-[13px] text-gray-700">
+                            {tool?.stars} ({tool?.stars} 0 Reviews)
+                          </span>
+                        </div>
+                        <div className="flex items-center">
+                          <img src={card} alt="type-icon" className="h-4 w-4" />
+                          <span className="ml-2 text-[13px] text-gray-700">
+                            {tool?.price}
+                          </span>
+                        </div>
+                        <div className="flex items-center">
+                          <img
+                            src={bookmark}
+                            alt="bookmark-icon"
+                            className="h-4 w-4"
+                          />
+                          <span className="ml-2 text-[13px] text-red-600">
+                            {/* {tool?.totalBookmarked} */}
+                            100
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col">
+                        <p className="mt-2 text-gray-700 text-[13px] py-2 border-t border-b border-gray-300 font-montserrat">
+                          {truncateExcerpt(tool?.excerpt)}
+                        </p>
+                        {tool?.excerpt?.length > 250 && (
+                          <Link 
+                            to={`/tool/${slugify(tool.name)}`}
+                            className="text-orange-500 text-[12px] mt-1 font-montserrat hover:underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Mostrar más
+                          </Link>
+                        )}
+                      </div>
+
+                      <ul className="mt-2 text-gray-700  text-[10px] space-y-1">
+                        {tool?.tags?.map((item, index) => (
+                          <li key={index}>#{item}</li>
+                        ))}
+                      </ul>
+
+                      <div className="flex justify-end  mt-[-25px] ">
+                        <a href={tool.url} target="_blank" rel="noopener noreferrer">
+                          <img src={share} alt="share-icon" className="w-6 h-6" />
+                        </a>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="flex flex-col">
-                    <p className="mt-2 text-gray-700 text-[13px] py-2 border-t border-b border-gray-300 font-montserrat">
-                      {truncateExcerpt(tool?.excerpt)}
-                    </p>
-                    {tool?.excerpt?.length > 250 && (
-                      <Link 
-                        to={`/tool/${slugify(tool.name)}`}
-                        className="text-orange-500 text-[12px] mt-1 font-montserrat hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Mostrar más
-                      </Link>
-                    )}
-                  </div>
-
-                  <ul className="mt-2 text-gray-700  text-[10px] space-y-1">
-                    {tool?.tags?.map((item, index) => (
-                      <li key={index}>#{item}</li>
-                    ))}
-                  </ul>
-
-                  <div className="flex justify-end  mt-[-25px] ">
-                    <a href={tool.url} target="_blank" rel="noopener noreferrer">
-                      <img src={share} alt="share-icon" className="w-6 h-6" />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
+                ))}
+          </>
+        )}
       </div>
-      <div className="mt-10 mb-10 flex justify-center w-full relative">
-        <ResponsivePagination
-          current={currentPage}
-          total={totalPages}
-          onPageChange={setCurrentPage}
-          previousLabel={"<"}
-          nextLabel={">"}
-          maxWidth={500}
-          className="pagination"
-          pageItemClassName="page-item"
-          activeItemClassName="active"
-          previousClassName="w-[34px] h-[34px] rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute left-4 md:left-[-100px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
-          nextClassName="w-[34px] h-[34px] rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-4 md:right-[-100px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
-        />
-      </div>
+      
+      {/* Paginación con spinner inline cuando se cambia de página */}
+      {totalPages > 1 && (
+        <div className="mt-10 mb-10 flex justify-center w-full relative">
+          {loading && (
+            <div className="absolute top-[-40px] left-1/2 transform -translate-x-1/2">
+              <LoadingSpinner size="small" inline={true} />
+            </div>
+          )}
+          <ResponsivePagination
+            current={currentPage}
+            total={totalPages}
+            onPageChange={setCurrentPage}
+            previousLabel={"<"}
+            nextLabel={">"}
+            maxWidth={500}
+            className="pagination"
+            pageItemClassName="page-item"
+            activeItemClassName="active"
+            previousClassName="w-[34px] h-[34px] rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute left-4 md:left-[-100px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
+            nextClassName="w-[34px] h-[34px] rounded-full shadow !bg-[#2a2a40] flex text-center items-center justify-center absolute right-4 md:right-[-100px] border border-[#63EA32] hover:shadow-[0_0_8px_rgba(99,234,50,0.6)] transition-all duration-300"
+          />
+        </div>
+      )}
     </div>
   );
 };

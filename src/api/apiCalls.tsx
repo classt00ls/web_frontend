@@ -43,6 +43,17 @@ const addToken = (request) => {
 	return request;
 }
 
+const addTokenIfExist = (request) => {
+
+	const token = localStorage.getItem('access_token');
+
+	if (token) {
+		request.headers["Authorization"] = `Bearer ${token}`;
+	} 
+	
+	return request;
+} 
+
 const requestError = (error) => {
 	if (error && error.response == undefined) {
 		console.log('Intercepting Error: ', error);
@@ -89,6 +100,6 @@ const anonError = async (error) => {
 
 // Interceptor antes de enviar una petición
 authApiCall.interceptors.request.use(addToken, requestError);
-
+anonApiCall.interceptors.request.use(addTokenIfExist, requestError);
 // Interceptor antes de procesar la respuesta recibida
 authApiCall.interceptors.response.use(authResponse);

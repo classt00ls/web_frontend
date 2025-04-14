@@ -1,6 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Loader from "../../Loader/Loader";
 import { TagApi } from "../../../api/TagApi";
 import { useDispatch } from "react-redux";
 import ResearchIcon from "../../../assets/icons/ResearchIcon";
@@ -16,6 +15,10 @@ import TranslatorIcon from "../../../assets/icons/TranslatorIcon";
 import { useTranslation } from "react-i18next";
 import './AiCategoryStyles.css';
 
+// Importamos los nuevos componentes y hooks de carga
+import LoadingSpinner from "../../Loader/LoadingSpinner";
+import useLoading from "../../../hooks/useLoading";
+
 const AiCategory = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -23,7 +26,10 @@ const AiCategory = () => {
 
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  
+  // Usamos nuestro hook para manejar el estado de carga
+  const { loading, withLoading } = useLoading("home-categories");
+  
   const [particles, setParticles] = useState([]);
   const [lines, setLines] = useState([]);
 
@@ -60,19 +66,15 @@ const AiCategory = () => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
+    withLoading(async () => {
       try {
         const response = await TagApi.getAllCategories();
         setCategories(response);
-        setLoading(false);
       } catch (err) {
         setError("Failed to fetch categories");
-        setLoading(false);
       }
-    };
-    fetchData();
-  }, []);
+    });
+  }, [withLoading]);
 
   const gotools = (target) => {
     // Actualizamos los filtros
@@ -117,9 +119,16 @@ const AiCategory = () => {
     }
   };
 
-  if (loading) {
-    return <Loader />;
-  }
+  // Componente de esqueleto para las tarjetas de categoría
+  const CategorySkeleton = () => (
+    <div className="category-card skeleton">
+      <div className="category-icon-container">
+        <div className="icon-glow"></div>
+        <div className="skeleton-icon"></div>
+      </div>
+      <div className="skeleton-title"></div>
+    </div>
+  );
 
   return (
     <div className="ai-categories-container">
@@ -157,9 +166,24 @@ const AiCategory = () => {
         {t('categories.explore_ai_tools') || "Explora las herramientas de IA"}
       </h2>
       
-      {categories ? (
-        <div className="categories-grid">
-          {categories?.map((category, index) => (
+      {/* Spinner de carga que se muestra cuando se cargan las categorías */}
+      {loading && (
+        <div className="flex justify-center mb-6">
+          <LoadingSpinner variant="primary" text={t('common.loading_categories', 'Cargando categorías...')} />
+        </div>
+      )}
+      
+      <div className="categories-grid">
+        {loading ? (
+          // Mostrar skeletons durante la carga
+          <>
+            {[...Array(8)].map((_, index) => (
+              <CategorySkeleton key={`skeleton-${index}`} />
+            ))}
+          </>
+        ) : categories?.length > 0 ? (
+          // Mostrar categorías una vez cargadas
+          categories.map((category, index) => (
             <div
               onClick={() => gotools(category.name)}
               key={index}
@@ -173,11 +197,18 @@ const AiCategory = () => {
                 {category.name}
               </h3>
             </div>
-          ))}
-        </div>
-      ) : (
-        <></>
-      )}
+          ))
+        ) : error ? (
+          // Mostrar error si no se pudieron cargar las categorías
+          <div className="error-message">
+            {t('common.error_loading', 'Error al cargar las categorías')}
+          </div>
+        ) : (
+          <div className="no-categories">
+            {t('categories.no_categories', 'No hay categorías disponibles')}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

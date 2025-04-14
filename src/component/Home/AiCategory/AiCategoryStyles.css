@@ -199,22 +199,31 @@
 
 /* Grid responsivo */
 .categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   gap: 20px;
-  justify-content: center;
   position: relative;
   z-index: 2;
 }
 
+.categories-grid .category-card {
+  flex: 0 0 auto;
+  width: calc(25% - 20px);
+  max-width: 180px;
+  min-width: 150px;
+}
+
 /* Media queries para responsividad */
-@media (max-width: 768px) {
-  .categories-grid {
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 15px;
+@media (max-width: 992px) {
+  .categories-grid .category-card {
+    width: calc(33.333% - 20px);
   }
-  
-  .category-card {
+}
+
+@media (max-width: 768px) {
+  .categories-grid .category-card {
+    width: calc(50% - 15px);
     min-height: 140px;
     padding: 15px 10px;
   }
@@ -230,16 +239,86 @@
 }
 
 @media (max-width: 480px) {
-  .categories-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
-  }
-  
-  .category-card {
+  .categories-grid .category-card {
+    width: calc(50% - 10px);
     min-height: 130px;
   }
   
   .ai-categories-title {
     font-size: 1.5rem;
+  }
+
+  .categories-grid {
+    gap: 10px;
+  }
+}
+
+/* Estilos para esqueletos de carga */
+.category-card.skeleton {
+  cursor: default;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.category-card.skeleton .category-icon-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.skeleton-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeleton-title {
+  width: 70%;
+  height: 16px;
+  margin: 15px auto 0;
+  border-radius: 4px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.error-message {
+  color: #ff4d4d;
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.no-categories {
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  padding: 20px;
+  font-size: 18px;
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 } 
